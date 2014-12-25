@@ -7,7 +7,7 @@ import thread
 import epics
 import time
 import copy
-
+import Queue
 import macros
 
 wake = threading.Event()
@@ -36,22 +36,22 @@ _macroFunctions = []
 macroFunctionNames = []
 macroFunctions = []
 
+# for sending messages to writer()
+MSG_COMMAND = 0
+MSG_COMMENT = 1
+
 def commandMonFunc(pvname, value, char_value, **kwd):
-	global debug, macroFile, prefix
-	if char_value.find(prefix+"caputRecorder") != -1:
-		return
-	(pvname,value) = char_value.split(',')
-	macroFile.write("\tepics.caput(\"%s\",\"%s\", wait=True, timeout=300)\n" % (pvname,value))
-	macroFile.flush()
+	global debug, macroFile, prefix, msgQueue
+	if debug: print "commandMonFunc: char_value='%s'" % char_value
+	msgQueue.put((MSG_COMMAND, char_value))
 
 def commentMonFunc(pvname, value, char_value, **kwd):
-	global debug, macroFile
-	macroFile.write("\t# %s\n" % char_value)
-	macroFile.flush()
+	global debug, macroFile, msgQueue
+	msgQueue.put((MSG_COMMENT, char_value))
 
 def startMacro():
 	global debug, macroFile, prefix, macroFunctionNames
-	#print("startMacro: entry\n")
+	if debug: print("startMacro: entry\n")
 	busy = epics.caget(prefix+"caputRecorderMacroRecording")
 	if (busy):
 		epics.caput(prefix+"caputRecorderUserMessage", "a macro is already being recorded")
@@ -273,10 +273,26 @@ def executeMacro():
 		print "error executing '%s'\n" % commandString
 	executingMacro = 0
 
+def writer():
+	global debug, macroFile, prefix, msgQueue
+
+	while(1):
+		(msg, char_value) = msgQueue.get()
+		if debug: print "writer: type=%d, char_value='%s'" % (msg, char_value)
+		if msg == MSG_COMMAND:
+			if char_value.find(prefix+"caputRecorder") == -1:
+				(pvname,value) = char_value.split(',')
+				macroFile.write("\tepics.caput(\"%s\",\"%s\", wait=True, timeout=300)\n" % (pvname,value))
+				macroFile.flush()
+			msgQueue.task_done()
+		elif msg == MSG_COMMENT:
+			macroFile.write("\t# %s\n" % char_value)
+			macroFile.flush()
+
 ############################################################################
 def start():
 	global debug, prefix, doStartMacro, doStopMacro, doReloadMacros, doexecuteMacro
-	global doSelectMacro, doAbortMacro, executingMacro
+	global doSelectMacro, doAbortMacro, executingMacro, msgQueue
 	wake.clear()
 	epics.camonitor(prefix+"caputRecorderMacroStopStart",callback=stopStartMonFunc)
 	epics.camonitor(prefix+"caputRecorderReloadMacros",callback=reloadMacrosMonFunc)
@@ -284,6 +300,13 @@ def start():
 	epics.camonitor(prefix+"caputRecorderExecuteMacro",callback=executeMacroMonFunc)
 	epics.camonitor(prefix+"caputRecorderAbortMacro",callback=abortMacroMonFunc)
 	reloadMacros()
+
+	# message and queue
+	msgQueue = Queue.Queue(maxsize=100)
+	writeThread = threading.Thread(target=writer)
+	writeThread.daemon = True
+	writeThread.start()
+
 	while (1):
 		wake.wait(1)
 		if wake.is_set():
