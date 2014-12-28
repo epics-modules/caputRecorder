@@ -6,8 +6,27 @@
 #include <epicsMessageQueue.h>
 #include <epicsThread.h>
 #include <epicsVersion.h>
-
 #define GE_EPICSBASE(v,r,l) ((EPICS_VERSION >= (v)) && (EPICS_REVISION >= (r)) && (EPICS_MODIFICATION >= (l)))
+
+#if GE_EPICSBASE(3,15,0)
+
+#include <dbChannel.h>
+
+/* Andrew Johnson's tech-talk message:
+ *In 3.15 the void * asTrapWriteMessage.serverSpecific pointer that gets
+ * passed to the listeners is no longer a dbAddr*, it's now a dbChannel* so
+ * to get the PV name all RSRV asTrapWriteListeners must call
+ *     dbChannelName((dbChannel *) msg.serverSpecific)
+ * instead, which returns a const char* holding the channel's full PV name.
+ * 
+ * I just updated the 3.15.1 AppDevGuide to correct this in the Access
+ * Security chapter, although we haven't actually documented the dbChannel
+ * API there yet (see dbChannel.h and post questions here until that gets
+ * written, sorry).
+ */
+
+#endif
+
 
 static epicsMessageQueueId caputRecorderMsgQueue=0;
 static int shutdown = FALSE;
@@ -25,62 +44,43 @@ typedef struct {
 } MSG;
 #define MSG_SIZE sizeof(MSG)
 
-#if GE_EPICSBASE(3,15,0)
-/* we need dbNameOfPV() */
-
-static char * dbCopyInNameComponentOfPV (
-    char * pBuf, unsigned bufLen, const char * pComponent )
-{
-    unsigned compLen = strlen ( pComponent );
-    if ( compLen < bufLen ) {
-        strcpy ( pBuf, pComponent );
-        return pBuf + compLen;
-    }
-    else {
-        unsigned reducedSize = bufLen - 1u;
-        strncpy ( pBuf, pComponent, reducedSize );
-        pBuf[reducedSize] = '\0';
-        return pBuf + reducedSize;
-    }
-}
-
-unsigned dbNameOfPV (
-    const dbAddr * paddr, char * pBuf, unsigned bufLen )
-{
-    dbFldDes * pfldDes = paddr->pfldDes;
-    char * pBufTmp = pBuf;
-    if ( bufLen == 0u ) {
-        return 0u;
-    }
-    pBufTmp = dbCopyInNameComponentOfPV ( 
-        pBufTmp, bufLen, paddr->precord->name );
-    pBufTmp = dbCopyInNameComponentOfPV ( 
-        pBufTmp, bufLen - ( pBufTmp - pBuf ), "." );
-    pBufTmp = dbCopyInNameComponentOfPV ( 
-        pBufTmp, bufLen - ( pBufTmp - pBuf ), pfldDes->name );
-    return pBufTmp - pBuf;
-}
-#endif
-
 int debug=0;
-void myAsListener(asTrapWriteMessage *pmessage,int after) {
-	DBADDR *paddr = pmessage->serverSpecific;
+void myAsListener(asTrapWriteMessage *pmessage, int after) {
+#if GE_EPICSBASE(3,15,0)
+	dbChannel *pchannel;
+#endif
+	DBADDR *paddr;
 	char pvname[BUFFER_SIZE], value[BUFFER_SIZE], save[BUFFER_SIZE];
 	MSG *msg;
 	unsigned int numChar;
 	long n=1, one=1, options=0;
+	short field_size;
 	dbfType field_type;
 	int i, j;
 
 	if (after==0) return;
 	if (debug) printf("myListener: %s@%s\n", pmessage->userid, pmessage->hostid);
+
+#if GE_EPICSBASE(3,15,0)
+	pchannel = pmessage->serverSpecific;
+	paddr = pchannel->addr;
+	n = pchannel->final_no_elements;
+	/* field_type = pchannel->final_type; */
+	field_type = pchannel->final_dbr_type;
+	field_size = pchannel->final_field_size;
+	pvname = dbChannelName(pchannel)
+	numChar = strlen(pvname);
+#else
+	paddr = pmessage->serverSpecific;
 	n = paddr->no_elements;
 	field_type = paddr->field_type;
+	field_size = paddr->field_size;
 	numChar = dbNameOfPV(paddr, pvname, BUFFER_SIZE);
+#endif
 	if (debug) printf("myListener: field_type=%d, no_elements='%ld'\n", field_type, n);
 
-	if (debug) printf("n==%ld, field_size==%d\n", n, paddr->field_size);
-	if ((n>1) && (paddr->field_size==1)) {
+	if (debug) printf("n==%ld, field_size==%d\n", n, field_size);
+	if ((n>1) && (field_size==1)) {
 		/* long string */
 		dbGet(paddr, field_type, value, &options, &n, NULL);
 	} else if (n>1) {
