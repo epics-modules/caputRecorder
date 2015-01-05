@@ -1,6 +1,6 @@
 
 file {
-	name="/home/oxygen/MOONEY/epics/synApps/support/xxx/xxxApp/op/adl/caputRecorder_small_bare.adl"
+	name="/home/oxygen/MOONEY/epics/synApps/support/caputRecorder/caputRecorderApp/op/adl/caputRecorder_small_bare.adl"
 	version=030107
 }
 display {
@@ -86,6 +86,23 @@ display {
 		289315,
 		1a7309,
 	}
+}
+text {
+	object {
+		x=285
+		y=45
+		width=90
+		height=20
+	}
+	"basic attribute" {
+		clr=33
+	}
+	"dynamic attribute" {
+		vis="calc"
+		calc="a"
+		chan="$(P)caputRecorderMacroRecording"
+	}
+	textix="Recording"
 }
 rectangle {
 	object {

@@ -1,14 +1,14 @@
 
 file {
-	name="/home/oxygen/MOONEY/epics/synApps/support/xxx/xxxApp/op/adl/caputRecorder_bare.adl"
+	name="/home/oxygen4/MOONEY/epics/synAppsSVN/support/caputRecorder/caputRecorderApp/op/adl/caputRecorder_bare.adl"
 	version=030107
 }
 display {
 	object {
-		x=1090
-		y=248
+		x=568
+		y=42
 		width=400
-		height=330
+		height=380
 	}
 	clr=14
 	bclr=2
@@ -86,6 +86,23 @@ display {
 		289315,
 		1a7309,
 	}
+}
+text {
+	object {
+		x=285
+		y=135
+		width=90
+		height=20
+	}
+	"basic attribute" {
+		clr=33
+	}
+	"dynamic attribute" {
+		vis="calc"
+		calc="a"
+		chan="$(P)caputRecorderMacroRecording"
+	}
+	textix="Recording"
 }
 rectangle {
 	object {
@@ -305,22 +322,6 @@ text {
 	}
 	textix="status:"
 }
-polyline {
-	object {
-		x=0
-		y=185
-		width=399
-		height=3
-	}
-	"basic attribute" {
-		clr=54
-		width=3
-	}
-	points {
-		(1,186)
-		(397,186)
-	}
-}
 text {
 	object {
 		x=170
@@ -358,20 +359,6 @@ text {
 		clr=14
 	}
 	textix="Record"
-}
-"choice button" {
-	object {
-		x=170
-		y=240
-		width=90
-		height=20
-	}
-	control {
-		chan="$(P)caputRecorderExecuteMacro"
-		clr=14
-		bclr=51
-	}
-	stacking="column"
 }
 "choice button" {
 	object {
@@ -591,21 +578,6 @@ composite {
 		}
 	}
 }
-"message button" {
-	object {
-		x=345
-		y=240
-		width=50
-		height=20
-	}
-	control {
-		chan="$(P)caputRecorderAbortMacro"
-		clr=30
-		bclr=20
-	}
-	label="Abort"
-	press_msg="1"
-}
 text {
 	object {
 		x=10
@@ -616,46 +588,7 @@ text {
 	"basic attribute" {
 		clr=14
 	}
-	textix="Playback"
-}
-composite {
-	object {
-		x=265
-		y=240
-		width=72
-		height=20
-	}
-	"composite name"=""
-	children {
-		"text entry" {
-			object {
-				x=265
-				y=240
-				width=30
-				height=20
-			}
-			control {
-				chan="$(P)caputRecorderExecuteLoops"
-				clr=14
-				bclr=51
-			}
-			format="string"
-			limits {
-			}
-		}
-		text {
-			object {
-				x=297
-				y=243
-				width=40
-				height=14
-			}
-			"basic attribute" {
-				clr=14
-			}
-			textix="times"
-		}
-	}
+	textix="Select"
 }
 "text update" {
 	object {
@@ -697,5 +630,133 @@ menu {
 		chan="$(P)caputRecorderMacros2"
 		clr=14
 		bclr=51
+	}
+}
+polyline {
+	object {
+		x=0
+		y=185
+		width=399
+		height=3
+	}
+	"basic attribute" {
+		clr=54
+		width=3
+	}
+	points {
+		(1,186)
+		(397,186)
+	}
+}
+text {
+	object {
+		x=10
+		y=335
+		width=380
+		height=20
+	}
+	"basic attribute" {
+		clr=14
+	}
+	textix="Playback"
+}
+polyline {
+	object {
+		x=0
+		y=330
+		width=399
+		height=3
+	}
+	"basic attribute" {
+		clr=54
+		width=3
+	}
+	points {
+		(1,331)
+		(397,331)
+	}
+}
+"choice button" {
+	object {
+		x=170
+		y=360
+		width=90
+		height=20
+	}
+	control {
+		chan="$(P)caputRecorderExecuteMacro"
+		clr=14
+		bclr=51
+	}
+	stacking="column"
+}
+"message button" {
+	object {
+		x=345
+		y=355
+		width=50
+		height=20
+	}
+	control {
+		chan="$(P)caputRecorderAbortMacro"
+		clr=30
+		bclr=20
+	}
+	label="Abort"
+	press_msg="1"
+}
+composite {
+	object {
+		x=265
+		y=360
+		width=72
+		height=20
+	}
+	"composite name"=""
+	children {
+		"text entry" {
+			object {
+				x=265
+				y=360
+				width=30
+				height=20
+			}
+			control {
+				chan="$(P)caputRecorderExecuteLoops"
+				clr=14
+				bclr=51
+			}
+			format="string"
+			limits {
+			}
+		}
+		text {
+			object {
+				x=297
+				y=363
+				width=40
+				height=14
+			}
+			"basic attribute" {
+				clr=14
+			}
+			textix="times"
+		}
+	}
+}
+"text update" {
+	object {
+		x=10
+		y=363
+		width=150
+		height=14
+	}
+	monitor {
+		chan="$(P)caputRecorderMacro"
+		clr=14
+		bclr=1
+	}
+	format="string"
+	limits {
 	}
 }

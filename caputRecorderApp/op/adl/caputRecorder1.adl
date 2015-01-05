@@ -1,14 +1,14 @@
 
 file {
-	name="/home/oxygen/MOONEY/epics/synApps/support/xxx/xxxApp/op/adl/caputRecorder1.adl"
+	name="/home/oxygen/MOONEY/epics/synApps/support/caputRecorder/caputRecorderApp/op/adl/caputRecorder1.adl"
 	version=030107
 }
 display {
 	object {
-		x=631
-		y=129
+		x=77
+		y=559
 		width=400
-		height=351
+		height=400
 	}
 	clr=14
 	bclr=2
@@ -101,14 +101,14 @@ display {
 	}
 	clr=0
 	bclr=17
-	label="-Refresh Menu"
+	label="-Refresh Menus"
 }
 composite {
 	object {
 		x=0
 		y=0
 		width=400
-		height=325
+		height=380
 	}
 	"composite name"=""
 	"composite file"="caputRecorder_bare.adl;P=$(P)"
@@ -116,7 +116,7 @@ composite {
 "related display" {
 	object {
 		x=350
-		y=330
+		y=380
 		width=50
 		height=20
 	}
