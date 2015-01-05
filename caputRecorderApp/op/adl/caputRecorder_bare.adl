@@ -1,6 +1,6 @@
 
 file {
-	name="/home/oxygen4/MOONEY/epics/synAppsSVN/support/caputRecorder/caputRecorderApp/op/adl/caputRecorder_bare.adl"
+	name="/home/oxygen/MOONEY/epics/synApps/support/caputRecorder/caputRecorderApp/op/adl/caputRecorder_bare.adl"
 	version=030107
 }
 display {
@@ -8,7 +8,7 @@ display {
 		x=568
 		y=42
 		width=400
-		height=380
+		height=410
 	}
 	clr=14
 	bclr=2
@@ -374,210 +374,6 @@ text {
 	}
 	stacking="column"
 }
-composite {
-	object {
-		x=10
-		y=265
-		width=370
-		height=35
-	}
-	"composite name"=""
-	children {
-		composite {
-			object {
-				x=10
-				y=265
-				width=70
-				height=35
-			}
-			"composite name"=""
-			children {
-				"text update" {
-					object {
-						x=10
-						y=265
-						width=70
-						height=14
-					}
-					monitor {
-						chan="$(P)caputRecorderArg1Name"
-						clr=14
-						bclr=1
-					}
-					format="string"
-					limits {
-					}
-				}
-				"text entry" {
-					object {
-						x=10
-						y=280
-						width=70
-						height=20
-					}
-					control {
-						chan="$(P)caputRecorderArg1Value"
-						clr=14
-						bclr=51
-					}
-					format="string"
-					limits {
-					}
-				}
-			}
-		}
-		composite {
-			object {
-				x=85
-				y=265
-				width=70
-				height=35
-			}
-			"composite name"=""
-			children {
-				"text update" {
-					object {
-						x=85
-						y=265
-						width=70
-						height=14
-					}
-					monitor {
-						chan="$(P)caputRecorderArg2Name"
-						clr=14
-						bclr=1
-					}
-					format="string"
-					limits {
-					}
-				}
-				"text entry" {
-					object {
-						x=85
-						y=280
-						width=70
-						height=20
-					}
-					control {
-						chan="$(P)caputRecorderArg2Value"
-						clr=14
-						bclr=51
-					}
-					format="string"
-					limits {
-					}
-				}
-			}
-		}
-		composite {
-			object {
-				x=160
-				y=265
-				width=70
-				height=35
-			}
-			"composite name"=""
-			children {
-				"text update" {
-					object {
-						x=160
-						y=265
-						width=70
-						height=14
-					}
-					monitor {
-						chan="$(P)caputRecorderArg3Name"
-						clr=14
-						bclr=1
-					}
-					format="string"
-					limits {
-					}
-				}
-				"text entry" {
-					object {
-						x=160
-						y=280
-						width=70
-						height=20
-					}
-					control {
-						chan="$(P)caputRecorderArg3Value"
-						clr=14
-						bclr=51
-					}
-					format="string"
-					limits {
-					}
-				}
-			}
-		}
-		"text update" {
-			object {
-				x=235
-				y=265
-				width=70
-				height=14
-			}
-			monitor {
-				chan="$(P)caputRecorderArg4Name"
-				clr=14
-				bclr=1
-			}
-			format="string"
-			limits {
-			}
-		}
-		"text entry" {
-			object {
-				x=235
-				y=280
-				width=70
-				height=20
-			}
-			control {
-				chan="$(P)caputRecorderArg4Value"
-				clr=14
-				bclr=51
-			}
-			format="string"
-			limits {
-			}
-		}
-		"text update" {
-			object {
-				x=310
-				y=265
-				width=70
-				height=14
-			}
-			monitor {
-				chan="$(P)caputRecorderArg5Name"
-				clr=14
-				bclr=1
-			}
-			format="string"
-			limits {
-			}
-		}
-		"text entry" {
-			object {
-				x=310
-				y=280
-				width=70
-				height=20
-			}
-			control {
-				chan="$(P)caputRecorderArg5Value"
-				clr=14
-				bclr=51
-			}
-			format="string"
-			limits {
-			}
-		}
-	}
-}
 text {
 	object {
 		x=10
@@ -592,7 +388,7 @@ text {
 }
 "text update" {
 	object {
-		x=10
+		x=140
 		y=243
 		width=150
 		height=14
@@ -604,32 +400,6 @@ text {
 	}
 	format="string"
 	limits {
-	}
-}
-menu {
-	object {
-		x=10
-		y=304
-		width=150
-		height=20
-	}
-	control {
-		chan="$(P)caputRecorderMacros1"
-		clr=14
-		bclr=51
-	}
-}
-menu {
-	object {
-		x=165
-		y=304
-		width=150
-		height=20
-	}
-	control {
-		chan="$(P)caputRecorderMacros2"
-		clr=14
-		bclr=51
 	}
 }
 polyline {
@@ -651,7 +421,261 @@ polyline {
 text {
 	object {
 		x=10
+		y=243
+		width=130
+		height=14
+	}
+	"basic attribute" {
+		clr=14
+	}
+	textix="selected function:"
+}
+composite {
+	object {
+		x=10
+		y=280
+		width=370
+		height=35
+	}
+	"composite name"=""
+	children {
+		composite {
+			object {
+				x=10
+				y=280
+				width=70
+				height=35
+			}
+			"composite name"=""
+			children {
+				"text update" {
+					object {
+						x=10
+						y=280
+						width=70
+						height=14
+					}
+					monitor {
+						chan="$(P)caputRecorderArg1Name"
+						clr=14
+						bclr=1
+					}
+					format="string"
+					limits {
+					}
+				}
+				"text entry" {
+					object {
+						x=10
+						y=295
+						width=70
+						height=20
+					}
+					control {
+						chan="$(P)caputRecorderArg1Value"
+						clr=14
+						bclr=51
+					}
+					format="string"
+					limits {
+					}
+				}
+			}
+		}
+		composite {
+			object {
+				x=85
+				y=280
+				width=70
+				height=35
+			}
+			"composite name"=""
+			children {
+				"text update" {
+					object {
+						x=85
+						y=280
+						width=70
+						height=14
+					}
+					monitor {
+						chan="$(P)caputRecorderArg2Name"
+						clr=14
+						bclr=1
+					}
+					format="string"
+					limits {
+					}
+				}
+				"text entry" {
+					object {
+						x=85
+						y=295
+						width=70
+						height=20
+					}
+					control {
+						chan="$(P)caputRecorderArg2Value"
+						clr=14
+						bclr=51
+					}
+					format="string"
+					limits {
+					}
+				}
+			}
+		}
+		composite {
+			object {
+				x=160
+				y=280
+				width=70
+				height=35
+			}
+			"composite name"=""
+			children {
+				"text update" {
+					object {
+						x=160
+						y=280
+						width=70
+						height=14
+					}
+					monitor {
+						chan="$(P)caputRecorderArg3Name"
+						clr=14
+						bclr=1
+					}
+					format="string"
+					limits {
+					}
+				}
+				"text entry" {
+					object {
+						x=160
+						y=295
+						width=70
+						height=20
+					}
+					control {
+						chan="$(P)caputRecorderArg3Value"
+						clr=14
+						bclr=51
+					}
+					format="string"
+					limits {
+					}
+				}
+			}
+		}
+		"text update" {
+			object {
+				x=235
+				y=280
+				width=70
+				height=14
+			}
+			monitor {
+				chan="$(P)caputRecorderArg4Name"
+				clr=14
+				bclr=1
+			}
+			format="string"
+			limits {
+			}
+		}
+		"text entry" {
+			object {
+				x=235
+				y=295
+				width=70
+				height=20
+			}
+			control {
+				chan="$(P)caputRecorderArg4Value"
+				clr=14
+				bclr=51
+			}
+			format="string"
+			limits {
+			}
+		}
+		"text update" {
+			object {
+				x=310
+				y=280
+				width=70
+				height=14
+			}
+			monitor {
+				chan="$(P)caputRecorderArg5Name"
+				clr=14
+				bclr=1
+			}
+			format="string"
+			limits {
+			}
+		}
+		"text entry" {
+			object {
+				x=310
+				y=295
+				width=70
+				height=20
+			}
+			control {
+				chan="$(P)caputRecorderArg5Value"
+				clr=14
+				bclr=51
+			}
+			format="string"
+			limits {
+			}
+		}
+	}
+}
+text {
+	object {
+		x=10
+		y=265
+		width=230
+		height=14
+	}
+	"basic attribute" {
+		clr=14
+	}
+	textix="arguments for selected function:"
+}
+menu {
+	object {
+		x=10
 		y=335
+		width=150
+		height=20
+	}
+	control {
+		chan="$(P)caputRecorderMacros1"
+		clr=14
+		bclr=51
+	}
+}
+menu {
+	object {
+		x=165
+		y=335
+		width=150
+		height=20
+	}
+	control {
+		chan="$(P)caputRecorderMacros2"
+		clr=14
+		bclr=51
+	}
+}
+text {
+	object {
+		x=10
+		y=366
 		width=380
 		height=20
 	}
@@ -660,26 +684,10 @@ text {
 	}
 	textix="Playback"
 }
-polyline {
-	object {
-		x=0
-		y=330
-		width=399
-		height=3
-	}
-	"basic attribute" {
-		clr=54
-		width=3
-	}
-	points {
-		(1,331)
-		(397,331)
-	}
-}
 "choice button" {
 	object {
 		x=170
-		y=360
+		y=391
 		width=90
 		height=20
 	}
@@ -693,7 +701,7 @@ polyline {
 "message button" {
 	object {
 		x=345
-		y=355
+		y=386
 		width=50
 		height=20
 	}
@@ -708,7 +716,7 @@ polyline {
 composite {
 	object {
 		x=265
-		y=360
+		y=391
 		width=72
 		height=20
 	}
@@ -717,7 +725,7 @@ composite {
 		"text entry" {
 			object {
 				x=265
-				y=360
+				y=391
 				width=30
 				height=20
 			}
@@ -733,7 +741,7 @@ composite {
 		text {
 			object {
 				x=297
-				y=363
+				y=394
 				width=40
 				height=14
 			}
@@ -747,7 +755,7 @@ composite {
 "text update" {
 	object {
 		x=10
-		y=363
+		y=394
 		width=150
 		height=14
 	}
@@ -759,4 +767,32 @@ composite {
 	format="string"
 	limits {
 	}
+}
+polyline {
+	object {
+		x=0
+		y=361
+		width=399
+		height=3
+	}
+	"basic attribute" {
+		clr=54
+		width=3
+	}
+	points {
+		(1,362)
+		(397,362)
+	}
+}
+text {
+	object {
+		x=10
+		y=320
+		width=200
+		height=14
+	}
+	"basic attribute" {
+		clr=14
+	}
+	textix="menus of function names:"
 }
