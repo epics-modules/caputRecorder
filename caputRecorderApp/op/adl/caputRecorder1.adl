@@ -8,7 +8,7 @@ display {
 		x=77
 		y=559
 		width=400
-		height=400
+		height=430
 	}
 	clr=14
 	bclr=2
@@ -108,7 +108,7 @@ composite {
 		x=0
 		y=0
 		width=400
-		height=380
+		height=412
 	}
 	"composite name"=""
 	"composite file"="caputRecorder_bare.adl;P=$(P)"
@@ -116,7 +116,7 @@ composite {
 "related display" {
 	object {
 		x=350
-		y=380
+		y=410
 		width=50
 		height=20
 	}

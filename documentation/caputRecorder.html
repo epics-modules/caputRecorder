@@ -5,8 +5,235 @@
 
 <H1> caputRecorder </h1>
 
-caputRecorder supports recording a series of caputs (e.g., mouse clicks and
-typing) into an MEDM window as a python function, and later replaying that
-series with a single caput.
+caputRecorder supports the recording and playback of a series of caputs (e.g.,
+mouse clicks and typing into an MEDM window).  It records each caput as a python
+command, and a series of caputs as a python function - also called here a
+<b><i>macro</i></b>.  caputRecorder can also serve as a simple user interface
+for delivering canned python functions to end users.
 
-</BODY>
+<H2> Requirements, configuration </h2>
+
+<p>The synApps xxx module, release R5-8, is configured to use caputRecorder.
+The steps and details of this configuration are as follows:
+
+<ol>
+<li>The workstation on which <i>caputRecorder.py</i> runs must have python with
+the <a href="http://cars.uchicago.edu/software/python/pyepics3">PyEpics</a>
+module installed.
+
+<li>Each ioc from which caputs are to be recorded must load the database
+<code>caputRecorder.db</code>, for example with this excerpt from st.cmd:
+
+<blockquote>
+<pre>
+dbLoadRecords("$(CAPUTRECORDER)/caputRecorderApp/Db/caputRecorder.db","P=xxx:,N=300")
+</pre>
+</blockquote>
+
+<blockquote>
+where <code>N</code> is the length of the longest caput command
+("pvname,value") that will be recorded.
+</blockquote>
+
+<li>Each ioc from which caputs are to be recorded must register caputRecorder's
+access-security trap listener, for example with the following excerpt from
+st.cmd.  (Note that this command must be executed after iocInit.)
+
+<blockquote>
+<pre>
+registerCaputRecorderTrapListener('xxx:caputRecorderCommand')
+</pre>
+</blockquote>
+
+<blockquote>
+
+where <code>xxx:caputRecorderCommand</code> is the name of the PV to which
+trapped caput commands will be written.
+
+</blockquote>
+
+<li>Each ioc from which caputs are to be recorded must run EPICS access security
+with an access-security file that specifies <code>TRAPWRITE</code> for the
+desired users and hosts.  Here is a sample excerpt from st.cmd:
+
+<blockquote>
+<pre>
+asSetFilename("$(TOP)/iocBoot/accessSecurity.acf")
+</pre>
+</blockquote>
+
+where the file <code>accessSecurity.acf</code> might have the following content:
+
+<blockquote>
+<pre>
+HAG(workstation) {mooneylinux.aps.anl.gov}
+UAG(user) {mooney}
+ASG(DEFAULT) {
+	RULE(1,READ)
+	RULE(1,WRITE,TRAPWRITE) {
+		HAG(workstation)
+		UAG(user)
+	}
+}
+</pre>
+</blockquote>
+
+<li>One ioc from which caputs are to be recorded will have its
+<code>caputRecorder.db</code> database displayed to the user via MEDM.  The
+Python program <i>caputRecorder.py</i> will also monitor and write to this
+database.
+
+<P><center><IMG SRC="caputRecorder.adl.jpg"><br>caputRecorder.adl</IMG></center>
+
+<li>The workstation on which this display is running must have the file
+<code>start_putrecorder</code> in its top-level directory (which I'll call
+<code>xxx</code>), and the file <i>macros.py</i> in
+<code>xxx/xxxApp/op/python</code>.  An example copy of
+<code>start_putrecorder</code> (from the synApps xxx module) is available as
+<code>caputRecorder/start_putrecorder</code>.
+
+An example copy of <i>macros.py</i> is
+available as <code>caputRecorder/caputRecorderApp/op/python/example_macros.py</code>.
+
+</ol>
+
+<h2>How to use</h2>
+
+Referring to the caputRecorder.adl display above, from top to bottom:
+
+<ul>
+
+<li><P>The button labelled "(re)start recorder" starts or restarts the python
+program <i>caputRecorder.py</i>
+
+<blockquote>
+As implemented, the MEDM display presumes that the
+current working directory of the process running MEDM is
+<code>xxx/xxxApp/op/adl</code>, and it invokes the shell script
+<code>../../../start_putrecorder</code> to run the python program
+<code>caputRecorder/caputRecorderApp/op/python/caputRecorder.py</code> The
+example version of <i>start_putrecorder</i> tries to ensure that only one copy of
+<i>caputRecorder.py</i> is running.
+</blockquote>
+
+<li><P><b>Inputs</b>
+
+<ul>
+
+
+<li><P>The text-monitor field labelled "caput:" displays the PV name and value
+most recently written to the ioc.  This field is written to by the
+access-security trap listener, and is updated whether or not a python
+function is being recorded.
+
+<li><P>The text-entry field labelled "comment:" allows you to add comments to
+the python function being recorded.  This field is monitored only while a python
+function is being recorded.
+
+</ul>
+
+<li><P><b>Record</b>
+<ul>
+<li><P>The text-entry field labelled "function name" should contain the
+name of the python function you want to record.  Note that you aren't permitted
+to use a function name that already exists in the <i>macros.py</i> file.
+
+<li><P>The choice button labelled "record puts" is used to start and stop
+recording.
+
+</ul>
+
+<li><P><b>Select</b>
+
+<ul>
+
+<li><P>Normally, you should not have to press the "Reload Macros" button,
+because <i>caputRecorder.py</i> reloads automatically after a new function has
+been recorded. However, you are allowed to edit the <i>macros.py</i> file manually.  If
+you do so, you must press "Reload Macros" to tell <i>caputRecorder.py</i> to reread the
+file. (If you deleted a function from <i>macros.py</i>, reloading isn't sufficient; you
+must restart <i>caputRecorder.py</i>, using the "(re)start recorder" button.)
+
+<li><P>The "Refresh Menus" button is needed whenever <i>macros.py</i> has changed, whether
+by recording a function, or by manually editing the file.
+
+<li><P>The text-monitor and text entry fields under the "arguments for selected
+function" label are the names and default values of the arguments, if any, of
+the selected function.  As recorded, functions have no arguments, but you can
+edit the python code.  If you do, you should use the "name=value" syntax for
+defining function arguments; otherwise your run-time user will not know which
+argument is which.
+
+<li><P>The menu fields labelled "menus of function names:" are the means by which a
+function is selected for playback.  Currently the caputRecorder.db database
+supports only two menu fields, each of which can hold 16 function names, but
+there could be many more.
+
+</ul>
+
+<li><P><b>Playback</b>
+
+<ul>
+
+<li><P>The text-monitor field contains the name of the selected function.  To play
+it back (to cause python to execute it) press the "Do" button.  When the
+function has finished, the "Do" button will return to the "Done" state.  If you
+want to execute the function repeatedly, enter the number of times in the field
+labelled "times"
+
+<li><P>The "Abort" button is intended to stop an executing function, and also to do
+any other abort-related work specified in the function named "_abort" in
+<i>macros.py</i>.  The supplied <i>example_macros.py</i> defines an abort function that aborts
+scans, halts motors, and stop the scaler named "scaler1".
+
+</ul>
+
+</ul>
+
+<H2> Discussion </h2>
+
+<ul>
+
+<li><P>
+
+<P>caputRecorder "reads" the <i>macros.py</i> file by importing it:
+
+<pre>
+import macros.py
+</pre>
+
+After <i>macros.py</i> has been changed, caputRecorder "rereads" it by
+reloading :
+
+<pre>
+reload(macros)
+</pre>
+
+Reload will overwrite objects in the live <i>macros</i> module with  values from
+the <i>macros.py</i> file, but it will not delete any objects.  If you delete a
+function or global variable from <i>macros.py</i>, reloading won't get rid of
+it; you have to restart python, which you can do by pressing the "(re)start
+recorder" button.
+
+<li><P>
+caputRecorder records a caput with the following python code:
+
+<pre>
+epics.caput("xxx:scan1.P1PV","xxx:m2.VAL", wait=True, timeout=300)
+</pre>
+
+This code will request a completion callback from EPICS, and will wait as long
+as 300 seconds for the callback to arrive.  This is probably much longer than
+most operations will take to complete, but five minutes is not long
+enough for many scans.  If you use caputRecorder to execute scans, plan to edit
+the macros.py file to increase the timeout for writes to xxx:scan1.EXSC.
+
+<P>Currently, it is not an error for a macro to timeout while waiting for a
+callback.  Python will simply move on to the next command and execute it.
+Currently, caputRecorder does not take advantage of PyEpics' ability to execute
+several commands and then wait for all to complete (that is, the "use_complete"
+option of the PV class's put() method).
+
+<li><P>
+
+ </BODY>
