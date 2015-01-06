@@ -1,0 +1,73 @@
+Here's an example of how to add caputRecorder to an existing application
+
+setenv TOP /net/s100dserv/xorApps/epics/synApps_5_7/ioc/mlab
+setenv CAPUTRECORDER /APSshare/epics/synApps_5_7/support/caputRecorder-1-0
+
+cd $TOP
+ed configure/RELEASE
+	add CAPUTRECORDER=$(SUPPORT)/caputRecorder-1-0
+
+cd mlabApp/src
+ed Makefile
+	add something analogous to this:
+	ifdef CAPUTRECORDER
+		mlab_Common_DBD += caputRecorder.dbd
+		mlab_Common_LIBS += caputRecorder
+	endif
+
+cd $TOP
+make rebuild
+
+cd $TOP
+cp $CAPUTRECORDER/example_start_putrecorder start_putrecorder
+ed start_putrecorder, fixing the following lines:
+	EPICS_APP=/net/s100dserv/xorApps/epics/synApps_5_7/ioc/mlab
+	EPICS_APP_PYTHON_DIR=${EPICS_APP}/mlabApp/op/python
+	PREFIX="mlab:"
+
+cd $TOP
+mkdir mlabApp/op/python
+cd $TOP/mlabApp/op/python
+cp $CAPUTRECORDER/caputRecorderApp/op/python/example_macros.py macros.py
+ed macros.py
+	delete everything but the _abort function, and blank line after it
+
+cd $TOP/iocBoot
+ed accessSecurity.acf &
+	make it look like this:
+	HAG(workstation) {<name of workstation>}
+	UAG(user) {<users>}
+	ASG(DEFAULT) {
+		RULE(1,READ)
+		RULE(1,WRITE,TRAPWRITE) {
+			HAG(workstation)
+			UAG(user)
+		}
+		RULE(1,WRITE)
+	}
+
+	or, simply this:
+	ASG(DEFAULT) {
+		RULE(1,READ)
+		RULE(1,WRITE,TRAPWRITE)
+	}
+
+cd $TOP/iocBoot/iocmlab
+ed st.cmd&
+	add this:
+	# Access Security
+	asSetFilename("$(TOP)/iocBoot/accessSecurity.acf")
+
+	# caputRecorder
+	dbLoadRecords("$(CAPUTRECORDER)/caputRecorderApp/Db/caputRecorder.db","P=mlab:,N=300")
+	#doAfterIocInit("registerCaputRecorderTrapListener('mlab:caputRecorderCommand')")
+	...
+	iocInit
+	...
+	registerCaputRecorderTrapListener('mlab:caputRecorderCommand')
+
+cd $TOP/mlabApp/op/adl
+medm mlab.adl
+	add button labelled "-caputRec", with the following entry:
+		label="caputRecorder", name="caputRecorder.adl", args="p=mlab:"
+
