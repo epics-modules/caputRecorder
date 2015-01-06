@@ -84,6 +84,11 @@ TRAPWRITE is in effect only for user <i>mooney</i> on workstation
 an ioc, but do want them for caputs from MEDM and channel-access clients that
 aren't in an ioc.
 
+<P>Note that the order in which rules occur in the file matters for TRAPWRITE. 
+If <code>RULE(1,WRITE)</code> were encountered before
+<code>RULE(1,WRITE,TRAPWRITE)</code>, TRAPWRITE would not be in effect for
+anybody, because everybody is covered by <code>RULE(1,WRITE)</code>.
+
 
 </blockquote>
 
@@ -99,7 +104,7 @@ database.
 <code>xxx</code>), and the file <i>macros.py</i> in
 <code>xxx/xxxApp/op/python</code>.  An example copy of
 <code>start_putrecorder</code> (from the synApps xxx module) is available as
-<code>caputRecorder/start_putrecorder</code>.
+<code>caputRecorder/example_start_putrecorder</code>.
 
 An example copy of <i>macros.py</i> is
 available as <code>caputRecorder/caputRecorderApp/op/python/example_macros.py</code>.
@@ -120,7 +125,7 @@ As implemented, the MEDM display presumes that the
 current working directory of the process running MEDM is
 <code>xxx/xxxApp/op/adl</code>, and it invokes the shell script
 <code>../../../start_putrecorder</code> to run the python program
-<code>caputRecorder/caputRecorderApp/op/python/caputRecorder.py</code> The
+<code>caputRecorder/caputRecorderApp/op/python/caputRecorder.py</code>. The
 example version of <i>start_putrecorder</i> tries to ensure that only one copy of
 <i>caputRecorder.py</i> is running.
 </blockquote>
@@ -156,12 +161,15 @@ recording.
 
 <ul>
 
+<li><P>The button labelled "edit macros.py" invokes the command named by
+the environment variable EDITOR on the file <i>macros.py</i>.
+
 <li><P>Normally, you should not have to press the "Reload Macros" button,
 because <i>caputRecorder.py</i> reloads automatically after a new function has
-been recorded. However, you are allowed to edit the <i>macros.py</i> file manually.  If
-you do so, you must press "Reload Macros" to tell <i>caputRecorder.py</i> to reread the
-file. (If you deleted a function from <i>macros.py</i>, reloading isn't sufficient; you
-must restart <i>caputRecorder.py</i>, using the "(re)start recorder" button.)
+been recorded. However, if you edit <i>macros.py</i> manually, you must press
+"Reload Macros" to tell <i>caputRecorder.py</i> to reread the file. (If you
+deleted a function from <i>macros.py</i>, reloading isn't sufficient; you must
+restart <i>caputRecorder.py</i>, using the "(re)start recorder" button.)
 
 <li><P>The "Refresh Menus" button is needed whenever <i>macros.py</i> has changed, whether
 by recording a function, or by manually editing the file.
