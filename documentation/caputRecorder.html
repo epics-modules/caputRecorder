@@ -74,8 +74,17 @@ ASG(DEFAULT) {
 		HAG(workstation)
 		UAG(user)
 	}
+	RULE(1,WRITE)
 }
 </pre>
+
+<P>This file grants write permission to anybody on any host, and specifies that
+TRAPWRITE is in effect only for user <i>mooney</i> on workstation
+<i>mooneylinux</i>.  You probably don't want TRAPWRITE in effect for caputs from
+an ioc, but do want them for caputs from MEDM and channel-access clients that
+aren't in an ioc.
+
+
 </blockquote>
 
 <li>One ioc from which caputs are to be recorded will have its
