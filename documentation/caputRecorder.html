@@ -21,7 +21,7 @@ The steps and details of this configuration are as follows:
 the <a href="http://cars.uchicago.edu/software/python/pyepics3">PyEpics</a>
 module installed.
 
-<li>Each ioc from which caputs are to be recorded must load the database
+<li><P>Each ioc from which caputs are to be recorded must load the database
 <code>caputRecorder.db</code>, for example with this excerpt from st.cmd:
 
 <blockquote>
@@ -85,7 +85,7 @@ database.
 
 <P><center><IMG SRC="caputRecorder.adl.jpg"><br>caputRecorder.adl</IMG></center>
 
-<li>The workstation on which this display is running must have the file
+<P><li>The workstation on which this display is running must have the file
 <code>start_putrecorder</code> in its top-level directory (which I'll call
 <code>xxx</code>), and the file <i>macros.py</i> in
 <code>xxx/xxxApp/op/python</code>.  An example copy of
@@ -234,6 +234,9 @@ Currently, caputRecorder does not take advantage of PyEpics' ability to execute
 several commands and then wait for all to complete (that is, the "use_complete"
 option of the PV class's put() method).
 
-<li><P>
+<li><P><a href="http://www-csr.bessy.de/control/SoftDist/caPutLog">caPutLog</a>
+can also trap caputs and write them to a PV.  A proof-of-principle
+implementation of caputRecorder used caPutLog 3.4 to do this, but it didn't
+handle long strings.
 
  </BODY>
