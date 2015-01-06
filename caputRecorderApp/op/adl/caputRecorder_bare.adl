@@ -1,6 +1,6 @@
 
 file {
-	name="/home/oxygen/MOONEY/epics/synApps/support/caputRecorder/caputRecorderApp/op/adl/caputRecorder_bare.adl"
+	name="/home/oxygen4/MOONEY/epics/synAppsSVN/support/caputRecorder/caputRecorderApp/op/adl/caputRecorder_bare.adl"
 	version=030107
 }
 display {
@@ -795,4 +795,19 @@ text {
 		clr=14
 	}
 	textix="menus of function names:"
+}
+"shell command" {
+	object {
+		x=240
+		y=190
+		width=150
+		height=20
+	}
+	command[0] {
+		label="edit macros.py"
+		name="${EDITOR} ../python/macros.py&"
+	}
+	clr=14
+	bclr=32
+	label="edit macros.py"
 }
