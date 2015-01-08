@@ -18,20 +18,6 @@ ed Makefile
 cd $TOP
 make rebuild
 
-cd $TOP
-cp $CAPUTRECORDER/example_start_putrecorder start_putrecorder
-ed start_putrecorder, fixing the following lines:
-	EPICS_APP=/net/s100dserv/xorApps/epics/synApps_5_7/ioc/mlab
-	EPICS_APP_PYTHON_DIR=${EPICS_APP}/mlabApp/op/python
-	PREFIX="mlab:"
-
-cd $TOP
-mkdir mlabApp/op/python
-cd $TOP/mlabApp/op/python
-cp $CAPUTRECORDER/caputRecorderApp/op/python/example_macros.py macros.py
-ed macros.py
-	delete everything but the _abort function, and the blank line after it
-
 cd $TOP/iocBoot
 ed accessSecurity.acf &
 	make it look like this:
@@ -64,6 +50,35 @@ ed st.cmd&
 	iocInit
 	...
 	registerCaputRecorderTrapListener('mlab:caputRecorderCommand')
+
+##############################################
+# if the application will run caputRecorder.py
+##############################################
+
+If deploying for an ioc using synApps earlier than 5.8, copy the 5.8 version
+of release.pl to $TOP
+
+Make sure the environment variable EDITOR contains the name of a text editor.
+MEDM must have this environment variable, so it could go in start_epics_xxx.
+
+cd $TOP
+cp $CAPUTRECORDER/example_start_putrecorder start_putrecorder
+ed start_putrecorder, fixing the following lines:
+	EPICS_APP=/net/s100dserv/xorApps/epics/synApps_5_7/ioc/mlab
+	EPICS_APP_PYTHON_DIR=${EPICS_APP}/mlabApp/op/python
+	PREFIX="mlab:"
+
+edit start_epics, or setup_epics_common, to modify the EPICS_DISPLAY_PATH
+	setenv myEPICS_DISPLAY_PATH $myEPICS_DISPLAY_PATH':'$CAPUTRECORDER/caputRecorderApp/op/adl
+
+cd $TOP
+mkdir mlabApp/op/python
+cd $TOP/mlabApp/op/python
+cp $CAPUTRECORDER/caputRecorderApp/op/python/example_macros.py macros.py
+chmod a+w macros.py
+ed macros.py
+	delete everything but the _abort function, and the blank line after it
+
 
 cd $TOP/mlabApp/op/adl
 medm mlab.adl
