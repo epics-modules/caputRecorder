@@ -39,7 +39,7 @@ static int valid_command_buffer=0;
 static epicsThreadId threadId=0;
 #define BUFFER_SIZE 100
 #define COMMAND_SIZE 300
-#define MAX_MESSAGES 20
+#define MAX_MESSAGES 200
 typedef struct {
 	int nchar;
 	char command[COMMAND_SIZE];
