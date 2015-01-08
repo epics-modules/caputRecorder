@@ -1970,6 +1970,42 @@ QWidget#centralWidget {background: rgba(218, 218, 218, 255);}
                 <set>Qt::AlignAbsolute|Qt::AlignLeft|Qt::AlignVCenter</set>
             </property>
         </widget>
+        <widget class="caShellCommand" name="caShellCommand_1">
+            <property name="geometry">
+                <rect>
+                    <x>240</x>
+                    <y>190</y>
+                    <width>150</width>
+                    <height>20</height>
+                </rect>
+            </property>
+            <property name="foreground">
+                <color alpha="255">
+                    <red>0</red>
+                    <green>0</green>
+                    <blue>0</blue>
+                </color>
+            </property>
+            <property name="background">
+                <color alpha="255">
+                    <red>238</red>
+                    <green>182</green>
+                    <blue>43</blue>
+                </color>
+            </property>
+            <property name="label">
+                <string>edit macros.py</string>
+            </property>
+            <property name="labels">
+                <string>edit macros.py</string>
+            </property>
+            <property name="files">
+                <string>${EDITOR} ../python/macros.py&amp;</string>
+            </property>
+            <property name="args">
+                <string></string>
+            </property>
+        </widget>
         <zorder>caLabel_0</zorder>
         <zorder>caRectangle_0</zorder>
         <zorder>caLabel_1</zorder>
@@ -2020,6 +2056,7 @@ QWidget#centralWidget {background: rgba(218, 218, 218, 255);}
         <zorder>caMessageButton_0</zorder>
         <zorder>caTextEntry_7</zorder>
         <zorder>caLineEdit_8</zorder>
+        <zorder>caShellCommand_1</zorder>
     </widget>
 </widget>
 </ui>
