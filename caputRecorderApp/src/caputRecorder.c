@@ -74,9 +74,11 @@ void myAsListener(asTrapWriteMessage *pmessage, int after) {
 	addr = pchannel->addr;
 	paddr = &addr;
 	n = pchannel->final_no_elements;
-	/* field_type = pchannel->final_type; */
-	field_type = pchannel->final_dbr_type;
+	field_type = pchannel->final_type;
+	/* field_type = pchannel->final_dbr_type; */
 	field_size = pchannel->final_field_size;
+	if (caputRecorderDebug) errlogPrintf("myListener:final_type=%d, final_dbr_type=%d\n", pchannel->final_type, pchannel->final_dbr_type);
+	if (caputRecorderDebug) errlogPrintf("myListener:n=%d, field_size=%d\n", n, field_size);
 	strncpy(pvname, dbChannelName(pchannel), BUFFER_SIZE-1);
 	numChar = strlen(pvname);
 #else
@@ -105,12 +107,12 @@ void myAsListener(asTrapWriteMessage *pmessage, int after) {
 		if (caputRecorderDebug) errlogPrintf("myListener: n<=1\n");
 		dbGetField(paddr, DBF_STRING, value, &options, &n, NULL);
 	}
-	value[BUFFER_SIZE-1] = '\0';
+	value[COMMAND_SIZE-1] = '\0';
 	if (caputRecorderDebug) errlogPrintf("myListener: pvname='%s' => '%s'\n", pvname, value);
 	
 	/* if " in value, replace with \" */
 	strcpy(save, value);
-	for (i=0, j=0; i<BUFFER_SIZE; ) {
+	for (i=0, j=0; i<COMMAND_SIZE; ) {
 		if (save[j] == '"') value[i++] = '\\';
 		value[i++] = save[j++];
 	}
