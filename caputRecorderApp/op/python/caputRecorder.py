@@ -8,6 +8,7 @@ import epics
 import time
 import copy
 import Queue
+
 import macros
 
 wake = threading.Event()
@@ -40,6 +41,10 @@ macroFunctions = []
 MSG_COMMAND = 0
 MSG_COMMENT = 1
 
+########################################################################
+## Respond to monitors from command and comment PVs
+## All we're going to do is send (pvname,value) information to the message queue
+
 def commandMonFunc(pvname, value, char_value, **kwd):
 	global debug, macroFile, prefix, msgQueue
 	if debug: print "commandMonFunc: char_value='%s'" % char_value
@@ -48,6 +53,40 @@ def commandMonFunc(pvname, value, char_value, **kwd):
 def commentMonFunc(pvname, value, char_value, **kwd):
 	global debug, macroFile, msgQueue
 	msgQueue.put((MSG_COMMENT, char_value))
+
+############################################################################
+## writer thread
+# read from the message queue, and write to the macros.py file, which startMacro()
+# opened for us as the file handle "MacroFile"
+
+def writer():
+	global debug, macroFile, prefix, msgQueue
+
+	while(1):
+		(msg, char_value) = msgQueue.get()
+		if debug: print "writer: type=%d, char_value='%s'" % (msg, char_value)
+		if msg == MSG_COMMAND:
+			if char_value.find(prefix+"caputRecorder") == -1:
+				(pvname,value) = char_value.split(',')
+				macroFile.write("\tepics.caput(\"%s\",\"%s\", wait=True, timeout=300)\n" % (pvname,value))
+				macroFile.flush()
+			msgQueue.task_done()
+		elif msg == MSG_COMMENT:
+			macroFile.write("\t# %s\n" % char_value)
+			macroFile.flush()
+
+########################################################################
+## Respond to monitors from StopStart PV
+
+def stopStartMonFunc(pvname, value, char_value, **kwd):
+	global debug, doStartMacro, doStopMacro
+
+	#print("stopStartMonFunc: value = ", value, "char_value = ", char_value)
+	if value:
+		doStartMacro = 1
+	else:
+		doStopMacro = 1
+	wake.set()
 
 def startMacro():
 	global debug, macroFile, prefix, macroFunctionNames
@@ -69,6 +108,9 @@ def startMacro():
 	epics.caput(prefix+"caputRecorderUserMessage", "Recording")
 	macroFile = open("macros.py","a")
 	macroFile.write("def %s():\n" % macroName)
+	# It's not legal to have a python function with no commands in it.
+	# Defend against user stopping recording without doing any caputs
+	# by writing dummy command to set the record date.
 	now = time.strftime("%c")
 	macroFile.write("\trecordDate = \"%s\"\n" % now)
 	macroFile.flush()
@@ -100,20 +142,11 @@ def endMacro():
 	doReloadMacros = 1
 	wake.set()
 
-def stopStartMonFunc(pvname, value, char_value, **kwd):
-	global debug, doStartMacro, doStopMacro
-
-	#print("stopStartMonFunc: value = ", value, "char_value = ", char_value)
-	if value:
-		doStartMacro = 1
-	else:
-		doStopMacro = 1
-	wake.set()
 
 ########################################################################
-
-
+## Respond to monitors from ReloadMacros PV
 ## read macros from file, and write names to EPICS PVs
+
 def reloadMacrosMonFunc(pvname, value, char_value, **kwd):
 	global debug, doReloadMacros
 	if value:
@@ -167,7 +200,11 @@ def reloadMacros():
 	selectMacro()
 	epics.caput(prefix+"caputRecorderReloadMacros", 0)
 
+
+########################################################################
+## Respond to monitors from Macros<n> PVs
 ## write args for selected macro to EPICS PVs
+
 def selectMacroMonFunc(pvname, value, char_value, **kwd):
 	global debug, doSelectMacro
 	doSelectMacro = 1
@@ -207,7 +244,18 @@ def selectMacro():
 	# clear the busy record that was set to begin this operation
 	epics.caput(prefix+"caputRecorderMacrosBusy", 0)
 
+########################################################################
+## Respond to monitors from ExecuteMacro, and AbortMacro PVs
+
 ## execute selected macro
+def executeMacroMonFunc(pvname, value, char_value, **kwd):
+	global debug, doexecuteMacro
+	if debug: print "executeMacroMonFunc: value=%d" % value
+	if value:
+		doexecuteMacro = 1
+	wake.set()
+
+## abort executing macro
 def abortMacroMonFunc(pvname, value, char_value, **kwd):
 	global debug, doAbortMacro, executingMacro
 	if debug: print "abortMacroMonFunc: value=%d" % value
@@ -216,16 +264,6 @@ def abortMacroMonFunc(pvname, value, char_value, **kwd):
 		if executingMacro:
 			thread.interrupt_main()
 	wake.set()
-
-def executeMacroMonFunc(pvname, value, char_value, **kwd):
-	global debug, doexecuteMacro
-	if debug: print "executeMacroMonFunc: value=%d" % value
-	if value:
-		doexecuteMacro = 1
-	wake.set()
-
-def loop(function, n):
-	function
 
 def executeMacro():
 	global debug, prefix, macroFunctionNames, macroFunctions, maxArgs, executingMacro
@@ -273,21 +311,6 @@ def executeMacro():
 		print "error executing '%s'\n" % commandString
 	executingMacro = 0
 
-def writer():
-	global debug, macroFile, prefix, msgQueue
-
-	while(1):
-		(msg, char_value) = msgQueue.get()
-		if debug: print "writer: type=%d, char_value='%s'" % (msg, char_value)
-		if msg == MSG_COMMAND:
-			if char_value.find(prefix+"caputRecorder") == -1:
-				(pvname,value) = char_value.split(',')
-				macroFile.write("\tepics.caput(\"%s\",\"%s\", wait=True, timeout=300)\n" % (pvname,value))
-				macroFile.flush()
-			msgQueue.task_done()
-		elif msg == MSG_COMMENT:
-			macroFile.write("\t# %s\n" % char_value)
-			macroFile.flush()
 
 ############################################################################
 def start():
@@ -367,12 +390,6 @@ def go(argv=["xxx:"]):
 	start()
 	stop()
 
-#	try:
-#		stop()
-#		start()
-#	except e:
-#		print "exception"
-#		stop()
 
 if __name__ == "__main__":
 
