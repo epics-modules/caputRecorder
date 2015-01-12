@@ -52,10 +52,10 @@ epicsExportAddress(int,caputRecorderDebug);
 void myAsListener(asTrapWriteMessage *pmessage, int after) {
 #if GE_EPICSBASE(3,15,0)
 	dbChannel *pchannel;
-#endif
 	dbAddr addr;
+#endif
 	DBADDR *paddr;
-	char pvname[BUFFER_SIZE], value[BUFFER_SIZE], save[BUFFER_SIZE];
+	char pvname[BUFFER_SIZE], value[COMMAND_SIZE], save[COMMAND_SIZE];
 	MSG msg;
 	unsigned int numChar;
 	long n=1, one=1, options=0;
