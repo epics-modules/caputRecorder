@@ -41,7 +41,14 @@ cd $TOP/iocBoot/iocmlab
 ed st.cmd&
 	add this:
 	# Access Security
-	asSetFilename("$(TOP)/iocBoot/accessSecurity.acf")
+	# Note: Ideally, you'd like to put the absolute path to the .acf file, but
+	# asSetFilename doesn't expand macros.  A relative path will sometimes work.
+	# Also note: if you screw up this file name, VERY strange things will happen,
+	# accompanied by scary error messages like this:
+	#     A call to 'assert(status == epicsMutexLockOK)'
+	#         by thread xyzzy failed
+	#     Calling epicsThreadSuspendSelf()                                                
+	asSetFilename("../iocBoot/accessSecurity.acf")
 
 	# caputRecorder
 	dbLoadRecords("$(CAPUTRECORDER)/caputRecorderApp/Db/caputRecorder.db","P=mlab:,N=300")
@@ -49,7 +56,7 @@ ed st.cmd&
 	...
 	iocInit
 	...
-	registerCaputRecorderTrapListener('mlab:caputRecorderCommand')
+	registerCaputRecorderTrapListener("mlab:caputRecorderCommand")
 
 ##############################################
 # if the application will run caputRecorder.py
