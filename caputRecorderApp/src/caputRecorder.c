@@ -53,6 +53,7 @@ void myAsListener(asTrapWriteMessage *pmessage, int after) {
 #if GE_EPICSBASE(3,15,0)
 	dbChannel *pchannel;
 #endif
+	dbAddr addr;
 	DBADDR *paddr;
 	char pvname[BUFFER_SIZE], value[BUFFER_SIZE], save[BUFFER_SIZE];
 	MSG msg;
@@ -70,12 +71,13 @@ void myAsListener(asTrapWriteMessage *pmessage, int after) {
 #if GE_EPICSBASE(3,15,0)
 	if (caputRecorderDebug) errlogPrintf("myListener: GE_EPICSBASE(3,15,0)\n");
 	pchannel = pmessage->serverSpecific;
-	paddr = pchannel->addr;
+	addr = pchannel->addr;
+	paddr = &addr;
 	n = pchannel->final_no_elements;
 	/* field_type = pchannel->final_type; */
 	field_type = pchannel->final_dbr_type;
 	field_size = pchannel->final_field_size;
-	pvname = dbChannelName(pchannel)
+	strncpy(pvname, dbChannelName(pchannel), BUFFER_SIZE-1);
 	numChar = strlen(pvname);
 #else
 	if (caputRecorderDebug) errlogPrintf("myListener: LT_EPICSBASE(3,15,0)\n");
