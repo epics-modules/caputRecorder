@@ -116,7 +116,7 @@ void myAsListener(asTrapWriteMessage *pmessage, int after) {
 		if (save[j] == '"') value[i++] = '\\';
 		value[i++] = save[j++];
 	}
-	n = snprintf(msg.command, COMMAND_SIZE-1, "%s,%s", pvname, value);
+	n = snprintf(msg.command, COMMAND_SIZE-1, "%s@%s,%s,%s", pmessage->userid, pmessage->hostid, pvname, value);
 	msg.command[n] = '\0';
 	msg.nchar = n+1;
 	if (caputRecorderDebug) errlogPrintf("myListener: msg.command='%s', msg.nchar=%d\n\n", msg.command, msg.nchar);
