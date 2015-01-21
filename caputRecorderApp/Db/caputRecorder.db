@@ -6,6 +6,16 @@ record(waveform, "$(P)caputRecorderComment") {
     field(FTVL, "CHAR")
     field(NELM, "$(N)")
 }
+
+record(waveform, "$(P)caputRecorderUsers") {
+    field(FTVL, "CHAR")
+    field(NELM, "$(N)")
+}
+record(waveform, "$(P)caputRecorderHosts") {
+    field(FTVL, "CHAR")
+    field(NELM, "$(N)")
+}
+
 record(bo, "$(P)caputRecorderMacroStopStart") {
 	field(ZNAM, "Stop")
 	field(ONAM, "Start")
