@@ -99,10 +99,10 @@ def commentMonFunc(pvname, value, char_value, **kwd):
 # read from the message queue, and write to the macros.py file, which startMacro()
 # opened for us as the file handle "MacroFile"
 
-def allowed(user, host):
+def userHostAllowed(user, host):
 	global allowedHosts, forbiddenHosts, allowedUsers, forbiddenUsers
 
-	if debug: print "allowed: user=%s, host=%s" % (user, host)
+	if debug: print "userHostAllowed: user=%s, host=%s" % (user, host)
 
 	if allowedHosts and host not in allowedHosts:
 		return False
@@ -122,12 +122,15 @@ def writer():
 		if debug: print "writer: type=%d, char_value='%s'" % (msg, char_value)
 		if msg == MSG_COMMAND:
 			if char_value.find(prefix+"caputRecorder") == -1:
-				(user_host,pvname,value) = char_value.split(',')
+				(pvname,value,user_host) = char_value.split(',')
 				# check user and host
-				(user, host) = user_host.split("@")
-				host = host.split(".")[0]
-				if debug: print "writer: user=%s, host=%s" % (user, host)
-				if allowed(user, host):
+				allowed = True
+				if user_host:
+					(user, host) = user_host.split("@")
+					host = host.split(".")[0]
+					if debug: print "writer: user=%s, host=%s" % (user, host)
+					allowed = userHostAllowed(user, host)
+				if allowed:
 					macroFile.write("\tepics.caput(\"%s\",\"%s\", wait=True, timeout=300)\n" % (pvname,value))
 					macroFile.flush()
 			msgQueue.task_done()
