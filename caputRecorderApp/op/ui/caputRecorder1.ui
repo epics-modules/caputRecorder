@@ -65,16 +65,16 @@ QWidget#centralWidget {background: rgba(218, 218, 218, 255);}
                 <rect>
                     <x>0</x>
                     <y>0</y>
-                    <width>402</width>
-                    <height>412</height>
+                    <width>404</width>
+                    <height>415</height>
                 </rect>
             </property>
             <property name="geometry">
                 <rect>
                     <x>0</x>
                     <y>0</y>
-                    <width>400</width>
-                    <height>410</height>
+                    <width>402</width>
+                    <height>413</height>
                 </rect>
             </property>
             <property name="filename">
@@ -126,9 +126,52 @@ QWidget#centralWidget {background: rgba(218, 218, 218, 255);}
                 <string>true</string>
             </property>
         </widget>
+        <widget class="caRelatedDisplay" name="caRelatedDisplay_2">
+            <property name="geometry">
+                <rect>
+                    <x>270</x>
+                    <y>410</y>
+                    <width>80</width>
+                    <height>20</height>
+                </rect>
+            </property>
+            <property name="foreground">
+                <color alpha="255">
+                    <red>255</red>
+                    <green>255</green>
+                    <blue>255</blue>
+                </color>
+            </property>
+            <property name="background">
+                <color alpha="255">
+                    <red>51</red>
+                    <green>153</green>
+                    <blue>0</blue>
+                </color>
+            </property>
+            <property name="label">
+                <string>-Configure</string>
+            </property>
+            <property name="stackingMode">
+                <enum>Menu</enum>
+            </property>
+            <property name="labels">
+                <string></string>
+            </property>
+            <property name="files">
+                <string>caputRecorderConfigure.adl</string>
+            </property>
+            <property name="args">
+                <string>P=$(P)</string>
+            </property>
+            <property name="removeParent">
+                <string>false</string>
+            </property>
+        </widget>
         <zorder>caInclude_0</zorder>
         <zorder>caRelatedDisplay_0</zorder>
         <zorder>caRelatedDisplay_1</zorder>
+        <zorder>caRelatedDisplay_2</zorder>
     </widget>
 </widget>
 </ui>

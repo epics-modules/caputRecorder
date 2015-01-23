@@ -8,11 +8,17 @@ import epics
 import time
 import copy
 import Queue
-
+import keyword
+import string
 import macros
+
+# convert whitespace to underscores
+transTable = string.maketrans(" \t", "__")
+commaToSpaceTable = string.maketrans(",", " ")
 
 wake = threading.Event()
 debug = 0
+
 prefix = "xxx:"
 menuFields=["ZRST","ONST","TWST","THST","FRST","FVST","SXST","SVST","EIST","NIST","TEST","ELST","TVST","TTST","FTST","FFST"]
 
@@ -41,6 +47,56 @@ macroFunctions = []
 MSG_COMMAND = 0
 MSG_COMMENT = 1
 
+allowedUsers = []
+allowedHosts = []
+forbiddenUsers = []
+forbiddenHosts = []
+
+commandMonitorList = []
+commentMonitorList = []
+
+def prefixesMonFunc(pvname, value, char_value, **kwd):
+	global commandMonitorList, commentMonitorList
+	pstring = char_value.translate(commaToSpaceTable)
+	userPrefixes = pstring.split(" ")
+	if userPrefixes:
+		commandMonitorList = []
+		commentMonitorList = []
+		for p in userPrefixes:
+			commandMonitorList = [p+"caputRecorderCommand"]
+			commentMonitorList = [p+"caputRecorderComment"]
+
+########################################################################
+## Respond to monitors from command and comment PVs
+## All we're going to do is send (pvname,value) information to the message queue
+
+def calcAllowed(char_value):
+	global debug
+	allowed = []
+	forbidden = []
+	if char_value != "":
+		items = char_value.split(" ")
+		for item in items:
+			if item[0] == '-':
+				forbidden.append(item[1:])
+			else:
+				allowed.append(item)
+	return (allowed, forbidden)
+
+def usersMonFunc(pvname, value, char_value, **kwd):
+	global debug, allowedUsers, forbiddenUsers
+	if debug: print "usersMonFunc: char_value='%s'" % char_value
+	(allowedUsers, forbiddenUsers) = calcAllowed(char_value)
+	if (debug):
+		print "allowedUsers='%s', forbiddenUsers='%s'\n" % (allowedUsers, forbiddenUsers)
+
+def hostsMonFunc(pvname, value, char_value, **kwd):
+	global debug, allowedHosts, forbiddenHosts
+	if debug: print "hostsMonFunc: char_value='%s'" % char_value
+	(allowedHosts, forbiddenHosts) = calcAllowed(char_value)
+	if (debug):
+		print "allowedHosts='%s', forbiddenHosts='%s'\n" % (allowedHosts, forbiddenHosts)
+
 ########################################################################
 ## Respond to monitors from command and comment PVs
 ## All we're going to do is send (pvname,value) information to the message queue
@@ -59,6 +115,21 @@ def commentMonFunc(pvname, value, char_value, **kwd):
 # read from the message queue, and write to the macros.py file, which startMacro()
 # opened for us as the file handle "MacroFile"
 
+def userHostAllowed(user, host):
+	global allowedHosts, forbiddenHosts, allowedUsers, forbiddenUsers
+
+	if debug: print "userHostAllowed: user=%s, host=%s" % (user, host)
+
+	if allowedHosts and host not in allowedHosts:
+		return False
+	if forbiddenHosts and host in forbiddenHosts:
+		return False
+	if allowedUsers and user not in allowedUsers:
+		return False
+	if forbiddenUsers and user in forbiddenUsers:
+		return False
+	return True
+
 def writer():
 	global debug, macroFile, prefix, msgQueue
 
@@ -67,9 +138,17 @@ def writer():
 		if debug: print "writer: type=%d, char_value='%s'" % (msg, char_value)
 		if msg == MSG_COMMAND:
 			if char_value.find(prefix+"caputRecorder") == -1:
-				(pvname,value) = char_value.split(',')
-				macroFile.write("\tepics.caput(\"%s\",\"%s\", wait=True, timeout=300)\n" % (pvname,value))
-				macroFile.flush()
+				(pvname,value,user_host) = char_value.split(',')
+				# check user and host
+				allowed = True
+				if user_host:
+					(user, host) = user_host.split("@")
+					host = host.split(".")[0]
+					if debug: print "writer: user=%s, host=%s" % (user, host)
+					allowed = userHostAllowed(user, host)
+				if allowed:
+					macroFile.write("\tepics.caput(\"%s\",\"%s\", wait=True, timeout=300)\n" % (pvname,value))
+					macroFile.flush()
 			msgQueue.task_done()
 		elif msg == MSG_COMMENT:
 			macroFile.write("\t# %s\n" % char_value)
@@ -90,20 +169,30 @@ def stopStartMonFunc(pvname, value, char_value, **kwd):
 
 def startMacro():
 	global debug, macroFile, prefix, macroFunctionNames
+	global commandMonitorList, commentMonitorList
 	if debug: print("startMacro: entry\n")
 	busy = epics.caget(prefix+"caputRecorderMacroRecording")
 	if (busy):
 		epics.caput(prefix+"caputRecorderUserMessage", "a macro is already being recorded")
 		return
 	macroName = epics.caget(prefix+"caputRecorderMacroName")
-	if macroName in macroFunctionNames:
-		epics.caput(prefix+"caputRecorderUserMessage", "macro name is already in use")
-		epics.caput(prefix+"caputRecorderMacroStopStart", 0)
-		return
+	
+	# check macroName for problems
 	if (macroName==""):
-		epics.caput(prefix+"caputRecorderUserMessage", "macro name is empty")
+		epics.caput(prefix+"caputRecorderUserMessage", "*** macro name is empty")
 		epics.caput(prefix+"caputRecorderMacroStopStart", 0)
 		return
+	if macroName.find(" ") != -1:
+		macroName = macroName.translate(transTable)
+	if macroName in macroFunctionNames:
+		epics.caput(prefix+"caputRecorderUserMessage", "*** macro name is already in use")
+		epics.caput(prefix+"caputRecorderMacroStopStart", 0)
+		return
+	if (macroName in keyword.kwlist):
+		epics.caput(prefix+"caputRecorderUserMessage", "*** macro name is a python keyword")
+		epics.caput(prefix+"caputRecorderMacroStopStart", 0)
+		return
+
 	epics.caput(prefix+"caputRecorderMacroRecording", 1)
 	epics.caput(prefix+"caputRecorderUserMessage", "Recording")
 	macroFile = open("macros.py","a")
@@ -121,6 +210,7 @@ def startMacro():
 
 def endMacro():
 	global debug, macroFile, prefix, doReloadMacros
+	global commandMonitorList, commentMonitorList
 	#print("endMacro: entry\n")
 	busy = epics.caget(prefix+"caputRecorderMacroRecording")
 	if (not busy):
@@ -316,13 +406,38 @@ def executeMacro():
 def start():
 	global debug, prefix, doStartMacro, doStopMacro, doReloadMacros, doexecuteMacro
 	global doSelectMacro, doAbortMacro, executingMacro, msgQueue
+	global allowedUsers, forbiddenUsers, allowedHosts, forbiddenHosts
+	global commandMonitorList, commentMonitorList
+
 	wake.clear()
+
+	# Build lists of the PVs we'll monitor while recording
+	userPrefixes = epics.caget(prefix+"caputRecorderPrefixes", as_string=True)
+	if userPrefixes:
+		commandMonitorList = []
+		commentMonitorList = []
+		for p in userPrefixes:
+			commandMonitorList = [p+"caputRecorderCommand"]
+			commentMonitorList = [p+"caputRecorderComment"]
+
 	epics.camonitor(prefix+"caputRecorderMacroStopStart",callback=stopStartMonFunc)
 	epics.camonitor(prefix+"caputRecorderReloadMacros",callback=reloadMacrosMonFunc)
 	epics.camonitor(prefix+"caputRecorderMacro",callback=selectMacroMonFunc)
 	epics.camonitor(prefix+"caputRecorderExecuteMacro",callback=executeMacroMonFunc)
 	epics.camonitor(prefix+"caputRecorderAbortMacro",callback=abortMacroMonFunc)
+	epics.camonitor(prefix+"caputRecorderUsers",callback=usersMonFunc)
+	epics.camonitor(prefix+"caputRecorderHosts",callback=hostsMonFunc)
+	epics.camonitor(prefix+"caputRecorderPrefixes",callback=prefixesMonFunc)
 	reloadMacros()
+	# We probably won't get a monitor from Users or Hosts, so do cagets
+	users = epics.caget(prefix+"caputRecorderUsers", as_string=True)
+	(allowedUsers, forbiddenUsers) = calcAllowed(users)
+	if (debug):
+		print "allowedUsers='%s', forbiddenUsers='%s'\n" % (allowedUsers, forbiddenUsers)
+	hosts = epics.caget(prefix+"caputRecorderHosts", as_string=True)
+	(allowedHosts, forbiddenHosts) = calcAllowed(hosts)
+	if (debug):
+		print "allowedHosts='%s', forbiddenHosts='%s'\n" % (allowedHosts, forbiddenHosts)
 
 	# message and queue
 	msgQueue = Queue.Queue(maxsize=100)
@@ -365,6 +480,9 @@ def stop():
 	epics.camonitor_clear(prefix+"caputRecorderMacro")
 	epics.camonitor_clear(prefix+"caputRecorderExecuteMacro")
 	epics.camonitor_clear(prefix+"caputRecorderAbortMacro")
+	epics.camonitor_clear(prefix+"caputRecorderUsers")
+	epics.camonitor_clear(prefix+"caputRecorderHosts")
+	epics.camonitor_clear(prefix+"caputRecorderPrefixes")
 
 def go(argv=["xxx:"]):
 	global debug, prefix, commandMonitorList, commentMonitorList
@@ -385,7 +503,7 @@ def go(argv=["xxx:"]):
 			commandMonitorList.append(otherprefix+"caputRecorderCommand")
 			commentMonitorList.append(otherprefix+"caputRecorderComment")
 
-	if debug: print "commandMonitorList", commandMonitorList
+	if debug: print "initial commandMonitorList", commandMonitorList
 	stop()
 	start()
 	stop()

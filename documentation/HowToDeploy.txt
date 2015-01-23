@@ -52,11 +52,18 @@ ed st.cmd&
 
 	# caputRecorder
 	dbLoadRecords("$(CAPUTRECORDER)/caputRecorderApp/Db/caputRecorder.db","P=mlab:,N=300")
-	#doAfterIocInit("registerCaputRecorderTrapListener('mlab:caputRecorderCommand')")
 	...
 	iocInit
 	...
 	registerCaputRecorderTrapListener("mlab:caputRecorderCommand")
+
+ed save_restore.cmd
+	add this:
+	set_requestfile_path("$(CAPUTRECORDER)", "caputRecorderApp/Db")
+
+ed auto_settings.req:
+	add this:
+	file caputRecorder_settings.req P=mlab:,N=300
 
 ##############################################
 # if the application will run caputRecorder.py

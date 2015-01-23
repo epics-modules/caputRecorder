@@ -1,6 +1,6 @@
 
 file {
-	name="/home/oxygen/MOONEY/epics/synApps/support/caputRecorder/caputRecorderApp/op/adl/caputRecorder1.adl"
+	name="/home/oxygen4/MOONEY/epics/synAppsSVN/support/caputRecorder/caputRecorderApp/op/adl/caputRecorder1.adl"
 	version=030107
 }
 display {
@@ -108,7 +108,7 @@ composite {
 		x=0
 		y=0
 		width=400
-		height=412
+		height=411
 	}
 	"composite name"=""
 	"composite file"="caputRecorder_bare.adl;P=$(P)"
@@ -128,4 +128,19 @@ composite {
 	clr=0
 	bclr=17
 	label="-Less"
+}
+"related display" {
+	object {
+		x=270
+		y=410
+		width=80
+		height=20
+	}
+	display[0] {
+		name="caputRecorderConfigure.adl"
+		args="P=$(P)"
+	}
+	clr=0
+	bclr=17
+	label="-Configure"
 }
