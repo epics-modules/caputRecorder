@@ -14,6 +14,7 @@ import macros
 
 # convert whitespace to underscores
 transTable = string.maketrans(" \t", "__")
+commaToSpaceTable = string.maketrans(",", " ")
 
 wake = threading.Event()
 debug = 0
@@ -50,6 +51,21 @@ allowedUsers = []
 allowedHosts = []
 forbiddenUsers = []
 forbiddenHosts = []
+
+commandMonitorList = []
+commentMonitorList = []
+
+def prefixesMonFunc(pvname, value, char_value, **kwd):
+	global commandMonitorList, commentMonitorList
+	pstring = char_value.translate(commaToSpaceTable)
+	userPrefixes = pstring.split(" ")
+	if userPrefixes:
+		commandMonitorList = []
+		commentMonitorList = []
+		for p in userPrefixes:
+			commandMonitorList = [p+"caputRecorderCommand"]
+			commentMonitorList = [p+"caputRecorderComment"]
+
 ########################################################################
 ## Respond to monitors from command and comment PVs
 ## All we're going to do is send (pvname,value) information to the message queue
@@ -153,6 +169,7 @@ def stopStartMonFunc(pvname, value, char_value, **kwd):
 
 def startMacro():
 	global debug, macroFile, prefix, macroFunctionNames
+	global commandMonitorList, commentMonitorList
 	if debug: print("startMacro: entry\n")
 	busy = epics.caget(prefix+"caputRecorderMacroRecording")
 	if (busy):
@@ -193,6 +210,7 @@ def startMacro():
 
 def endMacro():
 	global debug, macroFile, prefix, doReloadMacros
+	global commandMonitorList, commentMonitorList
 	#print("endMacro: entry\n")
 	busy = epics.caget(prefix+"caputRecorderMacroRecording")
 	if (not busy):
@@ -389,8 +407,19 @@ def start():
 	global debug, prefix, doStartMacro, doStopMacro, doReloadMacros, doexecuteMacro
 	global doSelectMacro, doAbortMacro, executingMacro, msgQueue
 	global allowedUsers, forbiddenUsers, allowedHosts, forbiddenHosts
+	global commandMonitorList, commentMonitorList
 
 	wake.clear()
+
+	# Build lists of the PVs we'll monitor while recording
+	userPrefixes = epics.caget(prefix+"caputRecorderPrefixes", as_string=True)
+	if userPrefixes:
+		commandMonitorList = []
+		commentMonitorList = []
+		for p in userPrefixes:
+			commandMonitorList = [p+"caputRecorderCommand"]
+			commentMonitorList = [p+"caputRecorderComment"]
+
 	epics.camonitor(prefix+"caputRecorderMacroStopStart",callback=stopStartMonFunc)
 	epics.camonitor(prefix+"caputRecorderReloadMacros",callback=reloadMacrosMonFunc)
 	epics.camonitor(prefix+"caputRecorderMacro",callback=selectMacroMonFunc)
@@ -398,6 +427,7 @@ def start():
 	epics.camonitor(prefix+"caputRecorderAbortMacro",callback=abortMacroMonFunc)
 	epics.camonitor(prefix+"caputRecorderUsers",callback=usersMonFunc)
 	epics.camonitor(prefix+"caputRecorderHosts",callback=hostsMonFunc)
+	epics.camonitor(prefix+"caputRecorderPrefixes",callback=prefixesMonFunc)
 	reloadMacros()
 	# We probably won't get a monitor from Users or Hosts, so do cagets
 	users = epics.caget(prefix+"caputRecorderUsers", as_string=True)
@@ -452,6 +482,7 @@ def stop():
 	epics.camonitor_clear(prefix+"caputRecorderAbortMacro")
 	epics.camonitor_clear(prefix+"caputRecorderUsers")
 	epics.camonitor_clear(prefix+"caputRecorderHosts")
+	epics.camonitor_clear(prefix+"caputRecorderPrefixes")
 
 def go(argv=["xxx:"]):
 	global debug, prefix, commandMonitorList, commentMonitorList
@@ -472,7 +503,7 @@ def go(argv=["xxx:"]):
 			commandMonitorList.append(otherprefix+"caputRecorderCommand")
 			commentMonitorList.append(otherprefix+"caputRecorderComment")
 
-	if debug: print "commandMonitorList", commandMonitorList
+	if debug: print "initial commandMonitorList", commandMonitorList
 	stop()
 	start()
 	stop()
