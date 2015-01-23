@@ -11,6 +11,30 @@ command, and a series of caputs as a python function - also called here a
 <b><i>macro</i></b>.  caputRecorder can also serve as a simple user interface
 for delivering canned python functions to end users.
 
+<H2> How does this work? </h2>
+
+EPICS access security has the ability to call a user function whenever a caput
+that meets certain requirements is received by an IOC.  The function is called
+an <i>access-security trap listener</i>, and caputRecorder provides one which
+writes a <i>caput-notification</i> string of the form "pvname,value,user@host"
+to an EPICS PV whenever an eligible caput is received by the IOC.
+
+<p>caputRecorder provides an EPICS database that contains the EPICS PV mentioned
+above, and other PVs that function as caputRecorder's user interface.  The user-
+interface PVs are monitored by the python program caputRecorder.py, and direct
+its operation.  When caputRecorder.py is given a function name and told to
+record, it begins monitoring the caput-notification PVs of specified IOCs, and
+writes python commands corresponding to each notification into the python
+program file macros.py.
+
+<P>caputRecorder.py also inspects the file macros.py and writes the names of
+functions in the file to a set of EPICS menus (that is, to mbbo records).  A
+user can select a function name from those menus, and tell caputRecorder to
+execute that function.
+
+<P>Thus, each IOC is responsible for telling caputRecorder that it received a
+caput, and one IOC also tells caPutRecorder what to do.
+
 <H2> Requirements, configuration </h2>
 
 The workstation on which <i>caputRecorder.py</i> runs must have python with
@@ -71,7 +95,7 @@ registerCaputRecorderTrapListener('xxx:caputRecorderCommand')
 <blockquote>
 
 where <code>xxx:caputRecorderCommand</code> is the name of the PV to which
-trapped caput commands will be written.
+caput-notification strings will be written.
 
 </blockquote>
 
@@ -142,6 +166,8 @@ monitor and write to this database.
 An example copy of <i>macros.py</i> is
 available as <code>caputRecorder/caputRecorderApp/op/python/example_macros.py</code>.
 
+<P><li>Set the environment variable EDITOR to your preferred text editor, so
+that the button labelled "!edit macros.py" above will work.
 </ol>
 
 <h2>How to use</h2>
