@@ -9,6 +9,23 @@
 
 <h1 align="center">caputRecorder Release Notes</h1>
 
+<h2 align="center">Release 1-2</h2>
+<ul>
+
+<li>Changed format of the value the IOC writes to caputRecorderCommand, from
+"pvname,value" to "pvname,value,user@host".  Note that an R1-2 ioc won't work
+with an R1-1 client, but an R1-1 ioc will work with an R1-2 client.
+
+<li>Added PVs caputRecorderUsers and caputRecorderHosts
+
+<li>caputRecorder.py now filters commands to honor caputRecorderUsers and
+caputRecorderHosts
+
+<li>caputRecorder.py now defends against macro names that contain embedded
+spaces or are python keywords
+
+</ul>
+
 <h2 align="center">Release 1-1</h2>
 
 <ul>

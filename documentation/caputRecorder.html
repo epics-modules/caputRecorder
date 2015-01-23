@@ -13,16 +13,24 @@ for delivering canned python functions to end users.
 
 <H2> Requirements, configuration </h2>
 
-<p>The synApps xxx module, release R5-8, is configured to use caputRecorder.
-The steps and details of this configuration are as follows:
-
-<ol>
-<li>The workstation on which <i>caputRecorder.py</i> runs must have python with
+The workstation on which <i>caputRecorder.py</i> runs must have python with
 the <a href="http://cars.uchicago.edu/software/python/pyepics3">PyEpics</a>
 module installed.
 
-<li><P>Each ioc from which caputs are to be recorded must load the database
-<code>caputRecorder.db</code>, for example with this excerpt from st.cmd:
+<P>EPICS IOCs that participate in caputRecorder, either by posting the caputs
+they receive, or by hosting caputRecorder's user interface, must be prepared as
+follows.  (These are excerpts from the synApps xxx module, release R5-8, which
+is already configured to use caputRecorder.)
+
+<ol>
+<li><P>Add <code>CAPUTRECORDER</code> to the IOC's RELEASE file
+
+<li><P>Include <code>caputRecorder.dbd</code> in the IOC's .dbd file.
+
+<li><P>Link the IOC's code against the <code>caputRecorder</code> library.
+
+<li><P>Load the database <code>caputRecorder.db</code>, for example with this
+excerpt from st.cmd:
 
 <blockquote>
 <pre>
@@ -31,13 +39,28 @@ dbLoadRecords("$(CAPUTRECORDER)/caputRecorderApp/Db/caputRecorder.db","P=xxx:,N=
 </blockquote>
 
 <blockquote>
-where <code>N</code> is the length of the longest caput command
-("pvname,value") that will be recorded.
+where <code>N</code> is the length of the longest caput-notification string
+("pvname,value,user@host") that will be sent to the recorder.
 </blockquote>
 
-<li>Each ioc from which caputs are to be recorded must register caputRecorder's
-access-security trap listener, for example with the following excerpt from
-st.cmd.  (Note that this command must be executed after iocInit.)
+<li><P>If you're using autosave, you'll probably also want to include
+<code>caputRecorder_settings.req</code> in the IOC's
+<code>auto_settings.req</code> file:
+
+<pre>
+file caputRecorder_settings.req P=xxx:,N=300
+</pre>
+
+If you do this, you must also add the following line to save_restore.cmd:
+
+<pre>
+set_requestfile_path("$(CAPUTRECORDER)", "caputRecorderApp/Db")
+</pre>
+
+
+<li>Register caputRecorder's access-security trap listener, for example with the
+following excerpt from st.cmd.  (Note that this command must be executed
+<i>after</i> iocInit.)
 
 <blockquote>
 <pre>
@@ -52,9 +75,9 @@ trapped caput commands will be written.
 
 </blockquote>
 
-<li>Each ioc from which caputs are to be recorded must run EPICS access security
-with an access-security file that specifies <code>TRAPWRITE</code> for the
-desired users and hosts.  Here is a sample excerpt from st.cmd:
+<li>Run EPICS access security with an access-security file that specifies
+<code>TRAPWRITE</code> for the desired users and hosts.  Here is a sample
+excerpt from st.cmd:
 
 <blockquote>
 <pre>
@@ -81,21 +104,31 @@ ASG(DEFAULT) {
 <P>This file grants write permission to anybody on any host, and specifies that
 TRAPWRITE is in effect only for user <i>mooney</i> on workstation
 <i>mooneylinux</i>.  You probably don't want TRAPWRITE in effect for caputs from
-an ioc, but do want them for caputs from MEDM and channel-access clients that
-aren't in an ioc.
+an IOC, but do want it for caputs from channel-access clients, such as MEDM, that
+aren't in an IOC.
 
 <P>Note that the order in which rules occur in the file matters for TRAPWRITE. 
 If <code>RULE(1,WRITE)</code> were encountered before
 <code>RULE(1,WRITE,TRAPWRITE)</code>, TRAPWRITE would not be in effect for
 anybody, because everybody is covered by <code>RULE(1,WRITE)</code>.
 
+<P>If you can't or don't want to select users and hosts using access-security
+rules, you can specify TRAPWRITE for all, and select users and hosts with
+caputRecorder's user interface.  The simplest possible access-security file that
+will work for caputRecorder is the following:
 
+<pre>
+ASG(DEFAULT) {
+	RULE(1,WRITE,TRAPWRITE)
+}
+</pre>
 </blockquote>
 
-<li>One ioc from which caputs are to be recorded will have its
-<code>caputRecorder.db</code> database displayed to the user via MEDM.  The
-Python program <i>caputRecorder.py</i> will also monitor and write to this
-database.
+
+<li>One IOC from which caputs are to be recorded will have its
+<code>caputRecorder.db</code> database displayed to the user via MEDM (or
+caQtDM, or CSS-BOY).  The Python program <i>caputRecorder.py</i> will also
+monitor and write to this database.
 
 <P><center><IMG SRC="caputRecorder.adl.jpg"><br>caputRecorder.adl</IMG></center>
 
@@ -136,7 +169,7 @@ example version of <i>start_putrecorder</i> tries to ensure that only one copy o
 
 
 <li><P>The text-monitor field labelled "caput:" displays the PV name and value
-most recently written to the ioc.  This field is written to by the
+most recently written to the IOC.  This field is written to by the
 access-security trap listener, and is updated whether or not a python
 function is being recorded.
 
@@ -206,6 +239,31 @@ scans, halts motors, and stop the scaler named "scaler1".
 </ul>
 
 </ul>
+
+<H2> Selecting what gets recorded </h2>
+
+You probably don't want to record all caputs that happen among your IOCs and
+clients, but only those done by users.  One way of filtering was shown above, in
+"Requirements, configuration". User-specified filtering is easier, and can be
+done at run time with caputRecorder's user interface. <ol>
+
+<li>You can choose which users' caputs will be recorded by specifying usernames
+to <code>caputRecorderUsers</code>.  (See "Record caputs from whom?" in
+the figure below.)  To disable recording from a specific user, put a minus sign
+in front of the username.
+
+<P><li>You can choose which hosts' caputs will be recorded by specifying
+hostnames to <code>caputRecorderHosts</code>.  (See "Record caputs from whom?"
+in the figure below.)  Only the first element of a host name need be specified.  (For
+example, "mooneylinux.aps.anl.gov" is used as "mooneylinux".)
+
+<P><li>You can choose which IOCs caputRecorder monitors, by specifying prefixes
+to <code>caputRecorderPrefixes</code>.  (See "Record caputs from which IOCs?" in
+the figure below.)  Unlike user and host choices, this choice does not take
+effect while a macro is being recorded.
+
+
+<P><center><IMG SRC="caputRecorderConfigure.adl.jpg"><br>caputRecorderConfigure.adl</IMG></center>
 
 <H2> Discussion </h2>
 
