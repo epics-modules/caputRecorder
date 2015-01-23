@@ -15,6 +15,10 @@ record(waveform, "$(P)caputRecorderHosts") {
     field(FTVL, "CHAR")
     field(NELM, "$(N)")
 }
+record(waveform, "$(P)caputRecorderPrefixes") {
+    field(FTVL, "CHAR")
+    field(NELM, "$(N)")
+}
 
 record(bo, "$(P)caputRecorderMacroStopStart") {
 	field(ZNAM, "Stop")
