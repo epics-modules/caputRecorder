@@ -1,6 +1,6 @@
 
 file {
-	name="/home/oxygen/MOONEY/epics/synApps/support/caputRecorder/caputRecorderApp/op/adl/caputRecorderConfig.adl"
+	name="/home/oxygen/MOONEY/epics/synApps/support/caputRecorder/caputRecorderApp/op/adl/caputRecorderConfigure.adl"
 	version=030107
 }
 display {
@@ -8,7 +8,7 @@ display {
 		x=568
 		y=42
 		width=400
-		height=280
+		height=200
 	}
 	clr=14
 	bclr=2
@@ -130,7 +130,7 @@ polyline {
 text {
 	object {
 		x=10
-		y=30
+		y=35
 		width=380
 		height=20
 	}
@@ -198,136 +198,87 @@ text {
 	limits {
 	}
 }
-text {
-	object {
-		x=10
-		y=120
-		width=70
-		height=14
-	}
-	"basic attribute" {
-		clr=14
-	}
-	textix="examples:"
-	align="horiz. right"
-}
-rectangle {
-	object {
-		x=68
-		y=135
-		width=324
-		height=18
-	}
-	"basic attribute" {
-		clr=51
-	}
-}
-text {
-	object {
-		x=70
-		y=136
-		width=320
-		height=14
-	}
-	"basic attribute" {
-		clr=14
-	}
-}
-text {
-	object {
-		x=70
-		y=155
-		width=320
-		height=14
-	}
-	"basic attribute" {
-		clr=14
-	}
-	textix="everyone"
-}
-rectangle {
-	object {
-		x=70
-		y=185
-		width=324
-		height=18
-	}
-	"basic attribute" {
-		clr=51
-	}
-}
-text {
-	object {
-		x=72
-		y=186
-		width=320
-		height=14
-	}
-	"basic attribute" {
-		clr=14
-	}
-	textix="userA userB"
-}
-text {
-	object {
-		x=72
-		y=205
-		width=320
-		height=14
-	}
-	"basic attribute" {
-		clr=14
-	}
-	textix="only userA and userB"
-}
-rectangle {
-	object {
-		x=69
-		y=235
-		width=324
-		height=18
-	}
-	"basic attribute" {
-		clr=51
-	}
-}
-text {
-	object {
-		x=71
-		y=236
-		width=320
-		height=14
-	}
-	"basic attribute" {
-		clr=14
-	}
-	textix="-vw5"
-}
-text {
-	object {
-		x=71
-		y=260
-		width=320
-		height=14
-	}
-	"basic attribute" {
-		clr=14
-	}
-	textix="everyone except vw5"
-}
-polyline {
+composite {
 	object {
 		x=1
-		y=113
+		y=120
 		width=399
-		height=3
+		height=57
 	}
-	"basic attribute" {
-		clr=54
-		width=3
+	"composite name"=""
+	children {
+		text {
+			object {
+				x=10
+				y=132
+				width=380
+				height=20
+			}
+			"basic attribute" {
+				clr=14
+			}
+			textix="Record caputs from which IOCs?"
+			align="horiz. centered"
+		}
+		text {
+			object {
+				x=10
+				y=159
+				width=65
+				height=14
+			}
+			"basic attribute" {
+				clr=14
+			}
+			textix="prefixes:"
+			align="horiz. right"
+		}
+		"text entry" {
+			object {
+				x=80
+				y=157
+				width=310
+				height=20
+			}
+			control {
+				chan="$(P)caputRecorderPrefixes"
+				clr=14
+				bclr=51
+			}
+			format="string"
+			limits {
+			}
+		}
+		polyline {
+			object {
+				x=1
+				y=120
+				width=399
+				height=3
+			}
+			"basic attribute" {
+				clr=54
+				width=3
+			}
+			points {
+				(2,121)
+				(398,121)
+			}
+		}
 	}
-	points {
-		(2,114)
-		(398,114)
+}
+"related display" {
+	object {
+		x=360
+		y=180
+		width=40
+		height=20
 	}
+	display[0] {
+		name="caputRecorderConfigureHelp.adl"
+		args="P=$(P)"
+	}
+	clr=0
+	bclr=17
+	label="-Help"
 }
