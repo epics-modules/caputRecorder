@@ -6,6 +6,20 @@ record(waveform, "$(P)caputRecorderComment") {
     field(FTVL, "CHAR")
     field(NELM, "$(N)")
 }
+record(ao, "$(P)caputRecorderDelaySec") {
+	field(DESC, "delay time in seconds")
+	field(DOL, "0")
+	field(PREC, "3")
+}
+record(busy, "$(P)caputRecorderAddDelayCmd") {
+	field(ZNAM, "Done")
+	field(ONAM, "Add")
+}
+record(ao, "$(P)caputRecorderWaitCBSec") {
+	field(DESC, "wait time in seconds")
+	field(DOL, "300")
+	field(PREC, "1")
+}
 
 record(waveform, "$(P)caputRecorderUsers") {
     field(FTVL, "CHAR")
