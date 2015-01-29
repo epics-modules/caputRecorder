@@ -20,11 +20,11 @@ writes a <i>caput-notification</i> string of the form "pvname,value,user@host"
 to an EPICS PV whenever an eligible caput is received by the IOC.
 
 <p>caputRecorder provides an EPICS database that contains the EPICS PV mentioned
-above, and other PVs that function as caputRecorder's user interface.  The user-
-interface PVs are monitored by the python program caputRecorder.py, and direct
-its operation.  When caputRecorder.py is given a function name and told to
-record, it begins monitoring the caput-notification PVs of specified IOCs, and
-writes python commands corresponding to each notification into the python
+above, and other PVs that function as caputRecorder's user interface.  The
+user-interface PVs are monitored by the python program caputRecorder.py, and
+direct its operation.  When caputRecorder.py is given a function name and told
+to record, it begins monitoring the caput-notification PVs of specified IOCs,
+and writes python commands corresponding to each notification into the python
 program file macros.py.
 
 <P>caputRecorder.py also inspects the file macros.py and writes the names of
@@ -105,7 +105,9 @@ excerpt from st.cmd:
 
 <blockquote>
 <pre>
+iocsh
 asSetFilename("$(TOP)/iocBoot/accessSecurity.acf")
+exit
 </pre>
 </blockquote>
 
@@ -202,6 +204,19 @@ function is being recorded.
 <li><P>The text-entry field labelled "comment:" allows you to add comments to
 the python function being recorded.  This field is monitored only while a python
 function is being recorded.
+
+<li><P>The text-entry field labelled "delay" specifies the time delay in seconds
+of the delay command that will be added to the macro being recorded when you
+press the "Add" button.  The actual python code for this command will be
+something like <code>time.sleep(1.200)</code>.  After caputRecorder.py has
+written the delay command, it will press the "Done" button.
+
+<li><P>The text-entry field labelled "time to wait for completion:" specifies
+the time in seconds that python will wait for completion of a macro command 
+that does a caput to an EPICS PV, before going on to the next command. 
+"Completion" means completion of any EPICS processing that results from the
+execution of that caput.  It's ok to change this time while a macro is being
+recorded.
 
 </ul>
 
@@ -322,14 +337,15 @@ recorder" button.
 caputRecorder records a caput with the following python code:
 
 <pre>
-epics.caput("xxx:scan1.P1PV","xxx:m2.VAL", wait=True, timeout=300)
+epics.caput("xxx:scan1.P1PV","xxx:m2.VAL", wait=True, timeout=300.0)
 </pre>
 
 This code will request a completion callback from EPICS, and will wait as long
 as 300 seconds for the callback to arrive.  This is probably much longer than
-most operations will take to complete, but five minutes is not long
-enough for many scans.  If you use caputRecorder to execute scans, plan to edit
-the macros.py file to increase the timeout for writes to xxx:scan1.EXSC.
+most operations will take to complete, but five minutes is not long enough for
+many scans.  If you use caputRecorder to execute scans, you'll probably want to
+increase the "time to wait for completion" described in the "How to
+use"/"Inputs" section.
 
 <P>Currently, it is not an error for a macro to timeout while waiting for a
 callback.  Python will simply move on to the next command and execute it.

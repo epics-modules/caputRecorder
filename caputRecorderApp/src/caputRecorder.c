@@ -3,9 +3,9 @@
 #include <string.h>
 #include <asTrapWrite.h>
 #include <dbAccess.h>
-#include <epicsExport.h>
 #include <errlog.h>
 #include <epicsMessageQueue.h>
+#include <epicsStdio.h>
 #include <epicsThread.h>
 #include <epicsVersion.h>
 #define GE_EPICSBASE(v,r,l) ((EPICS_VERSION >= (v)) && (EPICS_REVISION >= (r)) && (EPICS_MODIFICATION >= (l)))
@@ -28,6 +28,7 @@
  */
 
 #endif
+#include <epicsExport.h>
 
 
 static epicsMessageQueueId caputRecorderMsgQueue=0;
@@ -116,7 +117,7 @@ void myAsListener(asTrapWriteMessage *pmessage, int after) {
 		if (save[j] == '"') value[i++] = '\\';
 		value[i++] = save[j++];
 	}
-	n = snprintf(msg.command, COMMAND_SIZE-1, "%s,%s,%s@%s", pvname, value, pmessage->userid, pmessage->hostid);
+	n = epicsSnprintf(msg.command, COMMAND_SIZE-1, "%s,%s,%s@%s", pvname, value, pmessage->userid, pmessage->hostid);
 	msg.command[n] = '\0';
 	msg.nchar = n+1;
 	if (caputRecorderDebug) errlogPrintf("myListener: msg.command='%s', msg.nchar=%d\n\n", msg.command, msg.nchar);

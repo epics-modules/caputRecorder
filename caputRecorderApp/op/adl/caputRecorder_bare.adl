@@ -1,21 +1,21 @@
 
 file {
-	name="/home/oxygen4/MOONEY/epics/synAppsSVN/support/caputRecorder/caputRecorderApp/op/adl/caputRecorder_bare.adl"
+	name="/home/oxygen/MOONEY/epics/synApps/support/caputRecorder/caputRecorderApp/op/adl/caputRecorder_bare.adl"
 	version=030107
 }
 display {
 	object {
-		x=568
-		y=42
+		x=806
+		y=487
 		width=400
-		height=410
+		height=460
 	}
 	clr=14
 	bclr=2
 	cmap=""
 	gridSpacing=5
 	gridOn=0
-	snapToGrid=0
+	snapToGrid=1
 }
 "color map" {
 	ncolors=65
@@ -86,23 +86,6 @@ display {
 		289315,
 		1a7309,
 	}
-}
-text {
-	object {
-		x=285
-		y=135
-		width=90
-		height=20
-	}
-	"basic attribute" {
-		clr=33
-	}
-	"dynamic attribute" {
-		vis="calc"
-		calc="a"
-		chan="$(P)caputRecorderMacroRecording"
-	}
-	textix="Recording"
 }
 rectangle {
 	object {
@@ -201,22 +184,6 @@ text {
 	}
 	textix="Inputs"
 }
-polyline {
-	object {
-		x=0
-		y=95
-		width=399
-		height=3
-	}
-	"basic attribute" {
-		clr=54
-		width=3
-	}
-	points {
-		(1,96)
-		(397,96)
-	}
-}
 "shell command" {
 	object {
 		x=240
@@ -246,10 +213,56 @@ text {
 	textix="caput:"
 	align="horiz. right"
 }
+text {
+	object {
+		x=10
+		y=97
+		width=55
+		height=14
+	}
+	"basic attribute" {
+		clr=14
+	}
+	textix="delay"
+	align="horiz. right"
+}
+text {
+	object {
+		x=285
+		y=185
+		width=90
+		height=20
+	}
+	"basic attribute" {
+		clr=33
+	}
+	"dynamic attribute" {
+		vis="calc"
+		calc="a"
+		chan="$(P)caputRecorderMacroRecording"
+	}
+	textix="Recording"
+}
+polyline {
+	object {
+		x=0
+		y=145
+		width=399
+		height=3
+	}
+	"basic attribute" {
+		clr=54
+		width=3
+	}
+	points {
+		(1,146)
+		(397,146)
+	}
+}
 "text update" {
 	object {
 		x=70
-		y=165
+		y=215
 		width=320
 		height=14
 	}
@@ -262,40 +275,10 @@ text {
 	limits {
 	}
 }
-"choice button" {
-	object {
-		x=170
-		y=135
-		width=110
-		height=20
-	}
-	control {
-		chan="$(P)caputRecorderMacroStopStart"
-		clr=14
-		bclr=51
-	}
-	stacking="column"
-}
-"text entry" {
-	object {
-		x=10
-		y=135
-		width=150
-		height=20
-	}
-	control {
-		chan="$(P)caputRecorderMacroName"
-		clr=14
-		bclr=51
-	}
-	format="string"
-	limits {
-	}
-}
 text {
 	object {
 		x=285
-		y=135
+		y=185
 		width=90
 		height=20
 	}
@@ -313,7 +296,7 @@ text {
 text {
 	object {
 		x=10
-		y=165
+		y=215
 		width=60
 		height=14
 	}
@@ -325,7 +308,7 @@ text {
 text {
 	object {
 		x=170
-		y=120
+		y=170
 		width=110
 		height=14
 	}
@@ -338,7 +321,7 @@ text {
 text {
 	object {
 		x=10
-		y=120
+		y=170
 		width=150
 		height=14
 	}
@@ -351,7 +334,7 @@ text {
 text {
 	object {
 		x=10
-		y=100
+		y=150
 		width=380
 		height=20
 	}
@@ -363,7 +346,7 @@ text {
 "choice button" {
 	object {
 		x=10
-		y=215
+		y=265
 		width=230
 		height=20
 	}
@@ -377,7 +360,7 @@ text {
 text {
 	object {
 		x=10
-		y=190
+		y=240
 		width=380
 		height=20
 	}
@@ -389,7 +372,7 @@ text {
 "text update" {
 	object {
 		x=140
-		y=243
+		y=293
 		width=150
 		height=14
 	}
@@ -405,7 +388,7 @@ text {
 polyline {
 	object {
 		x=0
-		y=185
+		y=235
 		width=399
 		height=3
 	}
@@ -414,14 +397,14 @@ polyline {
 		width=3
 	}
 	points {
-		(1,186)
-		(397,186)
+		(1,236)
+		(397,236)
 	}
 }
 text {
 	object {
 		x=10
-		y=243
+		y=293
 		width=130
 		height=14
 	}
@@ -433,7 +416,7 @@ text {
 composite {
 	object {
 		x=10
-		y=280
+		y=330
 		width=370
 		height=35
 	}
@@ -442,7 +425,7 @@ composite {
 		composite {
 			object {
 				x=10
-				y=280
+				y=330
 				width=70
 				height=35
 			}
@@ -451,7 +434,7 @@ composite {
 				"text update" {
 					object {
 						x=10
-						y=280
+						y=330
 						width=70
 						height=14
 					}
@@ -467,7 +450,7 @@ composite {
 				"text entry" {
 					object {
 						x=10
-						y=295
+						y=345
 						width=70
 						height=20
 					}
@@ -485,7 +468,7 @@ composite {
 		composite {
 			object {
 				x=85
-				y=280
+				y=330
 				width=70
 				height=35
 			}
@@ -494,7 +477,7 @@ composite {
 				"text update" {
 					object {
 						x=85
-						y=280
+						y=330
 						width=70
 						height=14
 					}
@@ -510,7 +493,7 @@ composite {
 				"text entry" {
 					object {
 						x=85
-						y=295
+						y=345
 						width=70
 						height=20
 					}
@@ -528,7 +511,7 @@ composite {
 		composite {
 			object {
 				x=160
-				y=280
+				y=330
 				width=70
 				height=35
 			}
@@ -537,7 +520,7 @@ composite {
 				"text update" {
 					object {
 						x=160
-						y=280
+						y=330
 						width=70
 						height=14
 					}
@@ -553,7 +536,7 @@ composite {
 				"text entry" {
 					object {
 						x=160
-						y=295
+						y=345
 						width=70
 						height=20
 					}
@@ -571,7 +554,7 @@ composite {
 		"text update" {
 			object {
 				x=235
-				y=280
+				y=330
 				width=70
 				height=14
 			}
@@ -587,7 +570,7 @@ composite {
 		"text entry" {
 			object {
 				x=235
-				y=295
+				y=345
 				width=70
 				height=20
 			}
@@ -603,7 +586,7 @@ composite {
 		"text update" {
 			object {
 				x=310
-				y=280
+				y=330
 				width=70
 				height=14
 			}
@@ -619,7 +602,7 @@ composite {
 		"text entry" {
 			object {
 				x=310
-				y=295
+				y=345
 				width=70
 				height=20
 			}
@@ -637,7 +620,7 @@ composite {
 text {
 	object {
 		x=10
-		y=265
+		y=315
 		width=230
 		height=14
 	}
@@ -649,7 +632,7 @@ text {
 menu {
 	object {
 		x=10
-		y=335
+		y=385
 		width=150
 		height=20
 	}
@@ -662,7 +645,7 @@ menu {
 menu {
 	object {
 		x=165
-		y=335
+		y=385
 		width=150
 		height=20
 	}
@@ -675,7 +658,7 @@ menu {
 text {
 	object {
 		x=10
-		y=366
+		y=416
 		width=380
 		height=20
 	}
@@ -687,7 +670,7 @@ text {
 "choice button" {
 	object {
 		x=170
-		y=391
+		y=441
 		width=90
 		height=20
 	}
@@ -701,7 +684,7 @@ text {
 "message button" {
 	object {
 		x=345
-		y=386
+		y=436
 		width=50
 		height=20
 	}
@@ -716,7 +699,7 @@ text {
 composite {
 	object {
 		x=265
-		y=391
+		y=441
 		width=72
 		height=20
 	}
@@ -725,7 +708,7 @@ composite {
 		"text entry" {
 			object {
 				x=265
-				y=391
+				y=441
 				width=30
 				height=20
 			}
@@ -741,7 +724,7 @@ composite {
 		text {
 			object {
 				x=297
-				y=394
+				y=444
 				width=40
 				height=14
 			}
@@ -755,7 +738,7 @@ composite {
 "text update" {
 	object {
 		x=10
-		y=394
+		y=444
 		width=150
 		height=14
 	}
@@ -771,7 +754,7 @@ composite {
 polyline {
 	object {
 		x=0
-		y=361
+		y=411
 		width=399
 		height=3
 	}
@@ -780,14 +763,14 @@ polyline {
 		width=3
 	}
 	points {
-		(1,362)
-		(397,362)
+		(1,412)
+		(397,412)
 	}
 }
 text {
 	object {
 		x=10
-		y=320
+		y=370
 		width=200
 		height=14
 	}
@@ -799,7 +782,7 @@ text {
 "shell command" {
 	object {
 		x=240
-		y=190
+		y=240
 		width=150
 		height=20
 	}
@@ -810,4 +793,161 @@ text {
 	clr=14
 	bclr=32
 	label="edit macros.py"
+}
+composite {
+	object {
+		x=10
+		y=185
+		width=270
+		height=20
+	}
+	"composite name"=""
+	children {
+		"choice button" {
+			object {
+				x=170
+				y=185
+				width=110
+				height=20
+			}
+			control {
+				chan="$(P)caputRecorderMacroStopStart"
+				clr=14
+				bclr=51
+			}
+			stacking="column"
+		}
+		"text entry" {
+			object {
+				x=10
+				y=185
+				width=150
+				height=20
+			}
+			control {
+				chan="$(P)caputRecorderMacroName"
+				clr=14
+				bclr=51
+			}
+			format="string"
+			limits {
+			}
+		}
+	}
+}
+composite {
+	object {
+		x=70
+		y=95
+		width=220
+		height=20
+	}
+	"composite name"=""
+	children {
+		"choice button" {
+			object {
+				x=180
+				y=95
+				width=110
+				height=20
+			}
+			control {
+				chan="$(P)caputRecorderAddDelayCmd"
+				clr=14
+				bclr=51
+			}
+			stacking="column"
+		}
+		"text entry" {
+			object {
+				x=70
+				y=95
+				width=50
+				height=20
+			}
+			control {
+				chan="$(P)caputRecorderDelaySec"
+				clr=14
+				bclr=51
+			}
+			format="string"
+			limits {
+			}
+		}
+		text {
+			object {
+				x=125
+				y=97
+				width=50
+				height=14
+			}
+			"basic attribute" {
+				clr=14
+			}
+			textix="seconds"
+		}
+	}
+}
+composite {
+	object {
+		x=10
+		y=120
+		width=328
+		height=20
+	}
+	"composite name"=""
+	children {
+		text {
+			object {
+				x=10
+				y=122
+				width=200
+				height=14
+			}
+			"basic attribute" {
+				clr=14
+			}
+			textix="time to wait for completion:"
+			align="horiz. right"
+		}
+		composite {
+			object {
+				x=215
+				y=120
+				width=123
+				height=20
+			}
+			"composite name"=""
+			children {
+				"text entry" {
+					object {
+						x=215
+						y=120
+						width=70
+						height=20
+					}
+					control {
+						chan="$(P)caputRecorderWaitCBSec"
+						clr=14
+						bclr=51
+					}
+					format="string"
+					limits {
+					}
+				}
+				text {
+					object {
+						x=288
+						y=122
+						width=50
+						height=14
+					}
+					"basic attribute" {
+						clr=14
+					}
+					textix="seconds"
+				}
+			}
+		}
+	}
 }

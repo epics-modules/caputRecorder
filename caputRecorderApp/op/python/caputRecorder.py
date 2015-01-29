@@ -46,6 +46,7 @@ macroFunctions = []
 # for sending messages to writer()
 MSG_COMMAND = 0
 MSG_COMMENT = 1
+MSG_DELAY = 2
 
 allowedUsers = []
 allowedHosts = []
@@ -53,18 +54,15 @@ forbiddenUsers = []
 forbiddenHosts = []
 
 commandMonitorList = []
-commentMonitorList = []
 
 def prefixesMonFunc(pvname, value, char_value, **kwd):
-	global commandMonitorList, commentMonitorList
+	global commandMonitorList
 	pstring = char_value.translate(commaToSpaceTable)
 	userPrefixes = pstring.split(" ")
 	if userPrefixes:
 		commandMonitorList = []
-		commentMonitorList = []
 		for p in userPrefixes:
 			commandMonitorList = [p+"caputRecorderCommand"]
-			commentMonitorList = [p+"caputRecorderComment"]
 
 ########################################################################
 ## Respond to monitors from command and comment PVs
@@ -98,7 +96,7 @@ def hostsMonFunc(pvname, value, char_value, **kwd):
 		print "allowedHosts='%s', forbiddenHosts='%s'\n" % (allowedHosts, forbiddenHosts)
 
 ########################################################################
-## Respond to monitors from command and comment PVs
+## Respond to monitors from command, comment, and delay PVs
 ## All we're going to do is send (pvname,value) information to the message queue
 
 def commandMonFunc(pvname, value, char_value, **kwd):
@@ -109,6 +107,11 @@ def commandMonFunc(pvname, value, char_value, **kwd):
 def commentMonFunc(pvname, value, char_value, **kwd):
 	global debug, macroFile, msgQueue
 	msgQueue.put((MSG_COMMENT, char_value))
+
+def delayMonFunc(pvname, value, char_value, **kwd):
+	global debug, macroFile, msgQueue
+	if value>0:
+		msgQueue.put((MSG_DELAY, char_value))
 
 ############################################################################
 ## writer thread
@@ -147,12 +150,18 @@ def writer():
 					if debug: print "writer: user=%s, host=%s" % (user, host)
 					allowed = userHostAllowed(user, host)
 				if allowed:
-					macroFile.write("\tepics.caput(\"%s\",\"%s\", wait=True, timeout=300)\n" % (pvname,value))
+					putWaitSeconds = epics.caget(prefix+"caputRecorderWaitCBSec", use_monitor=True)
+					macroFile.write("\tepics.caput(\"%s\",\"%s\", wait=True, timeout=%.1f)\n" % (pvname,value,putWaitSeconds))
 					macroFile.flush()
 			msgQueue.task_done()
 		elif msg == MSG_COMMENT:
 			macroFile.write("\t# %s\n" % char_value)
 			macroFile.flush()
+		elif msg == MSG_DELAY:
+			delayTime = epics.caget(prefix+"caputRecorderDelaySec")
+			macroFile.write("\ttime.sleep(%.3f)\n" % delayTime)
+			macroFile.flush()
+			epics.caput(prefix+"caputRecorderAddDelayCmd", 0)
 
 ########################################################################
 ## Respond to monitors from StopStart PV
@@ -169,7 +178,7 @@ def stopStartMonFunc(pvname, value, char_value, **kwd):
 
 def startMacro():
 	global debug, macroFile, prefix, macroFunctionNames
-	global commandMonitorList, commentMonitorList
+	global commandMonitorList
 	if debug: print("startMacro: entry\n")
 	busy = epics.caget(prefix+"caputRecorderMacroRecording")
 	if (busy):
@@ -203,21 +212,21 @@ def startMacro():
 	now = time.strftime("%c")
 	macroFile.write("\trecordDate = \"%s\"\n" % now)
 	macroFile.flush()
-	for pv in commentMonitorList:
-		epics.camonitor(pv,callback=commentMonFunc)
+	epics.camonitor(prefix+"caputRecorderComment",callback=commentMonFunc)
+	epics.camonitor(prefix+"caputRecorderAddDelayCmd",callback=delayMonFunc)
 	for pv in commandMonitorList:
 		epics.camonitor(pv,callback=commandMonFunc)
 
 def endMacro():
 	global debug, macroFile, prefix, doReloadMacros
-	global commandMonitorList, commentMonitorList
+	global commandMonitorList
 	#print("endMacro: entry\n")
 	busy = epics.caget(prefix+"caputRecorderMacroRecording")
 	if (not busy):
 		return
 
-	for pv in commentMonitorList:
-		epics.camonitor_clear(pv)
+	epics.camonitor_clear(prefix+"caputRecorderComment")
+	epics.camonitor_clear(prefix+"caputRecorderAddDelayCmd")
 	for pv in commandMonitorList:
 		epics.camonitor_clear(pv)
 
@@ -407,7 +416,7 @@ def start():
 	global debug, prefix, doStartMacro, doStopMacro, doReloadMacros, doexecuteMacro
 	global doSelectMacro, doAbortMacro, executingMacro, msgQueue
 	global allowedUsers, forbiddenUsers, allowedHosts, forbiddenHosts
-	global commandMonitorList, commentMonitorList
+	global commandMonitorList
 
 	wake.clear()
 
@@ -415,10 +424,8 @@ def start():
 	userPrefixes = epics.caget(prefix+"caputRecorderPrefixes", as_string=True)
 	if userPrefixes:
 		commandMonitorList = []
-		commentMonitorList = []
 		for p in userPrefixes:
 			commandMonitorList = [p+"caputRecorderCommand"]
-			commentMonitorList = [p+"caputRecorderComment"]
 
 	epics.camonitor(prefix+"caputRecorderMacroStopStart",callback=stopStartMonFunc)
 	epics.camonitor(prefix+"caputRecorderReloadMacros",callback=reloadMacrosMonFunc)
@@ -485,7 +492,7 @@ def stop():
 	epics.camonitor_clear(prefix+"caputRecorderPrefixes")
 
 def go(argv=["xxx:"]):
-	global debug, prefix, commandMonitorList, commentMonitorList
+	global debug, prefix, commandMonitorList
 
 	usage = """
 	  python caputRecorder.py prefix [other_prefixes]
@@ -495,13 +502,11 @@ def go(argv=["xxx:"]):
 		prefix = argv[0]
 
 	commandMonitorList = [prefix+"caputRecorderCommand"]
-	commentMonitorList = [prefix+"caputRecorderComment"]
 	
 	if len(argv) > 1:
 		if debug: print "argv[1:]", argv[1:]
 		for otherprefix in argv[1:]:
 			commandMonitorList.append(otherprefix+"caputRecorderCommand")
-			commentMonitorList.append(otherprefix+"caputRecorderComment")
 
 	if debug: print "initial commandMonitorList", commandMonitorList
 	stop()
