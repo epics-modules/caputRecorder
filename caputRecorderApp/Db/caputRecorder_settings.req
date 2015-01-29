@@ -1,3 +1,5 @@
 $(P)caputRecorderUsers
 $(P)caputRecorderHosts
 $(P)caputRecorderPrefixes
+$(P)caputRecorderDelaySec
+$(P)caputRecorderWaitCBSec
