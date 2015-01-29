@@ -1,5 +1,6 @@
 #!/bin/env python
 
+import time
 import epics
 
 # The function "_abort" is special: it's used by asTrap to abort an executing
