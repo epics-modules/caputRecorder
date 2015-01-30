@@ -835,38 +835,79 @@ composite {
 		}
 	}
 }
-composite {
+"choice button" {
+	object {
+		x=180
+		y=95
+		width=110
+		height=20
+	}
+	control {
+		chan="$(P)caputRecorderAddDelayCmd"
+		clr=14
+		bclr=51
+	}
+	stacking="column"
+}
+"text entry" {
 	object {
 		x=70
 		y=95
-		width=220
+		width=50
+		height=20
+	}
+	control {
+		chan="$(P)caputRecorderDelaySec"
+		clr=14
+		bclr=51
+	}
+	format="string"
+	limits {
+	}
+}
+text {
+	object {
+		x=125
+		y=97
+		width=50
+		height=14
+	}
+	"basic attribute" {
+		clr=14
+	}
+	textix="seconds"
+}
+text {
+	object {
+		x=10
+		y=122
+		width=200
+		height=14
+	}
+	"basic attribute" {
+		clr=14
+	}
+	textix="time to wait for completion:"
+	align="horiz. right"
+}
+composite {
+	object {
+		x=215
+		y=120
+		width=123
 		height=20
 	}
 	"composite name"=""
 	children {
-		"choice button" {
-			object {
-				x=180
-				y=95
-				width=110
-				height=20
-			}
-			control {
-				chan="$(P)caputRecorderAddDelayCmd"
-				clr=14
-				bclr=51
-			}
-			stacking="column"
-		}
 		"text entry" {
 			object {
-				x=70
-				y=95
-				width=50
+				x=215
+				y=120
+				width=70
 				height=20
 			}
 			control {
-				chan="$(P)caputRecorderDelaySec"
+				chan="$(P)caputRecorderWaitCBSec"
 				clr=14
 				bclr=51
 			}
@@ -876,8 +917,8 @@ composite {
 		}
 		text {
 			object {
-				x=125
-				y=97
+				x=288
+				y=122
 				width=50
 				height=14
 			}
@@ -885,69 +926,6 @@ composite {
 				clr=14
 			}
 			textix="seconds"
-		}
-	}
-}
-composite {
-	object {
-		x=10
-		y=120
-		width=328
-		height=20
-	}
-	"composite name"=""
-	children {
-		text {
-			object {
-				x=10
-				y=122
-				width=200
-				height=14
-			}
-			"basic attribute" {
-				clr=14
-			}
-			textix="time to wait for completion:"
-			align="horiz. right"
-		}
-		composite {
-			object {
-				x=215
-				y=120
-				width=123
-				height=20
-			}
-			"composite name"=""
-			children {
-				"text entry" {
-					object {
-						x=215
-						y=120
-						width=70
-						height=20
-					}
-					control {
-						chan="$(P)caputRecorderWaitCBSec"
-						clr=14
-						bclr=51
-					}
-					format="string"
-					limits {
-					}
-				}
-				text {
-					object {
-						x=288
-						y=122
-						width=50
-						height=14
-					}
-					"basic attribute" {
-						clr=14
-					}
-					textix="seconds"
-				}
-			}
 		}
 	}
 }
