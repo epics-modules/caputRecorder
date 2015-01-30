@@ -156,7 +156,6 @@ ASG(DEFAULT) {
 caQtDM, or CSS-BOY).  The Python program <i>caputRecorder.py</i> will also
 monitor and write to this database.
 
-<P><center><IMG SRC="caputRecorder.adl.jpg"><br>caputRecorder.adl</IMG></center>
 
 <P><li>The workstation on which this display is running must have the file
 <code>start_putrecorder</code> in its top-level directory (which I'll call
@@ -173,6 +172,8 @@ that the button labelled "!edit macros.py" above will work.
 </ol>
 
 <h2>How to use</h2>
+
+<P><center><IMG SRC="caputRecorder.adl.jpg"><br>caputRecorder.adl</IMG></center>
 
 Referring to the caputRecorder.adl display above, from top to bottom:
 
@@ -299,9 +300,10 @@ in the figure below.)  Only the first element of a host name need be specified. 
 example, "mooneylinux.aps.anl.gov" is used as "mooneylinux".)
 
 <P><li>You can choose which IOCs caputRecorder monitors, by specifying prefixes
-to <code>caputRecorderPrefixes</code>.  (See "Record caputs from which IOCs?" in
+to <code>caputRecorderPrefixes</code>.  (See "Record caputs received by which IOCs?" in
 the figure below.)  Unlike user and host choices, this choice does not take
-effect while a macro is being recorded.
+effect while a macro is being recorded.  Also unlike user and host choices, this
+choice is not about the sender of a caput, but about the recipient.
 
 <P>On startup, caputRecorder monitors the iocs whose prefixes are specified on the
 command line.  If <code>caputRecorderPrefixes</code> is not empty, it will
