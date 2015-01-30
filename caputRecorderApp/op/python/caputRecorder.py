@@ -56,13 +56,18 @@ forbiddenHosts = []
 commandMonitorList = []
 
 def prefixesMonFunc(pvname, value, char_value, **kwd):
-	global commandMonitorList
-	pstring = char_value.translate(commaToSpaceTable)
+	makeCommandMonitorList(char_value)
+
+def makeCommandMonitorList(prefixStrings):
+	global prefix, commandMonitorList
+	pstring = prefixStrings.translate(commaToSpaceTable)
 	userPrefixes = pstring.split(" ")
+	if debug: print "userPrefixes=", userPrefixes
 	if userPrefixes:
 		commandMonitorList = []
 		for p in userPrefixes:
-			commandMonitorList = [p+"caputRecorderCommand"]
+			commandMonitorList.append(p+"caputRecorderCommand")
+	if debug: print "commandMonitorList=", commandMonitorList
 
 ########################################################################
 ## Respond to monitors from command and comment PVs
@@ -423,9 +428,7 @@ def start():
 	# Build lists of the PVs we'll monitor while recording
 	userPrefixes = epics.caget(prefix+"caputRecorderPrefixes", as_string=True)
 	if userPrefixes:
-		commandMonitorList = []
-		for p in userPrefixes:
-			commandMonitorList = [p+"caputRecorderCommand"]
+		makeCommandMonitorList(userPrefixes)
 
 	epics.camonitor(prefix+"caputRecorderMacroStopStart",callback=stopStartMonFunc)
 	epics.camonitor(prefix+"caputRecorderReloadMacros",callback=reloadMacrosMonFunc)
