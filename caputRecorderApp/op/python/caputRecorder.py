@@ -12,9 +12,10 @@ import keyword
 import string
 import macros
 
-# convert whitespace to underscores
-transTable = string.maketrans(" \t", "__")
+# convert commas to spaces
 commaToSpaceTable = string.maketrans(",", " ")
+# legal characters for function names
+legalChars = string.letters + string.digits + "_"
 
 wake = threading.Event()
 debug = 0
@@ -189,15 +190,23 @@ def startMacro():
 	if (busy):
 		epics.caput(prefix+"caputRecorderUserMessage", "a macro is already being recorded")
 		return
-	macroName = epics.caget(prefix+"caputRecorderMacroName")
+	tryMacroName = epics.caget(prefix+"caputRecorderMacroName")
 	
 	# check macroName for problems
-	if (macroName==""):
+	if (tryMacroName==""):
 		epics.caput(prefix+"caputRecorderUserMessage", "*** macro name is empty")
 		epics.caput(prefix+"caputRecorderMacroStopStart", 0)
 		return
-	if macroName.find(" ") != -1:
-		macroName = macroName.translate(transTable)
+	# function name must start with a letter
+	macroName = ""
+	if tryMacroName[0] not in string.letters:
+		macroName = "a"
+	# function name must consist of letters, digits, and underscores
+	for c in tryMacroName:
+		if c in legalChars:
+			macroName += c
+		else:
+			macroName += "_"
 	if macroName in macroFunctionNames:
 		epics.caput(prefix+"caputRecorderUserMessage", "*** macro name is already in use")
 		epics.caput(prefix+"caputRecorderMacroStopStart", 0)
