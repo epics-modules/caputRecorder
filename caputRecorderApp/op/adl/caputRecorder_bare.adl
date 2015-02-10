@@ -193,7 +193,7 @@ text {
 	}
 	command[0] {
 		label="start putrecorder"
-		name="../../../start_putrecorder"
+		name="${START_PUTRECORDER}"
 		args="$(P)"
 	}
 	clr=14
@@ -788,7 +788,7 @@ text {
 	}
 	command[0] {
 		label="edit macros.py"
-		name="${EDITOR} ../python/macros.py&"
+		name="${EDITOR} ${MACROS_PY}&"
 	}
 	clr=14
 	bclr=32
