@@ -156,19 +156,24 @@ ASG(DEFAULT) {
 caQtDM, or CSS-BOY).  The Python program <i>caputRecorder.py</i> will also
 monitor and write to this database.
 
+<P><li>The following environment variables must be set before running MEDM
+(caQtDM, etc.):
+<dl> 
 
-<P><li>The workstation on which this display is running must have the file
-<code>start_putrecorder</code> in its top-level directory (which I'll call
-<code>xxx</code>), and the file <i>macros.py</i> in
-<code>xxx/xxxApp/op/python</code>.  An example copy of
-<code>start_putrecorder</code> (from the synApps xxx module) is available as
+<dt>START_PUTRECORDER<dd>The path to a script that starts caputRecorder.py. 
+This will be used by the "!(re)start recorder" button described below.  There is a sample copy
+of a script that does this:
 <code>caputRecorder/example_start_putrecorder</code>.
 
-An example copy of <i>macros.py</i> is
-available as <code>caputRecorder/caputRecorderApp/op/python/example_macros.py</code>.
+<dt>MACROS_PY<dd>The path to the file, macros.py, in which caputs will be
+recorded.  There is an example copy of macros.py:
+<code>caputRecorder/caputRecorderApp/op/python/example_macros.py</code>.
 
-<P><li>Set the environment variable EDITOR to your preferred text editor, so
-that the button labelled "!edit macros.py" above will work.
+<dt>EDITOR<dd>The command that invokes your preferred editor, which will be used
+by the "!edit macros.py" button described below.
+
+</dl>
+
 </ol>
 
 <h2>How to use</h2>
@@ -221,11 +226,13 @@ recorded.
 
 </ul>
 
-<li><P><b>Record</b>
-<ul>
-<li><P>The text-entry field labelled "function name" should contain the
-name of the python function you want to record.  Note that you aren't permitted
-to use a function name that already exists in the <i>macros.py</i> file.
+<li><P><b>Record</b> <ul> <li><P>The text-entry field labelled "function name"
+should contain the name of the python function you want to record.  Note that
+you aren't permitted to use a function name that already exists in the
+<i>macros.py</i> file. Also note that the function name must start with a
+letter, and consist of letters digits, and underscores.  caputRecorder will
+enforce this by prepending "a" or replacing offending characters with
+underscores.
 
 <li><P>The choice button labelled "record puts" is used to start and stop
 recording.
