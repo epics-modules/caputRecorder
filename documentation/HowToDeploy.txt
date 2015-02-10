@@ -83,6 +83,8 @@ ed start_putrecorder, fixing the following lines:
 	EPICS_APP=/net/s100dserv/xorApps/epics/synApps_5_7/ioc/mlab
 	EPICS_APP_PYTHON_DIR=${EPICS_APP}/mlabApp/op/python
 	PREFIX="mlab:"
+set the environment variable START_PUTRECORDER to the path to start_putrecorder.
+(This allows you to put it anywhere you like.)
 
 edit start_epics, or setup_epics_common, to modify the EPICS_DISPLAY_PATH
 	setenv myEPICS_DISPLAY_PATH $myEPICS_DISPLAY_PATH':'$CAPUTRECORDER/caputRecorderApp/op/adl
@@ -94,6 +96,9 @@ cp $CAPUTRECORDER/caputRecorderApp/op/python/example_macros.py macros.py
 chmod a+w macros.py
 ed macros.py
 	delete everything but the _abort function, and the blank line after it
+
+set the environment variable MACROS_PY to the path to macros.py.  (This allows
+you to put it anywhere you like.)
 
 
 cd $TOP/mlabApp/op/adl
