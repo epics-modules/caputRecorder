@@ -81,7 +81,7 @@ cd $TOP
 cp $CAPUTRECORDER/example_start_putrecorder start_putrecorder
 ed start_putrecorder, fixing the following lines:
 	EPICS_APP=/net/s100dserv/xorApps/epics/synApps_5_7/ioc/mlab
-	EPICS_APP_PYTHON_DIR=${EPICS_APP}/mlabApp/op/python
+	MACROS_PY_DIR=${EPICS_APP}/mlabApp/op/python
 	PREFIX="mlab:"
 set the environment variable START_PUTRECORDER to the path to start_putrecorder.
 (This allows you to put it anywhere you like.)
@@ -97,8 +97,9 @@ chmod a+w macros.py
 ed macros.py
 	delete everything but the _abort function, and the blank line after it
 
-set the environment variable MACROS_PY to the path to macros.py.  (This allows
-you to put it anywhere you like.)
+set the environment variable MACROS_PY to the path to macros.py.  For example,
+setenv MACROS_PY ${EPICS_APP}/mlabApp/op/python/macros.py. (This allows you to
+put it anywhere you like.)
 
 
 cd $TOP/mlabApp/op/adl
