@@ -8,7 +8,7 @@ if [ "" == "${PREFIX}" ] ; then
 fi
 
 EPICS_APP=/home/oxygen/MOONEY/epics/synApps/support/xxx
-EPICS_APP_PYTHON_DIR=${EPICS_APP}/xxxApp/op/python
+MACROS_PY_DIR=${EPICS_APP}/xxxApp/op/python
 
 output=`perl -s ${EPICS_APP}/release.pl -form=bash ${EPICS_APP}`
 eval $output
@@ -25,8 +25,8 @@ if [ "" != "${CAPUTRECORDER_PID}" ] ; then
 fi
 
 
-cd ${EPICS_APP_PYTHON_DIR}
-export PYTHONPATH=${EPICS_APP_PYTHON_DIR}:$PYTHONPATH
+cd ${MACROS_PY_DIR}
+export PYTHONPATH=${MACROS_PY_DIR}:$PYTHONPATH
 
 # start caputRecorder.py
 # The first prefix specifies the caputRecorder.db database instance that will
