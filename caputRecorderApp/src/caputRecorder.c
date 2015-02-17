@@ -118,13 +118,13 @@ int myConvert(dbAddr *paddr, char *destString, int dbrType, dbfType field_type, 
 	epicsInt32 *pint32 = (epicsInt32 *)data;
 	float *pfloat = (float *)data;
 	double *pdouble = (double *)data;
+	int i;
 
 	if (caputRecorderDebug) errlogPrintf("myConvert: dbrType=%d, field_type=%d\n", dbrType, field_type);
 	switch (dbrType) {
 	case(oldDBR_STRING):
 		/* ignore no_elements */
-		strncpy(destString,(char *)data,maxSize);
-		*(destString+maxSize-1) = 0;
+		strncpy(destString,(char *)data, maxSize);
 		break;
 
 	case(oldDBR_SHORT):
@@ -158,8 +158,11 @@ int myConvert(dbAddr *paddr, char *destString, int dbrType, dbfType field_type, 
 		break;
 
 	case(oldDBR_CHAR):
-		while (no_elements--) cvtCharToString(*pchar++, destString++);
+		if (no_elements > maxSize-2) no_elements = maxSize-2;
+		for (i=0; i<no_elements; i++) destString[i] = pchar[i];
+		if (i<maxSize-1) destString[i] = '\0';
 		break;
+
 	case(oldDBR_LONG):
 		/* ignore no_elements */
 		switch (field_type) {
@@ -223,10 +226,33 @@ int myConvert(dbAddr *paddr, char *destString, int dbrType, dbfType field_type, 
 	default:
 		break;
 	}
+
+	*(destString+maxSize-1) = 0;
 	return(0);
 }
 
-#ifdef asTrapWriteWithData
+void myGetValueString(dbAddr *paddr, long n, char *value, int valueSize) {
+	dbfType field_type = paddr->field_type;
+	short field_size = paddr->field_size;
+	long one=1, options=0;
+	char save[COMMAND_SIZE];
+	
+	if ((n>1) && (field_size==1)) {
+		/* long string */
+		if (caputRecorderDebug) errlogPrintf("myGetValueString: (n>1) && (field_size==1)\n");
+		dbGetField(paddr, field_type, value, &options, &n, NULL);
+	} else if (n>1) {
+		/* we don't do arrays, unless they're actually long strings */
+		if (caputRecorderDebug) errlogPrintf("myGetValueString: n>1\n");
+		dbGetField(paddr, DBF_STRING, value, &options, &one, NULL);
+		strncpy(save, value, COMMAND_SIZE-1);
+		epicsSnprintf(value, valueSize-1, "array(%s,...)", save);
+	} else {
+		if (caputRecorderDebug) errlogPrintf("myGetValueString: n<=1\n");
+		dbGetField(paddr, DBF_STRING, value, &options, &n, NULL);
+	}
+	value[valueSize-1] = '\0';
+}
 
 void myAsDataListener(asTrapWriteMessage *pmessage, int after) {
 #if GE_EPICSBASE(3,15,0)
@@ -237,10 +263,10 @@ void myAsDataListener(asTrapWriteMessage *pmessage, int after) {
 	char pvname[BUFFER_SIZE], value[COMMAND_SIZE], save[COMMAND_SIZE];
 	MSG msg;
 	unsigned int numChar;
-	long n=1;
+	long no_elements=1, n;
 	short field_size;
 	dbfType field_type;
-	int i, j;
+	int i, j, dbrType;
 
 	if (caputRecorderDebug) errlogPrintf("myDataListener: after=%d\n", after);
 	if (after==0) return;
@@ -253,30 +279,50 @@ void myAsDataListener(asTrapWriteMessage *pmessage, int after) {
 	pchannel = pmessage->serverSpecific;
 	addr = pchannel->addr;
 	paddr = &addr;
-	n = pchannel->final_no_elements;
+	no_elements = pchannel->final_no_elements;
 	field_type = pchannel->final_type;
-	/* field_type = pchannel->final_dbr_type; */
 	field_size = pchannel->final_field_size;
 	if (caputRecorderDebug) errlogPrintf("myDataListener:final_type=%d, final_dbr_type=%d\n", pchannel->final_type, pchannel->final_dbr_type);
-	if (caputRecorderDebug) errlogPrintf("myDataListener:n=%d, field_size=%d\n", n, field_size);
+	if (caputRecorderDebug) errlogPrintf("myDataListener:no_elements=%d, field_size=%d\n", no_elements, field_size);
 	strncpy(pvname, dbChannelName(pchannel), BUFFER_SIZE-1);
 	numChar = strlen(pvname);
 #else
 	if (caputRecorderDebug) errlogPrintf("myDataListener: LT_EPICSBASE(3,15,0)\n");
 	paddr = pmessage->serverSpecific;
-	n = paddr->no_elements;
+	no_elements = paddr->no_elements;
 	field_type = paddr->field_type;
 	field_size = paddr->field_size;
 	numChar = dbNameOfPV(paddr, pvname, BUFFER_SIZE);
 #endif
+
+	if (caputRecorderDebug) errlogPrintf("myDataListener: no_elements==%ld, field_size==%d\n", no_elements, field_size);
+
+#ifdef asTrapWriteWithData
+	dbrType = pmessage->dbrType;
+	if (pmessage->data) {
+		no_elements = pmessage->no_elements;
+		if (caputRecorderDebug) errlogPrintf("myDataListener: pvname='%s'\n", pvname);
+		myConvert(paddr, value, dbrType, field_type, pmessage->data, pmessage->no_elements, COMMAND_SIZE);
+	} else {
+		myGetValueString(paddr, no_elements, value, COMMAND_SIZE);
+	}
+#else
+	dbrType = -1;
+	myGetValueString(paddr, no_elements, value, COMMAND_SIZE);
+#endif
+
+	/* long strings */
+	if (caputRecorderDebug) errlogPrintf("myDataListener: paddr->field_type=%d, no_elements==%ld\n", paddr->field_type, no_elements);
+	if ((paddr->field_type == DBF_CHAR) && (no_elements > MAX_STRING_SIZE)) {
+		i = strlen(pvname);
+		if (i < PVNAME_STRINGSZ-1) {
+			pvname[i] = '$';
+			pvname[i+1] = '\0';
+		}
+	}
 	if (caputRecorderDebug) errlogPrintf("myDataListener: field_type=%d, dbrType=%d, no_elements='%ld'\n",
-	field_type, pmessage->dbrType, n);
+	field_type, dbrType, no_elements);
 
-	if (caputRecorderDebug) errlogPrintf("n==%ld, field_size==%d\n", n, field_size);
-
-	if (caputRecorderDebug) errlogPrintf("myDataListener: (n>1) && (field_size==1)\n");
-	myConvert(paddr, value, pmessage->dbrType, field_type, pmessage->data, pmessage->no_elements, COMMAND_SIZE);
-	value[COMMAND_SIZE-1] = '\0';
 	if (caputRecorderDebug) errlogPrintf("myDataListener: pvname='%s' => '%s'\n", pvname, value);
 	
 	/* if " in value, replace with \" */
@@ -301,93 +347,6 @@ void myAsDataListener(asTrapWriteMessage *pmessage, int after) {
 		errlogPrintf("myAsListener: message queue overflow\n");
 	}
 }
-
-#else
-
-void myAsListener(asTrapWriteMessage *pmessage, int after) {
-#if GE_EPICSBASE(3,15,0)
-	dbChannel *pchannel;
-	dbAddr addr;
-#endif
-	DBADDR *paddr;
-	char pvname[BUFFER_SIZE], value[COMMAND_SIZE], save[COMMAND_SIZE];
-	MSG msg;
-	unsigned int numChar;
-	long n=1, one=1, options=0;
-	short field_size;
-	dbfType field_type;
-	int i, j;
-
-	if (caputRecorderDebug) errlogPrintf("myListener: after=%d\n", after);
-	if (after==0) return;
-
-	if (caputRecorderDebug) errlogPrintf("myListener: %s@%s\n", pmessage->userid, pmessage->hostid);
-
-#if GE_EPICSBASE(3,15,0)
-	if (caputRecorderDebug) errlogPrintf("myListener: GE_EPICSBASE(3,15,0)\n");
-	pchannel = pmessage->serverSpecific;
-	addr = pchannel->addr;
-	paddr = &addr;
-	n = pchannel->final_no_elements;
-	field_type = pchannel->final_type;
-	/* field_type = pchannel->final_dbr_type; */
-	field_size = pchannel->final_field_size;
-	if (caputRecorderDebug) errlogPrintf("myListener:final_type=%d, final_dbr_type=%d\n", pchannel->final_type, pchannel->final_dbr_type);
-	if (caputRecorderDebug) errlogPrintf("myListener:n=%d, field_size=%d\n", n, field_size);
-	strncpy(pvname, dbChannelName(pchannel), BUFFER_SIZE-1);
-	numChar = strlen(pvname);
-#else
-	if (caputRecorderDebug) errlogPrintf("myListener: LT_EPICSBASE(3,15,0)\n");
-	paddr = pmessage->serverSpecific;
-	n = paddr->no_elements;
-	field_type = paddr->field_type;
-	field_size = paddr->field_size;
-	numChar = dbNameOfPV(paddr, pvname, BUFFER_SIZE);
-#endif
-	if (caputRecorderDebug) errlogPrintf("myListener: field_type=%d, no_elements='%ld'\n", field_type, n);
-
-	if (caputRecorderDebug) errlogPrintf("n==%ld, field_size==%d\n", n, field_size);
-
-	if ((n>1) && (field_size==1)) {
-		/* long string */
-		if (caputRecorderDebug) errlogPrintf("myListener: (n>1) && (field_size==1)\n");
-		dbGetField(paddr, field_type, value, &options, &n, NULL);
-	} else if (n>1) {
-		/* we don't do arrays, unless they're actually long strings */
-		if (caputRecorderDebug) errlogPrintf("myListener: n>1\n");
-		dbGetField(paddr, DBF_STRING, value, &options, &one, NULL);
-		strcpy(save, value);
-		sprintf(value, "array(%s,...)", save);
-	} else {
-		if (caputRecorderDebug) errlogPrintf("myListener: n<=1\n");
-		dbGetField(paddr, DBF_STRING, value, &options, &n, NULL);
-	}
-	value[COMMAND_SIZE-1] = '\0';
-	if (caputRecorderDebug) errlogPrintf("myListener: pvname='%s' => '%s'\n", pvname, value);
-	
-	/* if " in value, replace with \" */
-	strcpy(save, value);
-	for (i=0, j=0; i<COMMAND_SIZE; ) {
-		if (save[j] == '"') value[i++] = '\\';
-		value[i++] = save[j++];
-	}
-	n = epicsSnprintf(msg.command, COMMAND_SIZE-1, "%s,%s,%s@%s", pvname, value, pmessage->userid, pmessage->hostid);
-	msg.command[n] = '\0';
-	msg.nchar = n+1;
-	if (caputRecorderDebug) errlogPrintf("myListener: msg.command='%s', msg.nchar=%d\n\n", msg.command, msg.nchar);
-
-	/* if (valid_command_buffer) dbPutField(paddr_cmd, DBF_CHAR, msg.command, n+1); */
-	if (!caputRecorderMsgQueue) {
-		errlogPrintf("myAsListener: no message queue\n");
-		return;
-	}
-	if (caputRecorderDebug) errlogPrintf("myListener: &msg=%p\n", &msg);
-
-	if (epicsMessageQueueTrySend(caputRecorderMsgQueue, (void *)&msg, MSG_SIZE)) {
-		errlogPrintf("myAsListener: message queue overflow\n");
-	}
-}
-#endif
 
 static void caputRecorderTask() {
 	int msg_size;
@@ -415,11 +374,7 @@ void registerCaputRecorderTrapListener(char *PVname) {
 	}
 	valid_command_buffer = 1;
 
-#ifdef asTrapWriteWithData
 	id = asTrapWriteRegisterListener(myAsDataListener);
-#else
-	id = asTrapWriteRegisterListener(myAsListener);
-#endif
 	if (!caputRecorderMsgQueue) {
 		caputRecorderMsgQueue = epicsMessageQueueCreate(MAX_MESSAGES, MSG_SIZE);
 	}
