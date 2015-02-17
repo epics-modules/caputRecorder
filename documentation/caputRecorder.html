@@ -371,4 +371,14 @@ can also trap caputs and write them to a PV.  A proof-of-principle
 implementation of caputRecorder used caPutLog 3.4 to do this, but it didn't
 handle long strings.
 
+<li><P>In EPICS 3.14.12.4 and earlier, and in versions of 3.15 earlier than
+3.15.2, access security did not provide the data from a caput to the
+asTrapListener, so caputRecorder used dbGetField() to get the data after it had
+been written. This was ok for most PVs, but some PVs (for example, the tweak
+fields of a motor record) have their values changed immediately after being
+written, and caputRecorder was getting the final value, rather than the value
+the user actually wrote.  Andrew Johnson fixed this by providing data to the
+asTrapListener, and caputRecorder R1-4 and later will use this capability if it
+is present.
+
  </BODY>
