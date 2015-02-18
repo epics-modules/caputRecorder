@@ -73,9 +73,7 @@ void getEnumString(dbAddr *paddr, char *destString, unsigned short us) {
 	cvtUshortToString(us, destString);
 	if (paddr) {
 		prset = dbGetRset(paddr);
-		if (caputRecorderDebug) errlogPrintf("getEnumString: prset=%p\n", prset);
 		if (prset && prset->get_enum_strs) {
-			if (caputRecorderDebug) errlogPrintf("getEnumString: get_enum_strs found\n");
 			status = (*prset->get_enum_strs)(paddr,&enumStrs);
 			if (!status) {
 				if (us < enumStrs.no_str) {
@@ -112,9 +110,9 @@ void getMenuString(dbAddr *paddr, char *destString, unsigned short us) {
 }
 
 int myConvert(dbAddr *paddr, char *destString, int dbrType, dbfType field_type, void *data, int no_elements, int maxSize) {
-    char  *pchar =  (char *)data;
-    short  *pshort = (short *)data;
-    unsigned short *pushort = (unsigned short *)data;
+	char *pchar =  (char *)data;
+	short *pshort = (short *)data;
+	unsigned short *pushort = (unsigned short *)data;
 	epicsInt32 *pint32 = (epicsInt32 *)data;
 	float *pfloat = (float *)data;
 	double *pdouble = (double *)data;
@@ -196,7 +194,7 @@ int myConvert(dbAddr *paddr, char *destString, int dbrType, dbfType field_type, 
 			getMenuString(paddr, destString, (unsigned short)*pfloat);
 			break;
 		default:
-			cvtFloatToString(*pfloat, destString, 11);
+			cvtFloatToString(*pfloat, destString, 7);
 			break;
 		}
 		break;
@@ -268,26 +266,26 @@ void myAsDataListener(asTrapWriteMessage *pmessage, int after) {
 	dbfType field_type;
 	int i, j, dbrType;
 
-	if (caputRecorderDebug) errlogPrintf("myDataListener: after=%d\n", after);
+	if (caputRecorderDebug) errlogPrintf("myAsDataListener: after=%d\n", after);
 	if (after==0) return;
 
-	if (caputRecorderDebug) errlogPrintf("myDataListener: %s@%s\n", pmessage->userid, pmessage->hostid);
+	if (caputRecorderDebug) errlogPrintf("myAsDataListener: %s@%s\n", pmessage->userid, pmessage->hostid);
 
 #if GE_EPICSBASE(3,15,0)
-	/* Haven't converted this to use asTrap data */
-	if (caputRecorderDebug) errlogPrintf("myDataListener: GE_EPICSBASE(3,15,0)\n");
+	/* Haven't tested this with asTrapWriteWithData */
+	if (caputRecorderDebug) errlogPrintf("myAsDataListener: GE_EPICSBASE(3,15,0)\n");
 	pchannel = pmessage->serverSpecific;
 	addr = pchannel->addr;
 	paddr = &addr;
 	no_elements = pchannel->final_no_elements;
 	field_type = pchannel->final_type;
 	field_size = pchannel->final_field_size;
-	if (caputRecorderDebug) errlogPrintf("myDataListener:final_type=%d, final_dbr_type=%d\n", pchannel->final_type, pchannel->final_dbr_type);
-	if (caputRecorderDebug) errlogPrintf("myDataListener:no_elements=%d, field_size=%d\n", no_elements, field_size);
+	if (caputRecorderDebug) errlogPrintf("myAsDataListener:final_type=%d, final_dbr_type=%d\n", pchannel->final_type, pchannel->final_dbr_type);
+	if (caputRecorderDebug) errlogPrintf("myAsDataListener:no_elements=%d, field_size=%d\n", no_elements, field_size);
 	strncpy(pvname, dbChannelName(pchannel), BUFFER_SIZE-1);
 	numChar = strlen(pvname);
 #else
-	if (caputRecorderDebug) errlogPrintf("myDataListener: LT_EPICSBASE(3,15,0)\n");
+	if (caputRecorderDebug) errlogPrintf("myAsDataListener: LT_EPICSBASE(3,15,0)\n");
 	paddr = pmessage->serverSpecific;
 	no_elements = paddr->no_elements;
 	field_type = paddr->field_type;
@@ -295,24 +293,25 @@ void myAsDataListener(asTrapWriteMessage *pmessage, int after) {
 	numChar = dbNameOfPV(paddr, pvname, BUFFER_SIZE);
 #endif
 
-	if (caputRecorderDebug) errlogPrintf("myDataListener: no_elements==%ld, field_size==%d\n", no_elements, field_size);
+	if (caputRecorderDebug) errlogPrintf("myAsDataListener: no_elements==%ld, field_size==%d\n", no_elements, field_size);
 
+
+	dbrType = -1;
 #ifdef asTrapWriteWithData
-	dbrType = pmessage->dbrType;
 	if (pmessage->data) {
+		dbrType = pmessage->dbrType;
 		no_elements = pmessage->no_elements;
-		if (caputRecorderDebug) errlogPrintf("myDataListener: pvname='%s'\n", pvname);
+		if (caputRecorderDebug) errlogPrintf("myAsDataListener: pvname='%s'\n", pvname);
 		myConvert(paddr, value, dbrType, field_type, pmessage->data, pmessage->no_elements, COMMAND_SIZE);
 	} else {
 		myGetValueString(paddr, no_elements, value, COMMAND_SIZE);
 	}
 #else
-	dbrType = -1;
 	myGetValueString(paddr, no_elements, value, COMMAND_SIZE);
 #endif
 
 	/* long strings */
-	if (caputRecorderDebug) errlogPrintf("myDataListener: paddr->field_type=%d, no_elements==%ld\n", paddr->field_type, no_elements);
+	if (caputRecorderDebug) errlogPrintf("myAsDataListener: paddr->field_type=%d, no_elements==%ld\n", paddr->field_type, no_elements);
 	if ((paddr->field_type == DBF_CHAR) && (no_elements > MAX_STRING_SIZE)) {
 		i = strlen(pvname);
 		if (i < PVNAME_STRINGSZ-1) {
@@ -320,10 +319,10 @@ void myAsDataListener(asTrapWriteMessage *pmessage, int after) {
 			pvname[i+1] = '\0';
 		}
 	}
-	if (caputRecorderDebug) errlogPrintf("myDataListener: field_type=%d, dbrType=%d, no_elements='%ld'\n",
+	if (caputRecorderDebug) errlogPrintf("myAsDataListener: field_type=%d, dbrType=%d, no_elements='%ld'\n",
 	field_type, dbrType, no_elements);
 
-	if (caputRecorderDebug) errlogPrintf("myDataListener: pvname='%s' => '%s'\n", pvname, value);
+	if (caputRecorderDebug) errlogPrintf("myAsDataListener: pvname='%s' => '%s'\n", pvname, value);
 	
 	/* if " in value, replace with \" */
 	strcpy(save, value);
@@ -334,17 +333,17 @@ void myAsDataListener(asTrapWriteMessage *pmessage, int after) {
 	n = epicsSnprintf(msg.command, COMMAND_SIZE-1, "%s,%s,%s@%s", pvname, value, pmessage->userid, pmessage->hostid);
 	msg.command[n] = '\0';
 	msg.nchar = n+1;
-	if (caputRecorderDebug) errlogPrintf("myDataListener: msg.command='%s', msg.nchar=%d\n\n", msg.command, msg.nchar);
+	if (caputRecorderDebug) errlogPrintf("myAsDataListener: msg.command='%s', msg.nchar=%d\n\n", msg.command, msg.nchar);
 
 	/* if (valid_command_buffer) dbPutField(paddr_cmd, DBF_CHAR, msg.command, n+1); */
 	if (!caputRecorderMsgQueue) {
-		errlogPrintf("myAsListener: no message queue\n");
+		errlogPrintf("myAsDataListener: no message queue\n");
 		return;
 	}
-	if (caputRecorderDebug) errlogPrintf("myDataListener: &msg=%p\n", &msg);
+	if (caputRecorderDebug) errlogPrintf("myAsDataListener: &msg=%p\n", &msg);
 
 	if (epicsMessageQueueTrySend(caputRecorderMsgQueue, (void *)&msg, MSG_SIZE)) {
-		errlogPrintf("myAsListener: message queue overflow\n");
+		errlogPrintf("myAsDataListener: message queue overflow\n");
 	}
 }
 
