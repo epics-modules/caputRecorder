@@ -3,3 +3,4 @@ $(P)caputRecorderHosts
 $(P)caputRecorderPrefixes
 $(P)caputRecorderDelaySec
 $(P)caputRecorderWaitCBSec
+$(P)caputRecorderDebug
