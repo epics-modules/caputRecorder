@@ -1,3 +1,18 @@
+record(mbbo, "$(P)caputRecorderIfMacroExists") {
+	field(ZRST, "Fail")
+	field(ONST, "Append")
+	field(TWST, "Replace")
+}
+record(bo, "$(P)caputRecorderWaitCompletion") {
+	field(ZNAM, "No")
+	field(ONAM, "Yes")
+	field(DOL, "1")
+}
+record(bo, "$(P)caputRecorderRecordTiming") {
+	field(ZNAM, "No")
+	field(ONAM, "Yes")
+}
+
 record(sub, "$(P)caputRecorderSubMLIS") {
 	field(SCAN, "1 second")
 	field(INAM, "initSubMLIS")
