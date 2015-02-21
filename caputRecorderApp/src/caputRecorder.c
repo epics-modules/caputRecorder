@@ -293,6 +293,9 @@ void myAsDataListener(asTrapWriteMessage *pmessage, int after) {
 	numChar = dbNameOfPV(paddr, pvname, BUFFER_SIZE);
 #endif
 
+	if (strstr(pvname, "caputRecorderHeartbeat")) {
+		return;
+	}
 	if (caputRecorderDebug) errlogPrintf("myAsDataListener: no_elements==%ld, field_size==%d\n", no_elements, field_size);
 
 
