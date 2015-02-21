@@ -152,7 +152,7 @@ polyline {
 		x=170
 		y=45
 		width=110
-		height=20
+		height=24
 	}
 	control {
 		chan="$(P)caputRecorderMacroStopStart"
@@ -265,9 +265,9 @@ menu {
 "choice button" {
 	object {
 		x=170
-		y=130
+		y=129
 		width=90
-		height=20
+		height=24
 	}
 	control {
 		chan="$(P)caputRecorderExecuteMacro"
@@ -281,7 +281,7 @@ menu {
 		x=10
 		y=105
 		width=230
-		height=20
+		height=18
 	}
 	control {
 		chan="$(P)caputRecorderReloadMacros"
@@ -455,52 +455,41 @@ rectangle {
 		chan="$(P)caputRecorderSubMLIS"
 	}
 }
-composite {
+text {
 	object {
 		x=355
 		y=105
 		width=45
-		height=20
+		height=10
 	}
-	"composite name"=""
-	children {
-		text {
-			object {
-				x=355
-				y=105
-				width=45
-				height=10
-			}
-			"basic attribute" {
-				clr=20
-			}
-			"dynamic attribute" {
-				vis="calc"
-				calc="a&b"
-				chan="$(P)caputRecorderNeedRefresh"
-				chanB="$(P)caputRecorderNeedRefreshB"
-			}
-			textix="PRESS"
-			align="horiz. centered"
-		}
-		text {
-			object {
-				x=355
-				y=115
-				width=45
-				height=10
-			}
-			"basic attribute" {
-				clr=20
-			}
-			"dynamic attribute" {
-				vis="calc"
-				calc="a&b"
-				chan="$(P)caputRecorderNeedRefresh"
-				chanB="$(P)caputRecorderNeedRefreshB"
-			}
-			textix="REFRESH"
-			align="horiz. centered"
-		}
+	"basic attribute" {
+		clr=20
 	}
+	"dynamic attribute" {
+		vis="calc"
+		calc="a&b"
+		chan="$(P)caputRecorderNeedRefresh"
+		chanB="$(P)caputRecorderNeedRefreshB"
+	}
+	textix="PRESS"
+	align="horiz. centered"
+}
+text {
+	object {
+		x=355
+		y=115
+		width=45
+		height=10
+	}
+	"basic attribute" {
+		clr=20
+	}
+	"dynamic attribute" {
+		vis="calc"
+		calc="a&b"
+		chan="$(P)caputRecorderNeedRefresh"
+		chanB="$(P)caputRecorderNeedRefreshB"
+	}
+	textix="REFRESH"
+	align="horiz. centered"
 }

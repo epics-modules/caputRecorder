@@ -5,10 +5,10 @@ file {
 }
 display {
 	object {
-		x=560
-		y=394
+		x=413
+		y=391
 		width=400
-		height=210
+		height=260
 	}
 	clr=14
 	bclr=2
@@ -131,7 +131,7 @@ text {
 	object {
 		x=10
 		y=35
-		width=380
+		width=400
 		height=20
 	}
 	"basic attribute" {
@@ -256,10 +256,26 @@ polyline {
 		(398,121)
 	}
 }
+polyline {
+	object {
+		x=1
+		y=185
+		width=399
+		height=3
+	}
+	"basic attribute" {
+		clr=54
+		width=3
+	}
+	points {
+		(2,186)
+		(398,186)
+	}
+}
 "related display" {
 	object {
 		x=360
-		y=185
+		y=234
 		width=40
 		height=20
 	}
@@ -271,32 +287,124 @@ polyline {
 	bclr=17
 	label="-Help"
 }
+composite {
+	object {
+		x=319
+		y=212
+		width=80
+		height=16
+	}
+	"composite name"=""
+	children {
+		text {
+			object {
+				x=319
+				y=212
+				width=45
+				height=14
+			}
+			"basic attribute" {
+				clr=5
+			}
+			textix="debug:"
+			align="horiz. right"
+		}
+		"text entry" {
+			object {
+				x=369
+				y=212
+				width=30
+				height=16
+			}
+			control {
+				chan="$(P)caputRecorderDebug"
+				clr=14
+				bclr=2
+			}
+			format="string"
+			limits {
+			}
+		}
+	}
+}
+"choice button" {
+	object {
+		x=181
+		y=196
+		width=80
+		height=18
+	}
+	control {
+		chan="$(P)caputRecorderRecordTiming"
+		clr=14
+		bclr=51
+	}
+	stacking="column"
+}
 text {
 	object {
 		x=10
-		y=190
-		width=45
+		y=198
+		width=170
 		height=14
 	}
 	"basic attribute" {
-		clr=5
+		clr=14
 	}
-	textix="debug:"
+	textix="record timing of caputs?"
 	align="horiz. right"
 }
-"text entry" {
+"choice button" {
 	object {
-		x=60
-		y=190
-		width=30
-		height=16
+		x=181
+		y=216
+		width=80
+		height=18
 	}
 	control {
-		chan="$(P)caputRecorderDebug"
+		chan="$(P)caputRecorderWaitCompletion"
 		clr=14
-		bclr=2
+		bclr=51
 	}
-	format="string"
-	limits {
+	stacking="column"
+}
+text {
+	object {
+		x=10
+		y=218
+		width=170
+		height=14
 	}
+	"basic attribute" {
+		clr=14
+	}
+	textix="wait for completion?"
+	align="horiz. right"
+}
+"choice button" {
+	object {
+		x=181
+		y=236
+		width=170
+		height=18
+	}
+	control {
+		chan="$(P)caputRecorderIfMacroExists"
+		clr=14
+		bclr=51
+	}
+	stacking="column"
+}
+text {
+	object {
+		x=10
+		y=238
+		width=170
+		height=14
+	}
+	"basic attribute" {
+		clr=14
+	}
+	textix="if macro already exists:"
+	align="horiz. right"
 }

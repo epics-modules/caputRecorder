@@ -308,7 +308,7 @@ text {
 text {
 	object {
 		x=170
-		y=170
+		y=166
 		width=110
 		height=14
 	}
@@ -348,7 +348,7 @@ text {
 		x=10
 		y=425
 		width=230
-		height=20
+		height=18
 	}
 	control {
 		chan="$(P)caputRecorderReloadMacros"
@@ -400,45 +400,34 @@ polyline {
 	bclr=32
 	label="edit macros.py"
 }
-composite {
+"choice button" {
+	object {
+		x=170
+		y=181
+		width=110
+		height=24
+	}
+	control {
+		chan="$(P)caputRecorderMacroStopStart"
+		clr=14
+		bclr=51
+	}
+	stacking="column"
+}
+"text entry" {
 	object {
 		x=10
 		y=185
-		width=270
+		width=150
 		height=20
 	}
-	"composite name"=""
-	children {
-		"choice button" {
-			object {
-				x=170
-				y=185
-				width=110
-				height=20
-			}
-			control {
-				chan="$(P)caputRecorderMacroStopStart"
-				clr=14
-				bclr=51
-			}
-			stacking="column"
-		}
-		"text entry" {
-			object {
-				x=10
-				y=185
-				width=150
-				height=20
-			}
-			control {
-				chan="$(P)caputRecorderMacroName"
-				clr=14
-				bclr=51
-			}
-			format="string"
-			limits {
-			}
-		}
+	control {
+		chan="$(P)caputRecorderMacroName"
+		clr=14
+		bclr=51
+	}
+	format="string"
+	limits {
 	}
 }
 "choice button" {
@@ -550,9 +539,9 @@ text {
 "choice button" {
 	object {
 		x=170
-		y=481
+		y=477
 		width=90
-		height=20
+		height=24
 	}
 	control {
 		chan="$(P)caputRecorderExecuteMacro"
@@ -576,44 +565,33 @@ text {
 	label="Abort"
 	press_msg="1"
 }
-composite {
+"text entry" {
 	object {
 		x=265
 		y=481
-		width=72
+		width=30
 		height=20
 	}
-	"composite name"=""
-	children {
-		"text entry" {
-			object {
-				x=265
-				y=481
-				width=30
-				height=20
-			}
-			control {
-				chan="$(P)caputRecorderExecuteLoops"
-				clr=14
-				bclr=51
-			}
-			format="string"
-			limits {
-			}
-		}
-		text {
-			object {
-				x=297
-				y=484
-				width=40
-				height=14
-			}
-			"basic attribute" {
-				clr=14
-			}
-			textix="times"
-		}
+	control {
+		chan="$(P)caputRecorderExecuteLoops"
+		clr=14
+		bclr=51
 	}
+	format="string"
+	limits {
+	}
+}
+text {
+	object {
+		x=297
+		y=484
+		width=40
+		height=14
+	}
+	"basic attribute" {
+		clr=14
+	}
+	textix="times"
 }
 "text update" {
 	object {
@@ -647,208 +625,164 @@ polyline {
 		(397,452)
 	}
 }
-composite {
+"text update" {
 	object {
 		x=10
 		y=345
-		width=370
-		height=35
+		width=70
+		height=14
 	}
-	"composite name"=""
-	children {
-		composite {
-			object {
-				x=10
-				y=345
-				width=70
-				height=35
-			}
-			"composite name"=""
-			children {
-				"text update" {
-					object {
-						x=10
-						y=345
-						width=70
-						height=14
-					}
-					monitor {
-						chan="$(P)caputRecorderArg1Name"
-						clr=14
-						bclr=1
-					}
-					format="string"
-					limits {
-					}
-				}
-				"text entry" {
-					object {
-						x=10
-						y=360
-						width=70
-						height=20
-					}
-					control {
-						chan="$(P)caputRecorderArg1Value"
-						clr=14
-						bclr=51
-					}
-					format="string"
-					limits {
-					}
-				}
-			}
-		}
-		composite {
-			object {
-				x=85
-				y=345
-				width=70
-				height=35
-			}
-			"composite name"=""
-			children {
-				"text update" {
-					object {
-						x=85
-						y=345
-						width=70
-						height=14
-					}
-					monitor {
-						chan="$(P)caputRecorderArg2Name"
-						clr=14
-						bclr=1
-					}
-					format="string"
-					limits {
-					}
-				}
-				"text entry" {
-					object {
-						x=85
-						y=360
-						width=70
-						height=20
-					}
-					control {
-						chan="$(P)caputRecorderArg2Value"
-						clr=14
-						bclr=51
-					}
-					format="string"
-					limits {
-					}
-				}
-			}
-		}
-		composite {
-			object {
-				x=160
-				y=345
-				width=70
-				height=35
-			}
-			"composite name"=""
-			children {
-				"text update" {
-					object {
-						x=160
-						y=345
-						width=70
-						height=14
-					}
-					monitor {
-						chan="$(P)caputRecorderArg3Name"
-						clr=14
-						bclr=1
-					}
-					format="string"
-					limits {
-					}
-				}
-				"text entry" {
-					object {
-						x=160
-						y=360
-						width=70
-						height=20
-					}
-					control {
-						chan="$(P)caputRecorderArg3Value"
-						clr=14
-						bclr=51
-					}
-					format="string"
-					limits {
-					}
-				}
-			}
-		}
-		"text update" {
-			object {
-				x=235
-				y=345
-				width=70
-				height=14
-			}
-			monitor {
-				chan="$(P)caputRecorderArg4Name"
-				clr=14
-				bclr=1
-			}
-			format="string"
-			limits {
-			}
-		}
-		"text entry" {
-			object {
-				x=235
-				y=360
-				width=70
-				height=20
-			}
-			control {
-				chan="$(P)caputRecorderArg4Value"
-				clr=14
-				bclr=51
-			}
-			format="string"
-			limits {
-			}
-		}
-		"text update" {
-			object {
-				x=310
-				y=345
-				width=70
-				height=14
-			}
-			monitor {
-				chan="$(P)caputRecorderArg5Name"
-				clr=14
-				bclr=1
-			}
-			format="string"
-			limits {
-			}
-		}
-		"text entry" {
-			object {
-				x=310
-				y=360
-				width=70
-				height=20
-			}
-			control {
-				chan="$(P)caputRecorderArg5Value"
-				clr=14
-				bclr=51
-			}
-			format="string"
-			limits {
-			}
-		}
+	monitor {
+		chan="$(P)caputRecorderArg1Name"
+		clr=14
+		bclr=1
+	}
+	format="string"
+	limits {
+	}
+}
+"text entry" {
+	object {
+		x=10
+		y=360
+		width=70
+		height=20
+	}
+	control {
+		chan="$(P)caputRecorderArg1Value"
+		clr=14
+		bclr=51
+	}
+	format="string"
+	limits {
+	}
+}
+"text update" {
+	object {
+		x=85
+		y=345
+		width=70
+		height=14
+	}
+	monitor {
+		chan="$(P)caputRecorderArg2Name"
+		clr=14
+		bclr=1
+	}
+	format="string"
+	limits {
+	}
+}
+"text entry" {
+	object {
+		x=85
+		y=360
+		width=70
+		height=20
+	}
+	control {
+		chan="$(P)caputRecorderArg2Value"
+		clr=14
+		bclr=51
+	}
+	format="string"
+	limits {
+	}
+}
+"text update" {
+	object {
+		x=160
+		y=345
+		width=70
+		height=14
+	}
+	monitor {
+		chan="$(P)caputRecorderArg3Name"
+		clr=14
+		bclr=1
+	}
+	format="string"
+	limits {
+	}
+}
+"text entry" {
+	object {
+		x=160
+		y=360
+		width=70
+		height=20
+	}
+	control {
+		chan="$(P)caputRecorderArg3Value"
+		clr=14
+		bclr=51
+	}
+	format="string"
+	limits {
+	}
+}
+"text update" {
+	object {
+		x=235
+		y=345
+		width=70
+		height=14
+	}
+	monitor {
+		chan="$(P)caputRecorderArg4Name"
+		clr=14
+		bclr=1
+	}
+	format="string"
+	limits {
+	}
+}
+"text entry" {
+	object {
+		x=235
+		y=360
+		width=70
+		height=20
+	}
+	control {
+		chan="$(P)caputRecorderArg4Value"
+		clr=14
+		bclr=51
+	}
+	format="string"
+	limits {
+	}
+}
+"text update" {
+	object {
+		x=310
+		y=345
+		width=70
+		height=14
+	}
+	monitor {
+		chan="$(P)caputRecorderArg5Name"
+		clr=14
+		bclr=1
+	}
+	format="string"
+	limits {
+	}
+}
+"text entry" {
+	object {
+		x=310
+		y=360
+		width=70
+		height=20
+	}
+	control {
+		chan="$(P)caputRecorderArg5Value"
+		clr=14
+		bclr=51
+	}
+	format="string"
+	limits {
 	}
 }
 text {
@@ -1182,52 +1116,41 @@ rectangle {
 		chan="$(P)caputRecorderSubMLIS"
 	}
 }
-composite {
+text {
 	object {
 		x=355
 		y=425
 		width=45
-		height=20
+		height=10
 	}
-	"composite name"=""
-	children {
-		text {
-			object {
-				x=355
-				y=425
-				width=45
-				height=10
-			}
-			"basic attribute" {
-				clr=20
-			}
-			"dynamic attribute" {
-				vis="calc"
-				calc="a&b"
-				chan="$(P)caputRecorderNeedRefresh"
-				chanB="$(P)caputRecorderNeedRefreshB"
-			}
-			textix="PRESS"
-			align="horiz. centered"
-		}
-		text {
-			object {
-				x=355
-				y=435
-				width=45
-				height=10
-			}
-			"basic attribute" {
-				clr=20
-			}
-			"dynamic attribute" {
-				vis="calc"
-				calc="a&b"
-				chan="$(P)caputRecorderNeedRefresh"
-				chanB="$(P)caputRecorderNeedRefreshB"
-			}
-			textix="REFRESH"
-			align="horiz. centered"
-		}
+	"basic attribute" {
+		clr=20
 	}
+	"dynamic attribute" {
+		vis="calc"
+		calc="a&b"
+		chan="$(P)caputRecorderNeedRefresh"
+		chanB="$(P)caputRecorderNeedRefreshB"
+	}
+	textix="PRESS"
+	align="horiz. centered"
+}
+text {
+	object {
+		x=355
+		y=435
+		width=45
+		height=10
+	}
+	"basic attribute" {
+		clr=20
+	}
+	"dynamic attribute" {
+		vis="calc"
+		calc="a&b"
+		chan="$(P)caputRecorderNeedRefresh"
+		chanB="$(P)caputRecorderNeedRefreshB"
+	}
+	textix="REFRESH"
+	align="horiz. centered"
 }

@@ -5,10 +5,10 @@ file {
 }
 display {
 	object {
-		x=972
-		y=40
+		x=1102
+		y=419
 		width=400
-		height=400
+		height=480
 	}
 	clr=14
 	bclr=2
@@ -473,4 +473,141 @@ polyline {
 		(1,286)
 		(397,286)
 	}
+}
+polyline {
+	object {
+		x=1
+		y=405
+		width=399
+		height=3
+	}
+	"basic attribute" {
+		clr=54
+		width=3
+	}
+	points {
+		(2,406)
+		(398,406)
+	}
+}
+composite {
+	object {
+		x=319
+		y=431
+		width=80
+		height=16
+	}
+	"composite name"=""
+	children {
+		text {
+			object {
+				x=319
+				y=431
+				width=45
+				height=14
+			}
+			"basic attribute" {
+				clr=5
+			}
+			textix="debug:"
+			align="horiz. right"
+		}
+		"text entry" {
+			object {
+				x=369
+				y=431
+				width=30
+				height=16
+			}
+			control {
+				chan="$(P)caputRecorderDebug"
+				clr=14
+				bclr=2
+			}
+			format="string"
+			limits {
+			}
+		}
+	}
+}
+"choice button" {
+	object {
+		x=181
+		y=415
+		width=80
+		height=18
+	}
+	control {
+		chan="$(P)caputRecorderRecordTiming"
+		clr=14
+		bclr=51
+	}
+	stacking="column"
+}
+text {
+	object {
+		x=10
+		y=417
+		width=170
+		height=14
+	}
+	"basic attribute" {
+		clr=14
+	}
+	textix="record timing of caputs?"
+	align="horiz. right"
+}
+"choice button" {
+	object {
+		x=181
+		y=435
+		width=80
+		height=18
+	}
+	control {
+		chan="$(P)caputRecorderWaitCompletion"
+		clr=14
+		bclr=51
+	}
+	stacking="column"
+}
+text {
+	object {
+		x=10
+		y=437
+		width=170
+		height=14
+	}
+	"basic attribute" {
+		clr=14
+	}
+	textix="wait for completion?"
+	align="horiz. right"
+}
+"choice button" {
+	object {
+		x=181
+		y=455
+		width=170
+		height=18
+	}
+	control {
+		chan="$(P)caputRecorderIfMacroExists"
+		clr=14
+		bclr=51
+	}
+	stacking="column"
+}
+text {
+	object {
+		x=10
+		y=457
+		width=170
+		height=14
+	}
+	"basic attribute" {
+		clr=14
+	}
+	textix="if macro already exists:"
+	align="horiz. right"
 }
