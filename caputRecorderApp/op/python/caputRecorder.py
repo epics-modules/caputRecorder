@@ -254,7 +254,7 @@ def stopStartMonFunc(pvname, value, char_value, **kwd):
 	else:
 		if value:
 			doStartMacro = 1
-		elif executingMacro:
+		else:
 			doStopMacro = 1
 		wake.set()
 
@@ -620,6 +620,7 @@ def start():
 			doStartMacro=0
 			startMacro()
 		if doStopMacro:
+			if debug: print "start: doStopMacro=True"
 			doStopMacro = 0
 			endMacro()
 		if doReloadMacros:
