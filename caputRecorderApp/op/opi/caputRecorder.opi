@@ -3,11 +3,11 @@
   <macros>
     <include_parent_macros>true</include_parent_macros>
   </macros>
-  <wuid>-5afea2c6:14b378672a3:-7fff</wuid>
+  <wuid>25f0e6ca:14baa28222d:-7fc6</wuid>
   <boy_version>3.2.10.20140131</boy_version>
   <scripts />
   <show_ruler>true</show_ruler>
-  <height>485</height>
+  <height>525</height>
   <name>caputRecorder</name>
   <snap_to_geometry>false</snap_to_geometry>
   <show_grid>false</show_grid>
@@ -36,11 +36,11 @@
       <include_parent_macros>true</include_parent_macros>
     </macros>
     <visible>true</visible>
-    <wuid>-5afea2c6:14b378672a3:-7ffd</wuid>
+    <wuid>25f0e6ca:14baa28222d:-7fc4</wuid>
     <auto_size>false</auto_size>
     <scripts />
     <zoom_to_fit>true</zoom_to_fit>
-    <height>461</height>
+    <height>501</height>
     <name>Linking Container</name>
     <scale_options>
       <width_scalable>true</width_scalable>
@@ -77,7 +77,7 @@
       <include_parent_macros>true</include_parent_macros>
     </macros>
     <visible>true</visible>
-    <wuid>-5afea2c6:14b378672a3:-7ffc</wuid>
+    <wuid>25f0e6ca:14baa28222d:-7fc3</wuid>
     <scripts />
     <height>20</height>
     <name>Grouping Container</name>
@@ -108,7 +108,7 @@
     <border_color>
       <color red="0" green="128" blue="255" />
     </border_color>
-    <y>465</y>
+    <y>505</y>
     <actions hook="false" hook_all="false" />
     <x>270</x>
     <tooltip></tooltip>
@@ -116,7 +116,7 @@
       <border_alarm_sensitive>false</border_alarm_sensitive>
       <visible>true</visible>
       <actions_from_pv>false</actions_from_pv>
-      <wuid>-5afea2c6:14b378672a3:-7ffb</wuid>
+      <wuid>25f0e6ca:14baa28222d:-7fc2</wuid>
       <scripts />
       <height>20</height>
       <name>Menu Button</name>
@@ -168,7 +168,7 @@ $(pv_value)</tooltip>
       <border_alarm_sensitive>false</border_alarm_sensitive>
       <visible>true</visible>
       <actions_from_pv>false</actions_from_pv>
-      <wuid>-5afea2c6:14b378672a3:-7ffa</wuid>
+      <wuid>25f0e6ca:14baa28222d:-7fc1</wuid>
       <scripts />
       <height>20</height>
       <name>Menu Button</name>
@@ -221,7 +221,7 @@ $(pv_value)</tooltip>
     <border_alarm_sensitive>false</border_alarm_sensitive>
     <visible>true</visible>
     <actions_from_pv>false</actions_from_pv>
-    <wuid>-5afea2c6:14b378672a3:-7ffe</wuid>
+    <wuid>25f0e6ca:14baa28222d:-7fc5</wuid>
     <scripts />
     <height>20</height>
     <name>Menu Button</name>
@@ -254,7 +254,7 @@ $(pv_value)</tooltip>
     <border_color>
       <color red="0" green="128" blue="255" />
     </border_color>
-    <y>265</y>
+    <y>425</y>
     <actions hook="false" hook_all="false">
       <action type="OPEN_DISPLAY">
         <path>caputRecorder1.opi</path>
