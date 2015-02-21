@@ -193,7 +193,7 @@ QPushButton::menu-indicator {image: url(none.png); width: 0}
                     <x>170</x>
                     <y>45</y>
                     <width>110</width>
-                    <height>20</height>
+                    <height>24</height>
                 </rect>
             </property>
             <property name="channel">
@@ -497,9 +497,9 @@ QPushButton::menu-indicator {image: url(none.png); width: 0}
             <property name="geometry">
                 <rect>
                     <x>170</x>
-                    <y>130</y>
+                    <y>129</y>
                     <width>90</width>
-                    <height>20</height>
+                    <height>24</height>
                 </rect>
             </property>
             <property name="channel">
@@ -532,7 +532,7 @@ QPushButton::menu-indicator {image: url(none.png); width: 0}
                     <x>10</x>
                     <y>105</y>
                     <width>230</width>
-                    <height>20</height>
+                    <height>18</height>
                 </rect>
             </property>
             <property name="channel">
@@ -935,111 +935,101 @@ QPushButton::menu-indicator {image: url(none.png); width: 0}
                 <string>$(P)caputRecorderSubMLIS</string>
             </property>
         </widget>
-        <widget class="caFrame" name="caFrame_1">
+        <widget class="caLabel" name="caLabel_7">
+            <property name="frameShape">
+                <enum>QFrame::NoFrame</enum>
+            </property>
+            <property name="foreground">
+                <color alpha="255">
+                    <red>253</red>
+                    <green>0</green>
+                    <blue>0</blue>
+                </color>
+            </property>
+            <property name="background">
+                <color alpha="0">
+                    <red>253</red>
+                    <green>0</green>
+                    <blue>0</blue>
+                </color>
+            </property>
+            <property name="visibility">
+                <enum>caLabel::Calc</enum>
+            </property>
+            <property name="visibilityCalc">
+                <string>a&amp;b</string>
+            </property>
+            <property name="channel">
+                <string>$(P)caputRecorderNeedRefresh</string>
+            </property>
+            <property name="channelB">
+                <string>$(P)caputRecorderNeedRefreshB</string>
+            </property>
+            <property name="text">
+                <string>PRESS</string>
+            </property>
+            <property name="fontScaleMode">
+                <enum>ESimpleLabel::WidthAndHeight</enum>
+            </property>
+            <property name="alignment">
+                <set>Qt::AlignAbsolute|Qt::AlignHCenter|Qt::AlignVCenter</set>
+            </property>
             <property name="geometry">
                 <rect>
                     <x>355</x>
                     <y>105</y>
-                    <width>47</width>
-                    <height>22</height>
+                    <width>45</width>
+                    <height>10</height>
                 </rect>
             </property>
-            <widget class="caLabel" name="caLabel_7">
-                <property name="frameShape">
-                    <enum>QFrame::NoFrame</enum>
-                </property>
-                <property name="foreground">
-                    <color alpha="255">
-                        <red>253</red>
-                        <green>0</green>
-                        <blue>0</blue>
-                    </color>
-                </property>
-                <property name="background">
-                    <color alpha="0">
-                        <red>253</red>
-                        <green>0</green>
-                        <blue>0</blue>
-                    </color>
-                </property>
-                <property name="visibility">
-                    <enum>caLabel::Calc</enum>
-                </property>
-                <property name="visibilityCalc">
-                    <string>a&amp;b</string>
-                </property>
-                <property name="channel">
-                    <string>$(P)caputRecorderNeedRefresh</string>
-                </property>
-                <property name="channelB">
-                    <string>$(P)caputRecorderNeedRefreshB</string>
-                </property>
-                <property name="text">
-                    <string>PRESS</string>
-                </property>
-                <property name="fontScaleMode">
-                    <enum>ESimpleLabel::WidthAndHeight</enum>
-                </property>
-                <property name="alignment">
-                    <set>Qt::AlignAbsolute|Qt::AlignHCenter|Qt::AlignVCenter</set>
-                </property>
-                <property name="geometry">
-                    <rect>
-                        <x>0</x>
-                        <y>0</y>
-                        <width>45</width>
-                        <height>10</height>
-                    </rect>
-                </property>
-            </widget>
-            <widget class="caLabel" name="caLabel_8">
-                <property name="frameShape">
-                    <enum>QFrame::NoFrame</enum>
-                </property>
-                <property name="foreground">
-                    <color alpha="255">
-                        <red>253</red>
-                        <green>0</green>
-                        <blue>0</blue>
-                    </color>
-                </property>
-                <property name="background">
-                    <color alpha="0">
-                        <red>253</red>
-                        <green>0</green>
-                        <blue>0</blue>
-                    </color>
-                </property>
-                <property name="visibility">
-                    <enum>caLabel::Calc</enum>
-                </property>
-                <property name="visibilityCalc">
-                    <string>a&amp;b</string>
-                </property>
-                <property name="channel">
-                    <string>$(P)caputRecorderNeedRefresh</string>
-                </property>
-                <property name="channelB">
-                    <string>$(P)caputRecorderNeedRefreshB</string>
-                </property>
-                <property name="text">
-                    <string>REFRESH</string>
-                </property>
-                <property name="fontScaleMode">
-                    <enum>ESimpleLabel::WidthAndHeight</enum>
-                </property>
-                <property name="alignment">
-                    <set>Qt::AlignAbsolute|Qt::AlignHCenter|Qt::AlignVCenter</set>
-                </property>
-                <property name="geometry">
-                    <rect>
-                        <x>0</x>
-                        <y>10</y>
-                        <width>45</width>
-                        <height>10</height>
-                    </rect>
-                </property>
-            </widget>
+        </widget>
+        <widget class="caLabel" name="caLabel_8">
+            <property name="frameShape">
+                <enum>QFrame::NoFrame</enum>
+            </property>
+            <property name="foreground">
+                <color alpha="255">
+                    <red>253</red>
+                    <green>0</green>
+                    <blue>0</blue>
+                </color>
+            </property>
+            <property name="background">
+                <color alpha="0">
+                    <red>253</red>
+                    <green>0</green>
+                    <blue>0</blue>
+                </color>
+            </property>
+            <property name="visibility">
+                <enum>caLabel::Calc</enum>
+            </property>
+            <property name="visibilityCalc">
+                <string>a&amp;b</string>
+            </property>
+            <property name="channel">
+                <string>$(P)caputRecorderNeedRefresh</string>
+            </property>
+            <property name="channelB">
+                <string>$(P)caputRecorderNeedRefreshB</string>
+            </property>
+            <property name="text">
+                <string>REFRESH</string>
+            </property>
+            <property name="fontScaleMode">
+                <enum>ESimpleLabel::WidthAndHeight</enum>
+            </property>
+            <property name="alignment">
+                <set>Qt::AlignAbsolute|Qt::AlignHCenter|Qt::AlignVCenter</set>
+            </property>
+            <property name="geometry">
+                <rect>
+                    <x>355</x>
+                    <y>115</y>
+                    <width>45</width>
+                    <height>10</height>
+                </rect>
+            </property>
         </widget>
         <zorder>caLabel_0</zorder>
         <zorder>caRectangle_0</zorder>
@@ -1056,7 +1046,6 @@ QPushButton::menu-indicator {image: url(none.png); width: 0}
         <zorder>caRectangle_1</zorder>
         <zorder>caLabel_7</zorder>
         <zorder>caLabel_8</zorder>
-        <zorder>caFrame_1</zorder>
         <zorder>caLineEdit_0</zorder>
         <zorder>caChoice_0</zorder>
         <zorder>caTextEntry_0</zorder>

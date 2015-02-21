@@ -4,10 +4,10 @@
 <widget class="QMainWindow" name="MainWindow">
     <property name="geometry">
         <rect>
-            <x>560</x>
-            <y>394</y>
+            <x>413</x>
+            <y>391</y>
             <width>400</width>
-            <height>210</height>
+            <height>260</height>
         </rect>
     </property>
     <property name="styleSheet">
@@ -155,7 +155,7 @@ QPushButton::menu-indicator {image: url(none.png); width: 0}
                 <rect>
                     <x>10</x>
                     <y>35</y>
-                    <width>380</width>
+                    <width>400</width>
                     <height>20</height>
                 </rect>
             </property>
@@ -493,11 +493,47 @@ QPushButton::menu-indicator {image: url(none.png); width: 0}
                 <string>1,1;397,1;</string>
             </property>
         </widget>
+        <widget class="caPolyLine" name="caPolyLine_2">
+            <property name="geometry">
+                <rect>
+                    <x>1</x>
+                    <y>185</y>
+                    <width>399</width>
+                    <height>3</height>
+                </rect>
+            </property>
+            <property name="lineSize">
+                <number>3</number>
+            </property>
+            <property name="foreground">
+                <color alpha="255">
+                    <red>10</red>
+                    <green>0</green>
+                    <blue>184</blue>
+                </color>
+            </property>
+            <property name="fillstyle">
+                <enum>Filled</enum>
+            </property>
+            <property name="lineColor">
+                <color alpha="255">
+                    <red>10</red>
+                    <green>0</green>
+                    <blue>184</blue>
+                </color>
+            </property>
+            <property name="linestyle">
+                <enum>Solid</enum>
+            </property>
+            <property name="xyPairs">
+                <string>1,1;397,1;</string>
+            </property>
+        </widget>
         <widget class="caRelatedDisplay" name="caRelatedDisplay_0">
             <property name="geometry">
                 <rect>
                     <x>360</x>
-                    <y>185</y>
+                    <y>234</y>
                     <width>40</width>
                     <height>20</height>
                 </rect>
@@ -535,56 +571,114 @@ QPushButton::menu-indicator {image: url(none.png); width: 0}
                 <string>false</string>
             </property>
         </widget>
-        <widget class="caLabel" name="caLabel_6">
-            <property name="frameShape">
-                <enum>QFrame::NoFrame</enum>
-            </property>
-            <property name="foreground">
-                <color alpha="255">
-                    <red>174</red>
-                    <green>174</green>
-                    <blue>174</blue>
-                </color>
-            </property>
-            <property name="background">
-                <color alpha="0">
-                    <red>174</red>
-                    <green>174</green>
-                    <blue>174</blue>
-                </color>
-            </property>
-            <property name="text">
-                <string>debug:</string>
-            </property>
-            <property name="fontScaleMode">
-                <enum>ESimpleLabel::WidthAndHeight</enum>
-            </property>
-            <property name="alignment">
-                <set>Qt::AlignAbsolute|Qt::AlignRight|Qt::AlignVCenter</set>
-            </property>
+        <widget class="caFrame" name="caFrame_0">
             <property name="geometry">
                 <rect>
-                    <x>10</x>
-                    <y>190</y>
-                    <width>50</width>
-                    <height>14</height>
+                    <x>319</x>
+                    <y>212</y>
+                    <width>82</width>
+                    <height>18</height>
                 </rect>
             </property>
+            <widget class="caLabel" name="caLabel_6">
+                <property name="frameShape">
+                    <enum>QFrame::NoFrame</enum>
+                </property>
+                <property name="foreground">
+                    <color alpha="255">
+                        <red>174</red>
+                        <green>174</green>
+                        <blue>174</blue>
+                    </color>
+                </property>
+                <property name="background">
+                    <color alpha="0">
+                        <red>174</red>
+                        <green>174</green>
+                        <blue>174</blue>
+                    </color>
+                </property>
+                <property name="text">
+                    <string>debug:</string>
+                </property>
+                <property name="fontScaleMode">
+                    <enum>ESimpleLabel::WidthAndHeight</enum>
+                </property>
+                <property name="alignment">
+                    <set>Qt::AlignAbsolute|Qt::AlignRight|Qt::AlignVCenter</set>
+                </property>
+                <property name="geometry">
+                    <rect>
+                        <x>0</x>
+                        <y>0</y>
+                        <width>50</width>
+                        <height>14</height>
+                    </rect>
+                </property>
+            </widget>
+            <widget class="caTextEntry" name="caTextEntry_3">
+                <property name="geometry">
+                    <rect>
+                        <x>50</x>
+                        <y>0</y>
+                        <width>30</width>
+                        <height>16</height>
+                    </rect>
+                </property>
+                <property name="fontScaleMode">
+                    <enum>caLineEdit::WidthAndHeight</enum>
+                </property>
+                <property name="channel">
+                    <string>$(P)caputRecorderDebug</string>
+                </property>
+                <property name="foreground">
+                    <color alpha="255">
+                        <red>0</red>
+                        <green>0</green>
+                        <blue>0</blue>
+                    </color>
+                </property>
+                <property name="background">
+                    <color alpha="255">
+                        <red>218</red>
+                        <green>218</green>
+                        <blue>218</blue>
+                    </color>
+                </property>
+                <property name="limitsMode">
+                    <enum>caLineEdit::Channel</enum>
+                </property>
+                <property name="limitsMode">
+                    <enum>caLineEdit::Channel</enum>
+                </property>
+                <property name="precisionMode">
+                    <enum>caLineEdit::Channel</enum>
+                </property>
+                <property name="minValue">
+                    <double>0.0</double>
+                </property>
+                <property name="maxValue">
+                    <double>1.0</double>
+                </property>
+                <property name="colorMode">
+                    <enum>caLineEdit::Static</enum>
+                </property>
+                <property name="formatType">
+                    <enum>string</enum>
+                </property>
+            </widget>
         </widget>
-        <widget class="caTextEntry" name="caTextEntry_3">
+        <widget class="caChoice" name="caChoice_0">
             <property name="geometry">
                 <rect>
-                    <x>60</x>
-                    <y>190</y>
-                    <width>30</width>
-                    <height>16</height>
+                    <x>181</x>
+                    <y>196</y>
+                    <width>80</width>
+                    <height>18</height>
                 </rect>
-            </property>
-            <property name="fontScaleMode">
-                <enum>caLineEdit::WidthAndHeight</enum>
             </property>
             <property name="channel">
-                <string>$(P)caputRecorderDebug</string>
+                <string>$(P)caputRecorderRecordTiming</string>
             </property>
             <property name="foreground">
                 <color alpha="255">
@@ -595,31 +689,190 @@ QPushButton::menu-indicator {image: url(none.png); width: 0}
             </property>
             <property name="background">
                 <color alpha="255">
-                    <red>218</red>
-                    <green>218</green>
-                    <blue>218</blue>
+                    <red>115</red>
+                    <green>223</green>
+                    <blue>255</blue>
                 </color>
             </property>
-            <property name="limitsMode">
-                <enum>caLineEdit::Channel</enum>
-            </property>
-            <property name="limitsMode">
-                <enum>caLineEdit::Channel</enum>
-            </property>
-            <property name="precisionMode">
-                <enum>caLineEdit::Channel</enum>
-            </property>
-            <property name="minValue">
-                <double>0.0</double>
-            </property>
-            <property name="maxValue">
-                <double>1.0</double>
+            <property name="stackingMode">
+                <enum>Column</enum>
             </property>
             <property name="colorMode">
-                <enum>caLineEdit::Static</enum>
+                <enum>caChoice::Static</enum>
             </property>
-            <property name="formatType">
-                <enum>string</enum>
+        </widget>
+        <widget class="caLabel" name="caLabel_7">
+            <property name="frameShape">
+                <enum>QFrame::NoFrame</enum>
+            </property>
+            <property name="foreground">
+                <color alpha="255">
+                    <red>0</red>
+                    <green>0</green>
+                    <blue>0</blue>
+                </color>
+            </property>
+            <property name="background">
+                <color alpha="0">
+                    <red>0</red>
+                    <green>0</green>
+                    <blue>0</blue>
+                </color>
+            </property>
+            <property name="text">
+                <string>record timing of caputs?</string>
+            </property>
+            <property name="fontScaleMode">
+                <enum>ESimpleLabel::WidthAndHeight</enum>
+            </property>
+            <property name="alignment">
+                <set>Qt::AlignAbsolute|Qt::AlignRight|Qt::AlignVCenter</set>
+            </property>
+            <property name="geometry">
+                <rect>
+                    <x>10</x>
+                    <y>198</y>
+                    <width>201</width>
+                    <height>14</height>
+                </rect>
+            </property>
+        </widget>
+        <widget class="caChoice" name="caChoice_1">
+            <property name="geometry">
+                <rect>
+                    <x>181</x>
+                    <y>216</y>
+                    <width>80</width>
+                    <height>18</height>
+                </rect>
+            </property>
+            <property name="channel">
+                <string>$(P)caputRecorderWaitCompletion</string>
+            </property>
+            <property name="foreground">
+                <color alpha="255">
+                    <red>0</red>
+                    <green>0</green>
+                    <blue>0</blue>
+                </color>
+            </property>
+            <property name="background">
+                <color alpha="255">
+                    <red>115</red>
+                    <green>223</green>
+                    <blue>255</blue>
+                </color>
+            </property>
+            <property name="stackingMode">
+                <enum>Column</enum>
+            </property>
+            <property name="colorMode">
+                <enum>caChoice::Static</enum>
+            </property>
+        </widget>
+        <widget class="caLabel" name="caLabel_8">
+            <property name="frameShape">
+                <enum>QFrame::NoFrame</enum>
+            </property>
+            <property name="foreground">
+                <color alpha="255">
+                    <red>0</red>
+                    <green>0</green>
+                    <blue>0</blue>
+                </color>
+            </property>
+            <property name="background">
+                <color alpha="0">
+                    <red>0</red>
+                    <green>0</green>
+                    <blue>0</blue>
+                </color>
+            </property>
+            <property name="text">
+                <string>wait for completion?</string>
+            </property>
+            <property name="fontScaleMode">
+                <enum>ESimpleLabel::WidthAndHeight</enum>
+            </property>
+            <property name="alignment">
+                <set>Qt::AlignAbsolute|Qt::AlignRight|Qt::AlignVCenter</set>
+            </property>
+            <property name="geometry">
+                <rect>
+                    <x>10</x>
+                    <y>218</y>
+                    <width>170</width>
+                    <height>14</height>
+                </rect>
+            </property>
+        </widget>
+        <widget class="caChoice" name="caChoice_2">
+            <property name="geometry">
+                <rect>
+                    <x>181</x>
+                    <y>236</y>
+                    <width>170</width>
+                    <height>18</height>
+                </rect>
+            </property>
+            <property name="channel">
+                <string>$(P)caputRecorderIfMacroExists</string>
+            </property>
+            <property name="foreground">
+                <color alpha="255">
+                    <red>0</red>
+                    <green>0</green>
+                    <blue>0</blue>
+                </color>
+            </property>
+            <property name="background">
+                <color alpha="255">
+                    <red>115</red>
+                    <green>223</green>
+                    <blue>255</blue>
+                </color>
+            </property>
+            <property name="stackingMode">
+                <enum>Column</enum>
+            </property>
+            <property name="colorMode">
+                <enum>caChoice::Static</enum>
+            </property>
+        </widget>
+        <widget class="caLabel" name="caLabel_9">
+            <property name="frameShape">
+                <enum>QFrame::NoFrame</enum>
+            </property>
+            <property name="foreground">
+                <color alpha="255">
+                    <red>0</red>
+                    <green>0</green>
+                    <blue>0</blue>
+                </color>
+            </property>
+            <property name="background">
+                <color alpha="0">
+                    <red>0</red>
+                    <green>0</green>
+                    <blue>0</blue>
+                </color>
+            </property>
+            <property name="text">
+                <string>if macro already exists:</string>
+            </property>
+            <property name="fontScaleMode">
+                <enum>ESimpleLabel::WidthAndHeight</enum>
+            </property>
+            <property name="alignment">
+                <set>Qt::AlignAbsolute|Qt::AlignRight|Qt::AlignVCenter</set>
+            </property>
+            <property name="geometry">
+                <rect>
+                    <x>10</x>
+                    <y>238</y>
+                    <width>201</width>
+                    <height>14</height>
+                </rect>
             </property>
         </widget>
         <zorder>caRectangle_0</zorder>
@@ -631,12 +884,20 @@ QPushButton::menu-indicator {image: url(none.png); width: 0}
         <zorder>caLabel_4</zorder>
         <zorder>caLabel_5</zorder>
         <zorder>caPolyLine_1</zorder>
+        <zorder>caPolyLine_2</zorder>
         <zorder>caLabel_6</zorder>
+        <zorder>caFrame_0</zorder>
+        <zorder>caLabel_7</zorder>
+        <zorder>caLabel_8</zorder>
+        <zorder>caLabel_9</zorder>
         <zorder>caTextEntry_0</zorder>
         <zorder>caTextEntry_1</zorder>
         <zorder>caTextEntry_2</zorder>
         <zorder>caRelatedDisplay_0</zorder>
         <zorder>caTextEntry_3</zorder>
+        <zorder>caChoice_0</zorder>
+        <zorder>caChoice_1</zorder>
+        <zorder>caChoice_2</zorder>
     </widget>
 </widget>
 </ui>
