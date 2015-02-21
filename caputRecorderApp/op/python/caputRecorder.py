@@ -10,6 +10,7 @@ import copy
 import Queue
 import keyword
 import string
+import shutil
 import macros
 
 # convert commas to spaces
@@ -64,6 +65,39 @@ forbiddenHosts = []
 
 commandMonitorList = []
 
+timeOfLastPut = None
+recordTiming = 0
+waitCompletion = 1
+ifMacroExists = "Fail"
+
+########################################################################
+def deleteFunction(fileName, functionName):
+	deletedLines = []
+	retainedLines = []
+	macroFile = open(fileName,"r")
+	lines = macroFile.readlines()
+	deleting = 0
+	for line in lines:
+		if deleting:
+			if line.find("def")==0:
+				deleting = 0
+		else:
+			if line.find("def " + functionName)==0:
+				deleting = 1
+		
+		if deleting:
+			deletedLines.append(line)
+		else:
+			retainedLines.append(line)
+	
+	macroFile.close()
+
+	macroFile = open(fileName,"w")
+	macroFile.writelines(retainedLines)
+	macroFile.close()
+	return deletedLines
+
+########################################################################
 def prefixesMonFunc(pvname, value, char_value, **kwd):
 	makeCommandMonitorList(char_value)
 
@@ -156,7 +190,7 @@ def userHostAllowed(user, host):
 
 def writer():
 	global debug, macroFile, prefix, msgQueue, doexecuteMacro, executeLevel, postponeStop
-	global doStartMacro, doStopMacro, connected
+	global doStartMacro, doStopMacro, connected, recordTiming, timeOfLastPut, waitCompletion
 
 	while(1):
 		(msg, char_value) = msgQueue.get()
@@ -166,6 +200,14 @@ def writer():
 		if not connected:
 			continue
 		if msg == MSG_COMMAND:
+			now = time.time()
+			if timeOfLastPut:
+				if debug: print "writer: recordTiming = %d" % recordTiming
+				dt = now - timeOfLastPut
+				if recordTiming and dt>0:
+					macroFile.write("\ttime.sleep(%.3f)\n" % dt)
+			timeOfLastPut = now
+
 			if char_value.find(prefix+"caputRecorder") == -1:
 				(pvname,value,user_host) = char_value.split(',')
 				# check user and host
@@ -176,8 +218,11 @@ def writer():
 					if debug: print "writer: user=%s, host=%s" % (user, host)
 					allowed = userHostAllowed(user, host)
 				if allowed:
-					putWaitSeconds = epics.caget(prefix+"caputRecorderWaitCBSec", use_monitor=True)
-					macroFile.write("\tepics.caput(\"%s\",\"%s\", wait=True, timeout=%.1f)\n" % (pvname,value,putWaitSeconds))
+					if waitCompletion:
+						putWaitSeconds = epics.caget(prefix+"caputRecorderWaitCBSec", use_monitor=True)
+						macroFile.write("\tepics.caput(\"%s\",\"%s\", wait=True, timeout=%.1f)\n" % (pvname,value,putWaitSeconds))
+					else:
+						macroFile.write("\tepics.caput(\"%s\",\"%s\")\n" % (pvname,value))
 					macroFile.flush()
 			msgQueue.task_done()
 		elif msg == MSG_COMMENT:
@@ -190,7 +235,10 @@ def writer():
 			epics.caput(prefix+"caputRecorderAddDelayCmd", 0)
 		elif msg == MSG_DO:
 			if debug: print "writer:MSG_DO, char_value='%s'" % char_value
-			busy = epics.caget(prefix+"caputRecorderMacroRecording")
+			try:
+				busy = epics.caget(prefix+"caputRecorderMacroRecording")
+			except:
+				return
 			if char_value == "Do":
 				if (busy):
 					# add call to selected function to macro file
@@ -260,7 +308,7 @@ def stopStartMonFunc(pvname, value, char_value, **kwd):
 
 def startMacro():
 	global debug, macroFile, prefix, macroFunctionNames
-	global commandMonitorList, connected
+	global commandMonitorList, connected, timeOfLastPut, ifMacroExists
 
 	if debug: print("startMacro: entry\n")
 	if not connected:
@@ -289,26 +337,48 @@ def startMacro():
 			macroName += "_"
 	# function name must be 25 characters or less (mbboRecord string length)
 	if len(macroName) > 25: macroName = macroName[:25]
-	# See of function name is already defined
-	if macroName in macroFunctionNames:
-		epics.caput(prefix+"caputRecorderUserMessage", "*** macro name is already in use")
-		epics.caput(prefix+"caputRecorderMacroStopStart", 0)
-		return
 	if (macroName in keyword.kwlist):
 		epics.caput(prefix+"caputRecorderUserMessage", "*** macro name is a python keyword")
 		epics.caput(prefix+"caputRecorderMacroStopStart", 0)
 		return
+	# See of function name is already defined
+	appending = False
+	if macroName in macroFunctionNames:
+		if debug: print"ifMacroExists=%s" % ifMacroExists
+		if ifMacroExists=="Fail":
+			epics.caput(prefix+"caputRecorderUserMessage", "*** macro name is already in use")
+			epics.caput(prefix+"caputRecorderMacroStopStart", 0)
+			return
+		if ifMacroExists=="Replace":
+			timeString = time.strftime("_%y%m%d-%H%M%S")
+			shutil.copy("macros.py","macros.py"+timeString)
+		dl = deleteFunction("macros.py", macroName)
+		if ifMacroExists=="Append":
+			macroFile = open("macros.py","a")
+			macroFile.writelines(dl)
+			macroFile.close()
+			appending = True
+			epics.caput(prefix+"caputRecorderUserMessage", "appending to existing macro")
+		else:
+			# replace
+			
+			epics.caput(prefix+"caputRecorderUserMessage", "replacing existing macro")
 
 	epics.caput(prefix+"caputRecorderMacroRecording", 1)
 	epics.caput(prefix+"caputRecorderUserMessage", "Recording")
 	macroFile = open("macros.py","a")
-	macroFile.write("def %s():\n" % macroName)
+	if appending == False:
+		macroFile.write("def %s():\n" % macroName)
+	else:
+		macroFile.write("\t# appended to exsting macro...\n")
+
 	# It's not legal to have a python function with no commands in it.
 	# Defend against user stopping recording without doing any caputs
 	# by writing dummy command to set the record date.
 	now = time.strftime("%c")
 	macroFile.write("\trecordDate = \"%s\"\n" % now)
 	macroFile.flush()
+	timeOfLastPut = None
 	epics.camonitor(prefix+"caputRecorderComment",callback=commentMonFunc)
 	epics.camonitor(prefix+"caputRecorderAddDelayCmd",callback=delayMonFunc)
 	for pv in commandMonitorList:
@@ -322,7 +392,11 @@ def endMacro():
 	if not connected:
 		return
 
-	recording = epics.caget(prefix+"caputRecorderMacroRecording")
+	try:
+		recording = epics.caget(prefix+"caputRecorderMacroRecording")
+	except:
+		return
+
 	if (not recording):
 		return
 
@@ -536,13 +610,16 @@ def startTimeMonFunc(pvname, value, char_value, **kwd):
 			wake.set()
 
 def onConnectionChange(pvname=None, conn= None, **kws):
-	global debug, connected
-	if debug: print 'PV connection status changed: %s %s\n' % (pvname,  repr(conn))
+	global debug, connected, doReloadMacros, wake
+	if debug: print 'onConnectionChange: PV connection status changed: %s %s\n' % (pvname,  repr(conn))
 	if conn:
 		# wait for initial monitors to come in before allowing writer() to act on them
 		if connected == False:
 			#time.sleep(1)
 			connected = True
+			if debug: print 'onConnectionChange: doReloadMacros=1\n'
+			doReloadMacros = 1
+			wake.set()
 	else:
 		connected = False
 		
@@ -566,7 +643,7 @@ def heartbeat():
 		time.sleep(waitTime)
 
 def start():
-	global debug, prefix, doStartMacro, doStopMacro, doReloadMacros, doexecuteMacro
+	global debug, prefix, wake, doStartMacro, doStopMacro, doReloadMacros, doexecuteMacro
 	global doSelectMacro, doAbortMacro, executingMacro, msgQueue
 	global allowedUsers, forbiddenUsers, allowedHosts, forbiddenHosts
 	global commandMonitorList, exitProgram
@@ -617,6 +694,7 @@ def start():
 			if debug: print "start: wake.is_set()"
 			wake.clear()
 		if doStartMacro:
+			if debug: print "start: doStartMacro=True"
 			doStartMacro=0
 			startMacro()
 		if doStopMacro:
@@ -624,9 +702,11 @@ def start():
 			doStopMacro = 0
 			endMacro()
 		if doReloadMacros:
+			if debug: print "start: doReloadMacros=True"
 			doReloadMacros = 0
 			reloadMacros()
 		if doSelectMacro:
+			if debug: print "start: doSelectMacro=True"
 			doSelectMacro = 0
 			selectMacro()
 		if doexecuteMacro:
@@ -657,8 +737,20 @@ def debugMonFunc(pvname, value, char_value, **kwd):
 	global debug
 	debug = value
 
+def recordTimingMonFunc(pvname, value, char_value, **kwd):
+	global debug, recordTiming
+	recordTiming = value
+
+def waitCompletionMonFunc(pvname, value, char_value, **kwd):
+	global debug, waitCompletion
+	waitCompletion = value
+
+def ifMacroExistsMonFunc(pvname, value, char_value, **kwd):
+	global debug, ifMacroExists
+	ifMacroExists = char_value
+
 def go(argv=["xxx:"]):
-	global debug, prefix, commandMonitorList, startTime
+	global debug, prefix, commandMonitorList, startTime, recordTiming, waitCompletion, ifMacroExists
 
 	usage = """
 	  python caputRecorder.py prefix [other_prefixes]
@@ -675,8 +767,19 @@ def go(argv=["xxx:"]):
 			commandMonitorList.append(otherprefix+"caputRecorderCommand")
 
 	if debug: print "initial commandMonitorList", commandMonitorList
+
 	debug = epics.caget(prefix+"caputRecorderDebug")
 	epics.camonitor(prefix+"caputRecorderDebug",callback=debugMonFunc)
+
+	recordTiming = epics.caget(prefix+"caputRecorderRecordTiming")
+	epics.camonitor(prefix+"caputRecorderRecordTiming",callback=recordTimingMonFunc)
+
+	waitCompletion = epics.caget(prefix+"caputRecorderWaitCompletion")
+	epics.camonitor(prefix+"caputRecorderWaitCompletion",callback=waitCompletionMonFunc)
+
+	ifMacroExists = epics.caget(prefix+"caputRecorderIfMacroExists", as_string=True)
+	epics.camonitor(prefix+"caputRecorderIfMacroExists",callback=ifMacroExistsMonFunc)
+
 	startTime = time.strftime("%c")
 	epics.caput(prefix+"caputRecorderStartTime", startTime)
 	stop()
