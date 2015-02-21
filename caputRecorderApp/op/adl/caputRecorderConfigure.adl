@@ -1,14 +1,14 @@
 
 file {
-	name="/home/oxygen4/MOONEY/epics/synAppsSVN/support/caputRecorder/caputRecorderApp/op/adl/caputRecorderConfigure.adl"
+	name="/home/oxygen/MOONEY/epics/synApps/support/caputRecorder/caputRecorderApp/op/adl/caputRecorderConfigure.adl"
 	version=030107
 }
 display {
 	object {
-		x=568
-		y=42
+		x=560
+		y=394
 		width=400
-		height=200
+		height=210
 	}
 	clr=14
 	bclr=2
@@ -259,7 +259,7 @@ polyline {
 "related display" {
 	object {
 		x=360
-		y=180
+		y=185
 		width=40
 		height=20
 	}
@@ -270,4 +270,33 @@ polyline {
 	clr=0
 	bclr=17
 	label="-Help"
+}
+text {
+	object {
+		x=10
+		y=190
+		width=45
+		height=14
+	}
+	"basic attribute" {
+		clr=5
+	}
+	textix="debug:"
+	align="horiz. right"
+}
+"text entry" {
+	object {
+		x=60
+		y=190
+		width=30
+		height=16
+	}
+	control {
+		chan="$(P)caputRecorderDebug"
+		clr=14
+		bclr=2
+	}
+	format="string"
+	limits {
+	}
 }

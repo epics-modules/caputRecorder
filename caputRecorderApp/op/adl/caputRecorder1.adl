@@ -5,10 +5,10 @@ file {
 }
 display {
 	object {
-		x=799
-		y=495
+		x=86
+		y=458
 		width=400
-		height=485
+		height=525
 	}
 	clr=14
 	bclr=2
@@ -90,7 +90,7 @@ display {
 "related display" {
 	object {
 		x=250
-		y=265
+		y=425
 		width=100
 		height=20
 	}
@@ -108,7 +108,7 @@ composite {
 		x=0
 		y=0
 		width=400
-		height=461
+		height=501
 	}
 	"composite name"=""
 	"composite file"="caputRecorder_bare.adl;P=$(P)"
@@ -116,7 +116,7 @@ composite {
 composite {
 	object {
 		x=270
-		y=465
+		y=505
 		width=130
 		height=20
 	}
@@ -125,7 +125,7 @@ composite {
 		"related display" {
 			object {
 				x=350
-				y=465
+				y=505
 				width=50
 				height=20
 			}
@@ -141,7 +141,7 @@ composite {
 		"related display" {
 			object {
 				x=270
-				y=465
+				y=505
 				width=80
 				height=20
 			}
