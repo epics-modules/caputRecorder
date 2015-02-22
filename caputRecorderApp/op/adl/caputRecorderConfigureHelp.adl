@@ -5,10 +5,10 @@ file {
 }
 display {
 	object {
-		x=1102
-		y=419
+		x=670
+		y=418
 		width=400
-		height=480
+		height=500
 	}
 	clr=14
 	bclr=2
@@ -426,7 +426,7 @@ text {
 	"basic attribute" {
 		clr=14
 	}
-	textix="Record caputs received by which IOCs?"
+	textix="Record caputs to which IOCs?"
 	align="horiz. centered"
 }
 text {
@@ -584,19 +584,43 @@ text {
 	textix="wait for completion?"
 	align="horiz. right"
 }
-"choice button" {
+composite {
 	object {
-		x=181
-		y=455
-		width=170
+		x=10
+		y=475
+		width=341
 		height=18
 	}
-	control {
-		chan="$(P)caputRecorderIfMacroExists"
-		clr=14
-		bclr=51
+	"composite name"=""
+	children {
+		"choice button" {
+			object {
+				x=181
+				y=475
+				width=170
+				height=18
+			}
+			control {
+				chan="$(P)caputRecorderIfMacroExists"
+				clr=14
+				bclr=51
+			}
+			stacking="column"
+		}
+		text {
+			object {
+				x=10
+				y=477
+				width=170
+				height=14
+			}
+			"basic attribute" {
+				clr=14
+			}
+			textix="if macro already exists:"
+			align="horiz. right"
+		}
 	}
-	stacking="column"
 }
 text {
 	object {
@@ -608,6 +632,34 @@ text {
 	"basic attribute" {
 		clr=14
 	}
-	textix="if macro already exists:"
+	textix="wait for how long?"
 	align="horiz. right"
+}
+"text entry" {
+	object {
+		x=181
+		y=455
+		width=70
+		height=18
+	}
+	control {
+		chan="$(P)caputRecorderWaitCBSec"
+		clr=14
+		bclr=51
+	}
+	format="string"
+	limits {
+	}
+}
+text {
+	object {
+		x=254
+		y=457
+		width=50
+		height=14
+	}
+	"basic attribute" {
+		clr=14
+	}
+	textix="seconds"
 }

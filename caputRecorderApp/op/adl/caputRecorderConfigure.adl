@@ -5,10 +5,10 @@ file {
 }
 display {
 	object {
-		x=413
-		y=391
+		x=1085
+		y=79
 		width=400
-		height=260
+		height=280
 	}
 	clr=14
 	bclr=2
@@ -208,7 +208,7 @@ text {
 	"basic attribute" {
 		clr=14
 	}
-	textix="Record caputs received by which IOCs?"
+	textix="Record caputs to which IOCs?"
 	align="horiz. centered"
 }
 text {
@@ -272,61 +272,6 @@ polyline {
 		(398,186)
 	}
 }
-"related display" {
-	object {
-		x=360
-		y=234
-		width=40
-		height=20
-	}
-	display[0] {
-		name="caputRecorderConfigureHelp.adl"
-		args="P=$(P)"
-	}
-	clr=0
-	bclr=17
-	label="-Help"
-}
-composite {
-	object {
-		x=319
-		y=212
-		width=80
-		height=16
-	}
-	"composite name"=""
-	children {
-		text {
-			object {
-				x=319
-				y=212
-				width=45
-				height=14
-			}
-			"basic attribute" {
-				clr=5
-			}
-			textix="debug:"
-			align="horiz. right"
-		}
-		"text entry" {
-			object {
-				x=369
-				y=212
-				width=30
-				height=16
-			}
-			control {
-				chan="$(P)caputRecorderDebug"
-				clr=14
-				bclr=2
-			}
-			format="string"
-			limits {
-			}
-		}
-	}
-}
 "choice button" {
 	object {
 		x=181
@@ -384,7 +329,7 @@ text {
 "choice button" {
 	object {
 		x=181
-		y=236
+		y=256
 		width=170
 		height=18
 	}
@@ -398,7 +343,7 @@ text {
 text {
 	object {
 		x=10
-		y=238
+		y=258
 		width=170
 		height=14
 	}
@@ -407,4 +352,71 @@ text {
 	}
 	textix="if macro already exists:"
 	align="horiz. right"
+}
+"related display" {
+	object {
+		x=360
+		y=254
+		width=40
+		height=20
+	}
+	display[0] {
+		name="caputRecorderConfigureHelp.adl"
+		args="P=$(P)"
+	}
+	clr=0
+	bclr=17
+	label="-Help"
+}
+composite {
+	object {
+		x=10
+		y=236
+		width=294
+		height=18
+	}
+	"composite name"=""
+	children {
+		text {
+			object {
+				x=10
+				y=238
+				width=170
+				height=14
+			}
+			"basic attribute" {
+				clr=14
+			}
+			textix="wait for how long?"
+			align="horiz. right"
+		}
+		"text entry" {
+			object {
+				x=181
+				y=236
+				width=70
+				height=18
+			}
+			control {
+				chan="$(P)caputRecorderWaitCBSec"
+				clr=14
+				bclr=51
+			}
+			format="string"
+			limits {
+			}
+		}
+		text {
+			object {
+				x=254
+				y=238
+				width=50
+				height=14
+			}
+			"basic attribute" {
+				clr=14
+			}
+			textix="seconds"
+		}
+	}
 }
