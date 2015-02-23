@@ -3,11 +3,11 @@
   <macros>
     <include_parent_macros>true</include_parent_macros>
   </macros>
-  <wuid>-2701c5dc:14bae0271c9:-7fff</wuid>
+  <wuid>-545ca464:14bb824bc55:-7fff</wuid>
   <boy_version>3.2.10.20140131</boy_version>
   <scripts />
   <show_ruler>true</show_ruler>
-  <height>525</height>
+  <height>505</height>
   <name>caputRecorder</name>
   <snap_to_geometry>false</snap_to_geometry>
   <show_grid>false</show_grid>
@@ -29,18 +29,18 @@
     <min_height>-1</min_height>
   </auto_scale_widgets>
   <actions hook="false" hook_all="false" />
-  <y>501</y>
-  <x>364</x>
+  <y>457</y>
+  <x>1078</x>
   <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
     <macros>
       <include_parent_macros>true</include_parent_macros>
     </macros>
     <visible>true</visible>
-    <wuid>-2701c5dc:14bae0271c9:-7ffd</wuid>
+    <wuid>-545ca464:14bb824bc55:-7ffd</wuid>
     <auto_size>false</auto_size>
     <scripts />
     <zoom_to_fit>true</zoom_to_fit>
-    <height>501</height>
+    <height>481</height>
     <name>Linking Container</name>
     <scale_options>
       <width_scalable>true</width_scalable>
@@ -76,7 +76,7 @@
     <border_alarm_sensitive>false</border_alarm_sensitive>
     <visible>true</visible>
     <actions_from_pv>false</actions_from_pv>
-    <wuid>-2701c5dc:14bae0271c9:-7ffe</wuid>
+    <wuid>-545ca464:14bb824bc55:-7ffe</wuid>
     <scripts />
     <height>20</height>
     <name>Menu Button</name>
@@ -109,7 +109,7 @@
     <border_color>
       <color red="0" green="128" blue="255" />
     </border_color>
-    <y>425</y>
+    <y>405</y>
     <actions hook="false" hook_all="false">
       <action type="OPEN_DISPLAY">
         <path>caputRecorder1.opi</path>
@@ -128,7 +128,7 @@ $(pv_value)</tooltip>
     <border_alarm_sensitive>false</border_alarm_sensitive>
     <visible>true</visible>
     <actions_from_pv>false</actions_from_pv>
-    <wuid>-2701c5dc:14bae0271c9:-7ffc</wuid>
+    <wuid>-545ca464:14bb824bc55:-7ffc</wuid>
     <scripts />
     <height>20</height>
     <name>Menu Button</name>
@@ -161,7 +161,7 @@ $(pv_value)</tooltip>
     <border_color>
       <color red="0" green="128" blue="255" />
     </border_color>
-    <y>505</y>
+    <y>485</y>
     <actions hook="false" hook_all="false">
       <action type="OPEN_DISPLAY">
         <path>caputRecorder_small.opi</path>
@@ -180,7 +180,7 @@ $(pv_value)</tooltip>
     <border_alarm_sensitive>false</border_alarm_sensitive>
     <visible>true</visible>
     <actions_from_pv>false</actions_from_pv>
-    <wuid>-2701c5dc:14bae0271c9:-7ffb</wuid>
+    <wuid>-545ca464:14bb824bc55:-7ffb</wuid>
     <scripts />
     <height>20</height>
     <name>Menu Button</name>
@@ -213,7 +213,7 @@ $(pv_value)</tooltip>
     <border_color>
       <color red="0" green="128" blue="255" />
     </border_color>
-    <y>505</y>
+    <y>485</y>
     <actions hook="false" hook_all="false">
       <action type="OPEN_DISPLAY">
         <path>caputRecorderConfigure.opi</path>
