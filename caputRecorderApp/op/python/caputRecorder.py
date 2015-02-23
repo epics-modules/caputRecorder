@@ -11,7 +11,12 @@ import Queue
 import keyword
 import string
 import shutil
-import macros
+import os
+
+#import macros
+macros = None
+
+macroFileName = "macros.py"
 
 # convert commas to spaces
 commaToSpaceTable = string.maketrans(",", " ")
@@ -32,6 +37,7 @@ doReloadMacros = 0
 doexecuteMacro = 0
 doSelectMacro = 0
 doAbortMacro = 0
+doEditMacros = 0
 executingMacro = 0
 exitProgram = 0
 
@@ -309,6 +315,7 @@ def stopStartMonFunc(pvname, value, char_value, **kwd):
 def startMacro():
 	global debug, macroFile, prefix, macroFunctionNames
 	global commandMonitorList, connected, timeOfLastPut, ifMacroExists
+	global macroFileName
 
 	if debug: print("startMacro: entry\n")
 	if not connected:
@@ -343,6 +350,7 @@ def startMacro():
 		return
 	# See of function name is already defined
 	appending = False
+	if debug: print "startMacro: ifMacroExists=", ifMacroExists
 	if macroName in macroFunctionNames:
 		if debug: print"ifMacroExists=%s" % ifMacroExists
 		if ifMacroExists=="Fail":
@@ -351,10 +359,10 @@ def startMacro():
 			return
 		if ifMacroExists=="Replace":
 			timeString = time.strftime("_%y%m%d-%H%M%S")
-			shutil.copy("macros.py","macros.py"+timeString)
-		dl = deleteFunction("macros.py", macroName)
+			shutil.copy(macroFileName,macroFileName+timeString)
+		dl = deleteFunction(macroFileName, macroName)
 		if ifMacroExists=="Append":
-			macroFile = open("macros.py","a")
+			macroFile = open(macroFileName,"a")
 			macroFile.writelines(dl)
 			macroFile.close()
 			appending = True
@@ -366,11 +374,11 @@ def startMacro():
 
 	epics.caput(prefix+"caputRecorderMacroRecording", 1)
 	epics.caput(prefix+"caputRecorderUserMessage", "Recording")
-	macroFile = open("macros.py","a")
+	macroFile = open(macroFileName,"a")
 	if appending == False:
 		macroFile.write("def %s():\n" % macroName)
 	else:
-		macroFile.write("\t# appended to exsting macro...\n")
+		macroFile.write("\t# appended to existing macro...\n")
 
 	# It's not legal to have a python function with no commands in it.
 	# Defend against user stopping recording without doing any caputs
@@ -432,10 +440,13 @@ def reloadMacrosMonFunc(pvname, value, char_value, **kwd):
 	wake.set()
 
 def reloadMacros():
+	global macros
 	global debug, prefix, macroFunctionNames, macroFunctions, menuFields
 	global _macroFunctionNames, _macroFunctions, connected
 
+	if debug: print "reloadMacros:entry"
 	if not connected:
+		if debug: print "reloadMacros:not connected"
 		return
 
 	success = 0
@@ -445,17 +456,20 @@ def reloadMacros():
 	macroFunctionNames = []
 	macroFunctions = []
 
+	if debug: print "reloadMacros: dir(macros)=", dir(macros)
 	try:
 		reload(macros)
 		success = 1
 	except:
 		epics.caput(prefix+"caputRecorderUserMessage", "Macro file contains error(s)")
+	if debug: print "reloadMacros: dir(macros)=", dir(macros)
 
 	# erase menu strings
 	epics.caput(prefix+"caputRecorderClearMacros", 1, wait=True, timeout=5)
 
 	if success:
 		functions = [o for o in getmembers(macros) if isfunction(o[1])]
+		if debug: print "reloadMacros:functions=", functions
 		(_macroFunctionNames, _macroFunctions) = zip(*functions)
 		# don't add functions whose names begin with '_' to function menu
 		macroFunctionNames = list(copy.deepcopy(_macroFunctionNames))
@@ -467,6 +481,7 @@ def reloadMacros():
 				del macroFunctions[i]
 			else:
 				i += 1
+		if debug: print "reloadMacros:macroFunctionNames=", macroFunctionNames
 		i = 0
 		for (name, func, field) in zip(macroFunctionNames, macroFunctions, menuFields*maxMacroMenus):
 			menu = i/len(menuFields) + 1
@@ -546,6 +561,7 @@ def abortMacroMonFunc(pvname, value, char_value, **kwd):
 		wake.set()
 
 def executeMacro():
+	global macros
 	global debug, prefix, macroFunctionNames, macroFunctions, maxArgs, executingMacro
 	global _macroFunctionNames, connected
 
@@ -646,7 +662,7 @@ def start():
 	global debug, prefix, wake, doStartMacro, doStopMacro, doReloadMacros, doexecuteMacro
 	global doSelectMacro, doAbortMacro, executingMacro, msgQueue
 	global allowedUsers, forbiddenUsers, allowedHosts, forbiddenHosts
-	global commandMonitorList, exitProgram
+	global commandMonitorList, exitProgram, doEditMacros, macroFileName
 
 	wake.clear()
 
@@ -717,6 +733,11 @@ def start():
 		if doAbortMacro:
 			doAbortMacro = 0
 			epics.caput(prefix+"caputRecorderAbortMacro", 0)
+		if doEditMacros:
+			doEditMacros = 0
+			epics.caput(prefix+"caputRecorderEditMacros", 0)
+			editor = os.environ['EDITOR']
+			os.system(editor + " " + macroFileName + "&")
 		if exitProgram:
 			sys.exit()
 	stop()
@@ -724,6 +745,7 @@ def start():
 
 def stop():
 	global debug, prefix
+
 	epics.camonitor_clear(prefix+"caputRecorderMacroStopStart")
 	epics.camonitor_clear(prefix+"caputRecorderReloadMacros")
 	epics.camonitor_clear(prefix+"caputRecorderMacro")
@@ -732,6 +754,17 @@ def stop():
 	epics.camonitor_clear(prefix+"caputRecorderUsers")
 	epics.camonitor_clear(prefix+"caputRecorderHosts")
 	epics.camonitor_clear(prefix+"caputRecorderPrefixes")
+	epics.camonitor_clear(prefix+"caputRecorderAddDelayCmd")
+	epics.camonitor_clear(prefix+"caputRecorderComment")
+
+	# clear all busy records, and the bo record caputRecorderEditMacros
+	epics.caput(prefix+"caputRecorderMacroStopStart", 0)
+	epics.caput(prefix+"caputRecorderMacroRecording", 0)
+	epics.caput(prefix+"caputRecorderExecuteMacro", 0)
+	epics.caput(prefix+"caputRecorderEditMacros", 0)
+	epics.caput(prefix+"caputRecorderAbortMacro", 0)
+	epics.caput(prefix+"caputRecorderAddDelayCmd", 0)
+	
 
 def debugMonFunc(pvname, value, char_value, **kwd):
 	global debug
@@ -748,25 +781,46 @@ def waitCompletionMonFunc(pvname, value, char_value, **kwd):
 def ifMacroExistsMonFunc(pvname, value, char_value, **kwd):
 	global debug, ifMacroExists
 	ifMacroExists = char_value
+	
+def editMacrosMonFunc(pvname, value, char_value, **kwd):
+	global debug, wake, macroFileName, doEditMacros
+	if debug: print "editMacrosMonFunc: entry"
+	if value:
+		doEditMacros = value
+		wake.set()
 
-def go(argv=["xxx:"]):
+usage = """
+usage:   python caputRecorder.py prefix [other_prefixes] [macrofile]
+example: python caputRecorder.py 1bmb: 1bma: 1bmc: macros_1bmb:.py
+"""
+
+def go(argv=[]):
 	global debug, prefix, commandMonitorList, startTime, recordTiming, waitCompletion, ifMacroExists
+	global macroFileName, macros
 
-	usage = """
-	  python caputRecorder.py prefix [other_prefixes]
-	  python caputRecorder.py 1bma: 1bmb: 1bmc:
-	"""
 	if len(argv) > 0:
 		prefix = argv[0]
+		commandMonitorList = [prefix+"caputRecorderCommand"]
+	else:
+		print usage
+		return
 
-	commandMonitorList = [prefix+"caputRecorderCommand"]
-	
 	if len(argv) > 1:
-		if debug: print "argv[1:]", argv[1:]
-		for otherprefix in argv[1:]:
-			commandMonitorList.append(otherprefix+"caputRecorderCommand")
-
+		for arg in argv[1:]:
+			if arg.endswith(".py"):
+				macroFileName = arg
+			else:
+				commandMonitorList.append(arg+"caputRecorderCommand")
 	if debug: print "initial commandMonitorList", commandMonitorList
+
+	# see if prefix+"caputRecorderCommand" exists
+	#default_commandPV = epics.PV(prefix+"caputRecorderCommand", timeout=2)
+	
+	# imort the macros module
+	(macroModuleName, ext) = os.path.splitext(os.path.basename(macroFileName))
+	macros = __import__(macroModuleName)
+	#print "macroFileName='%s'" % macroFileName
+	#print "dir(macros)=", dir(macros)
 
 	debug = epics.caget(prefix+"caputRecorderDebug")
 	epics.camonitor(prefix+"caputRecorderDebug",callback=debugMonFunc)
@@ -780,6 +834,9 @@ def go(argv=["xxx:"]):
 	ifMacroExists = epics.caget(prefix+"caputRecorderIfMacroExists", as_string=True)
 	epics.camonitor(prefix+"caputRecorderIfMacroExists",callback=ifMacroExistsMonFunc)
 
+	epics.camonitor(prefix+"caputRecorderEditMacros",callback=editMacrosMonFunc)
+
+	# This is part of our mechanism to exit when a new version of caputRecorder is launched
 	startTime = time.strftime("%c")
 	epics.caput(prefix+"caputRecorderStartTime", startTime)
 	stop()
