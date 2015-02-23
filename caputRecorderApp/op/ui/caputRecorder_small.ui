@@ -55,7 +55,7 @@ QPushButton::menu-indicator {image: url(none.png); width: 0}
                 <string>caputRecorder.adl</string>
             </property>
             <property name="args">
-                <string>P=$(P)</string>
+                <string>P=$(P),L=$(L)</string>
             </property>
             <property name="removeParent">
                 <string>true</string>
@@ -121,7 +121,7 @@ QPushButton::menu-indicator {image: url(none.png); width: 0}
                 <string>caputRecorder1_small.adl</string>
             </property>
             <property name="args">
-                <string>P=$(P)</string>
+                <string>P=$(P),L=$(L)</string>
             </property>
             <property name="removeParent">
                 <string>true</string>

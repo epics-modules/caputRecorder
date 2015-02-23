@@ -4,10 +4,10 @@
 <widget class="QMainWindow" name="MainWindow">
     <property name="geometry">
         <rect>
-            <x>364</x>
-            <y>501</y>
+            <x>1078</x>
+            <y>457</y>
             <width>400</width>
-            <height>525</height>
+            <height>505</height>
         </rect>
     </property>
     <property name="styleSheet">
@@ -23,7 +23,7 @@ QPushButton::menu-indicator {image: url(none.png); width: 0}
             <property name="geometry">
                 <rect>
                     <x>250</x>
-                    <y>425</y>
+                    <y>405</y>
                     <width>100</width>
                     <height>20</height>
                 </rect>
@@ -55,7 +55,7 @@ QPushButton::menu-indicator {image: url(none.png); width: 0}
                 <string>caputRecorder1.adl</string>
             </property>
             <property name="args">
-                <string>P=$(P)</string>
+                <string>P=$(P),L=$(L)</string>
             </property>
             <property name="removeParent">
                 <string>true</string>
@@ -67,7 +67,7 @@ QPushButton::menu-indicator {image: url(none.png); width: 0}
                     <x>0</x>
                     <y>0</y>
                     <width>402</width>
-                    <height>502</height>
+                    <height>482</height>
                 </rect>
             </property>
             <property name="geometry">
@@ -75,21 +75,21 @@ QPushButton::menu-indicator {image: url(none.png); width: 0}
                     <x>0</x>
                     <y>0</y>
                     <width>400</width>
-                    <height>500</height>
+                    <height>480</height>
                 </rect>
             </property>
             <property name="filename">
                 <string>caputRecorder_bare.adl</string>
             </property>
             <property name="macro">
-                <string>P=$(P)</string>
+                <string>P=$(P),L=$(L)</string>
             </property>
         </widget>
         <widget class="caRelatedDisplay" name="caRelatedDisplay_1">
             <property name="geometry">
                 <rect>
                     <x>350</x>
-                    <y>505</y>
+                    <y>485</y>
                     <width>50</width>
                     <height>20</height>
                 </rect>
@@ -121,7 +121,7 @@ QPushButton::menu-indicator {image: url(none.png); width: 0}
                 <string>caputRecorder_small.adl</string>
             </property>
             <property name="args">
-                <string>P=$(P)</string>
+                <string>P=$(P),L=$(L)</string>
             </property>
             <property name="removeParent">
                 <string>true</string>
@@ -131,7 +131,7 @@ QPushButton::menu-indicator {image: url(none.png); width: 0}
             <property name="geometry">
                 <rect>
                     <x>270</x>
-                    <y>505</y>
+                    <y>485</y>
                     <width>80</width>
                     <height>20</height>
                 </rect>
