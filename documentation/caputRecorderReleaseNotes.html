@@ -2,7 +2,7 @@
 
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<title>caputREcorderReleaseNotes</title>
+<title>caputRecorderReleaseNotes</title>
 </head>
 
 <body bgcolor="#FFFFFF">
@@ -47,7 +47,17 @@ disconnected for 10 seconds, caputRecorder exits.
 <li>When menus have been rewritten, caputRecorder sets caputRecorderNeedRefresh,
 so user knows to press the "Refresh Menus" button.  Added code to detect when
 the display has been closed and reopened (e.g., as the result of "Refresh
-Menus"), and clear caputRecorderNeedRefresh.  
+Menus"), and clear caputRecorderNeedRefresh.
+
+<li>caputRecorder.py exits when it detects a new version of itself talking to
+the same control database.
+
+<li>If macro exists in macro file, allow Fail/Append/Replace.  Added option to
+try to reproduce timing of caputs.  Made wait for completion an option.  Reload
+macros on ca reconnect.
+
+<li>Allow for more than one copy of caputRecorder per ioc.
+
 
 </ul>
 

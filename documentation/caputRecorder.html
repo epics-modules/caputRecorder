@@ -20,47 +20,54 @@
 
 
 <a name="Overview"></a> <h2>Overview</h2> <P>caputRecorder supports the recording
-and playback of sequences of caputs.  It records each caput as a python command,
-and a sequence of caputs as a python function&mdash;also called here a
-<b><i>macro</i></b>.  caputRecorder can also serve as a simple user interface for
-delivering canned python functions to end users.  caputRecorder communicates with
-users via an EPICS database, which can be displayed by MEDM, caQtDM, CSS-BOY, or EDM. 
-Thus, it allows any EPICS record or channel-access client to run python functions
-and wait for them to complete.
+and playback of sequences of caputs.  It records each caput as a <a
+href="https://www.python.org/">python</a> command, and a sequence of caputs as a
+python function&mdash;also called here a <b><i>macro</i></b>.  caputRecorder can
+also serve as a simple user interface for delivering canned python functions to
+end users.  caputRecorder communicates with users via an EPICS database, so it
+allows any EPICS record or channel-access client to record and run python
+functions, and to wait for them to complete.
 
 <blockquote><font size="-1">
 
 <i>caput</i> is short for "Channel Access put".  When you press a button, or make
 a menu selection, in an MEDM (or other display manager) display, you are doing a
-caput.  Any program that writes to EPICS PVs does so by doing caputs. </font>
-</blockquote>
+caput.  Any program that writes to EPICS PVs does so by doing caputs.
+
+</font></blockquote>
 
 <P>caputRecorder also supports generalizing recorded macros with arguments. 
 (This requires manual editing of python code.) It provides a user interface
 through which macro arguments are displayed with default values that can be
 changed via channel access.
 
-<P>caputRecorder is intended to meet the following kinds needs:
+<P>caputRecorder is intended to meet the following kinds of needs:
 
-<ul>
-<li><P>Automate measurements involving several sequences of steps that users
-know how to do manually, but for which no software has been written.  If users
-can do a measurement step manually while the recorder is on, they will in effect
-have written software to automate that measurement step, and they can then
-combine several such steps as needed to perform a particular instance of the
-measurement type.
+<ul> <li><P>Automate measurements involving sequences of steps that users know how
+to do manually, but for which no software has been written.  If users can do a
+measurement step manually while the recorder is on, they will in effect have
+written software to automate that step, and they can then combine several such
+steps as needed to perform a particular instance of the measurement type.
 
-<li><P>Improve communication between users and software
-developers who support them.  Rather than describing needed software in general
-terms, or laboriously listing required steps, a user can simply record them, and
-hand the developer the equivalent python code.
+<li><P>Improve communication between users and the software developers who
+support them.  Rather than describing needed software in general terms, or
+laboriously listing the required actions in the required order, a user can
+simply record them, with comments for any actions outside of EPICS, and send the
+developer the python code.
 
-<li><P>Assist in troubleshooting, by recording the exact sequence
-of caputs that produced a problem.
+<li><P>Assist in troubleshooting, by recording exact sequences of caputs that
+do and do not reproduce a problem.
 
 <li><P>Automate testing, by recording sequences of caputs that succeed with the
 current version of some software, and playing them back to verify that they also
 succeed with the new version.
+
+<li><P>Show someone how to operate a complicated device by operating it
+yourself, while recording, and emailing them the python code.
+
+<li><P>Record everything a user does.  (But <a
+href="http://www-csr.bessy.de/control/SoftDist/caPutLog">caPutLog</a> is a
+<i>much</i> better tool for this purpose.)
 
 </ul>
 
@@ -125,12 +132,11 @@ xxx module, release R5-8, which is already configured to use caputRecorder.)
 
 <li><P>Link the IOC's code against the <code>caputRecorder</code> library.
 
-<li><P>Load the database <code>caputRecorder.db</code>, for example with this
-excerpt from st.cmd:
+<li><P>Load the database <code>caputPoster.db</code>
 
 <blockquote>
 <pre>
-dbLoadRecords("$(CAPUTRECORDER)/caputRecorderApp/Db/caputRecorder.db","P=xxx:,N=300")
+dbLoadRecords("$(CAPUTRECORDER)/caputRecorderApp/Db/caputPoster.db","P=xxx:,N=300")
 </pre>
 </blockquote>
 
@@ -139,12 +145,25 @@ where <code>N</code> is the length of the longest caput-notification string
 ("pvname,value,user@host") that will be sent to the recorder.
 </blockquote>
 
-<li><P>If you're using autosave, you'll probably also want to include
+<li><P>If this IOC will host caputRecorder's user interface, load the database
+<code>caputRecorder.db</code>
+
+<blockquote>
+<pre>
+dbLoadRecords("$(CAPUTRECORDER)/caputRecorderApp/Db/caputRecorder.db","P=xxx:,N=100")
+</pre>
+</blockquote>
+
+<blockquote>
+where <code>N</code> is the length of the comment, users, hosts, and prefixes
+strings.
+
+<P>If you're using autosave, you'll probably also want to include
 <code>caputRecorder_settings.req</code> in the IOC's
 <code>auto_settings.req</code> file:
 
 <pre>
-file caputRecorder_settings.req P=xxx:,N=300
+file caputRecorder_settings.req P=xxx:,N=100
 </pre>
 
 If you do this, you must also add the following line to save_restore.cmd:
@@ -153,10 +172,10 @@ If you do this, you must also add the following line to save_restore.cmd:
 set_requestfile_path("$(CAPUTRECORDER)", "caputRecorderApp/Db")
 </pre>
 
+</blockquote>
 
-<li>Register caputRecorder's access-security trap listener, for example with the
-following excerpt from st.cmd.  (Note that this command must be executed
-<i>after</i> iocInit.)
+<li>Register caputRecorder's access-security trap listener.  (Note that this
+command must be executed <i>after</i> iocInit.)
 
 <blockquote>
 <pre>
@@ -172,8 +191,7 @@ caput-notification strings will be written.
 </blockquote>
 
 <li>Run EPICS access security with an access-security file that specifies
-<code>TRAPWRITE</code> for the desired users and hosts.  Here is a sample
-excerpt from st.cmd:
+<code>TRAPWRITE</code> for the desired users and hosts.
 
 <blockquote>
 <pre>
@@ -223,11 +241,6 @@ ASG(DEFAULT) {
 </blockquote>
 
 
-<li>One IOC from which caputs are to be recorded will have its
-<code>caputRecorder.db</code> database displayed to the user via MEDM (or
-caQtDM, or CSS-BOY).  The Python program caputRecorder.py will also
-monitor and write to this database.
-
 <P><li>The following environment variables must be set before running MEDM
 (caQtDM, etc.):
 <dl> 
@@ -243,12 +256,12 @@ user-interface database) is running at a time. caputRecorder.py detects the
 launch of a new copy of itself that uses the same control PVs, and exits.
 
 
-<P><dt>MACROS_PY<dd>The path to the file macros.py, in which caputs will be
-recorded.  There is an example copy of macros.py here:
+<P><dt>MACROS_PY<dd>The path to the macros file, in which caputs will be
+recorded.  There is an example copy of this file here:
 <pre>caputRecorder/caputRecorderApp/op/python/example_macros.py</pre>
 
-<P><dt>EDITOR<dd>The command that invokes your preferred editor, which will be used
-by the "!edit macros.py" button described below.
+<P><dt>EDITOR<dd>The command that invokes your preferred editor, which will be
+used for the "edit macros" button described below.
 
 </dl>
 
@@ -289,24 +302,23 @@ press the "Add" button.  The actual python code for this command will be
 something like <code>time.sleep(1.200)</code>.  After caputRecorder.py has
 written the delay command, it will press the "Done" button.
 
-<li><P>The text-entry field labelled "time to wait for completion:" specifies
-the time in seconds that python will wait for completion of a macro command 
-that does a caput to an EPICS PV, before going on to the next command. 
-"Completion" means completion of any EPICS processing that results from the
-execution of that caput.  It's ok to change this time while a macro is being
-recorded.  (Note that you can tell caputRecorder to <i>not</i> wait for
-completion.  See <a href="#Record options">Record options</a>.)
-
 </ul>
 
-<li><P><b>Record Macro</b> <ul> <li><P>The text-entry field labelled "macro
-name" should contain the name of the macro (python function) you want to
-record.  Note that you aren't permitted to use a macro name that already exists
-in macros.py. Also note that the macro name must start with a letter, and must
-consist of letters digits, and underscores.  caputRecorder will enforce this by
-prepending "a" and/or replacing offending characters with underscores.  The
-maximum length of a macro name is 25 characters; this limit is set by the length
-of an mbboRecord's menu-string field.
+<li><P><b>Record Macro</b> <ul> <li><P>The text-entry field labelled "macro name"
+specifies the name of the macro (python function) you will record.
+
+<blockquote>
+
+By default, you aren't permitted to use a macro name that already exists in
+macros.py.  (See <a href="#Record options">Record options</a>.)
+
+<P>Also note that the macro name must start with a letter, and must consist of
+letters digits, and underscores.  caputRecorder will enforce this by prepending
+"a" and/or replacing offending characters with underscores.  The macro name will
+be truncated to 25 characters; this limit is set by the length of an mbboRecord's
+menu-string field.
+
+</blockquote>
 
 <li><P>The choice button labelled "record puts" is used to start and stop
 recording.  While recording, you can write to EPICS PVs via any EPICS client,
@@ -320,7 +332,7 @@ recording of another macro.
 <li><P>When you execute macro <b>A</b> while recording macro <b>B</b>,
 caputRecorder will suppress recording of the caputs that result from the
 execution of macro <b>A</b>, and will simply record a function call to macro
-<b>A</b> in macro <b>B</b>.
+<b>A</b>.
 
 </ul>
 
@@ -328,7 +340,7 @@ execution of macro <b>A</b>, and will simply record a function call to macro
 
 <ul>
 
-<li><P>The button labelled "!edit macros.py" invokes the command named by
+<li><P>The button labelled "edit macros" invokes the command named by
 the environment variable EDITOR on the file macros.py.
 
 <li><P>The gray boxes are menus, which will contain the names of recorded
@@ -409,10 +421,10 @@ in the figure below.)  Only the first element of a host name need be specified. 
 example, "mooneylinux.aps.anl.gov" is used as "mooneylinux".)
 
 <P><li>You can choose which IOCs caputRecorder monitors, by specifying prefixes
-to <code>caputRecorderPrefixes</code>.  (See "Record caputs received by which
-IOCs?" in the figure below.)  Unlike user and host choices, this choice does not
-take effect while a macro is being recorded.  Also unlike user and host choices,
-this choice is not about the sender of a caput, but about the recipient.
+to <code>caputRecorderPrefixes</code>.  (See "Record caputs to which IOCs?" in
+the figure below.)  Unlike user and host choices, this choice does not take
+effect while a macro is being recorded.  Also unlike user and host choices, this
+choice is not about the sender of a caput, but about the recipient.
 
 <P>On startup, caputRecorder monitors the iocs whose prefixes are specified on the
 command line.  If <code>caputRecorderPrefixes</code> is not empty, it will
@@ -426,6 +438,10 @@ through access security.
 <a name="Record options"></a>
 <H2> Record options </h2>
 
+<ul>
+
+<li><b>Timing</b>
+
 <P>The timing of caputs will, in general, be different on replay than when
 recorded, but you can tell caputRecorder to try to reproduce the timing.  If you
 select "Yes" for "record timing of caputs?" (see diagram above), caputRecorder
@@ -433,10 +449,18 @@ will insert delays between caput commands.  You can change this setting while
 recording. Note that if caputRecorder waits for completion, the required delay
 time could be negative, in which case caputRecorder will insert no delay.
 
+<li><b>Wait for completion</b>
+
 <P>You can choose whether or not caputRecorder will wait for completion after
 executing recorded caputs, by setting "wait for completion?" (see diagram
 above). Note that this affects the python code written while recording, and is
 not an execute-time choice. You can change this setting while recording.
+
+<P>If you tell caputRecorder to wait for completion, you can tell it for how
+long to wait, using the text-entry field labelled "wait for how long?". You can
+change this time while recording.
+
+<li><b>Behavior if macro name already exists</b>
 
 <P>If you attempt to record a macro whose name is already defined in macros.py,
 caputRecorder will do one of three things, depending on the setting of the
@@ -452,6 +476,8 @@ caputRecorder will write a backup copy of macros.py, named "macros.py_yymmdd-HHM
 the current date and time.
 
 </dl>
+
+</ul>
 
 <a name="Discussion"></a>
 <H2> Discussion </h2>
@@ -517,4 +543,33 @@ is present.
 <li><P>caputRecorder R1-4 monitors the connection status of one of its PVs, and
 exits if that PV remains disconnected for more than 10 seconds.
 
- </BODY>
+<li><P>The EDM display-file translation failed at the adl file's "shell command",
+so I just deleted those items from the EDM displays.
+
+<li><P>You can run more than one instance of caputRecorder in an IOC (but
+only one copy per IOC of caputPoster.db is supported). To run two
+instances of caputRecorder, you must give them different prefixes:
+
+<pre>
+dbLoadRecords("$(CAPUTRECORDER)/caputRecorderApp/Db/caputPoster.db","P=xxx:,N=300")
+dbLoadRecords("$(CAPUTRECORDER)/caputRecorderApp/Db/caputRecorder.db","P=xxx:,N=100")
+dbLoadRecords("$(CAPUTRECORDER)/caputRecorderApp/Db/caputRecorder.db","P=xxx<font color=red>A</font>:,N=100")
+...
+iocInit
+...
+registerCaputRecorderTrapListener('xxx:caputRecorderCommand')
+</pre>
+
+start_putRecorder must specify a different name for macros.py for the two
+instances.  The example_start_putRecorder script does this as follows:
+
+<pre>
+MACROS_PY=${MACROS_PY_DIR}/"macros_"${PREFIX}.py
+# start caputRecorder.py
+$COMMAND ${PREFIX} ${MACROS_PY}&
+</pre>
+
+Also, you must tell the second copy to look at the one installed copy of
+caputPoster.db (that is, the xxx:caputRecorderCommand PV) by specifying
+the prefix in the "prefixes:" string.
+</BODY>
