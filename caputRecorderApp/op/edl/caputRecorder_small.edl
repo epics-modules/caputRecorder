@@ -33,7 +33,7 @@ release 0
 x 0
 y 0
 w 400
-h 150
+h 175
 
 beginGroup
 
@@ -46,7 +46,7 @@ release 0
 x 0
 y 0
 w 400
-h 150
+h 175
 fgColor index 14
 bgColor index 0
 topShadowColor index 0
@@ -90,7 +90,7 @@ menuLabel {
   0 
 }
 symbols {
-  0 "P=$(P)"
+  0 "P=$(P),L=$(L)"
 }
 closeAction {
   0 1
@@ -125,7 +125,7 @@ menuLabel {
   0 
 }
 symbols {
-  0 "P=$(P)"
+  0 "P=$(P),L=$(L)"
 }
 closeAction {
   0 1

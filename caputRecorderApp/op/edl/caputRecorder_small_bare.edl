@@ -333,14 +333,14 @@ minor 0
 release 0
 x 10
 y 0
-w 200
-h 23
+w 215
+h 20
 font "helvetica-medium-r-8.0"
 fontAlign "center"
 fgColor index 14
 useDisplayBg
 value {
- "caput recorder"
+ "caput recorder $(P)"
 }
 endObjectProperties
 

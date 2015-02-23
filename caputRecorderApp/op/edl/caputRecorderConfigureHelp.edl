@@ -3,10 +3,10 @@ beginScreenProperties
 major 4
 minor 0
 release 0
-x 1102
-y 419
+x 670
+y 418
 w 400
-h 480
+h 500
 font "helvetica-medium-r-18.0"
 ctlFont "helvetica-medium-r-8.0"
 btnFont "helvetica-medium-r-18.0"
@@ -538,7 +538,7 @@ fontAlign "center"
 fgColor index 14
 useDisplayBg
 value {
- "Record caputs received by which IOCs?"
+ "Record caputs to which IOCs?"
 }
 endObjectProperties
 
@@ -737,6 +737,44 @@ value {
 }
 endObjectProperties
 
+# (Group)
+object activeGroupClass
+beginObjectProperties
+major 4
+minor 0
+release 0
+x 10
+y 475
+w 341
+h 18
+
+beginGroup
+
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 0
+release 0
+x 10
+y 477
+w 170
+h 14
+font "helvetica-medium-r-8.0"
+fontAlign "right"
+fgColor index 14
+useDisplayBg
+value {
+ "if macro already exists:"
+}
+endObjectProperties
+
+endGroup
+
+endObjectProperties
+
+
 # (Static Text)
 object activeXTextClass
 beginObjectProperties
@@ -752,7 +790,51 @@ fontAlign "right"
 fgColor index 14
 useDisplayBg
 value {
- "if macro already exists:"
+ "wait for how long?"
+}
+endObjectProperties
+
+# (Text Control)
+object activeXTextDspClass
+beginObjectProperties
+major 4
+minor 0
+release 0
+x 181
+y 455
+w 70
+h 18
+controlPv "$(P)caputRecorderWaitCBSec"
+font "helvetica-medium-r-8.0"
+smartRefresh
+fastUpdate
+fgColor index 14
+bgColor index 51
+editable
+autoHeight
+format "string"
+motifWidget
+nullColor index 32
+useHexPrefix
+objType "controls"
+newPos
+endObjectProperties
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 0
+release 0
+x 254
+y 457
+w 50
+h 14
+font "helvetica-medium-r-8.0"
+fgColor index 14
+useDisplayBg
+value {
+ "seconds"
 }
 endObjectProperties
 # (Group)
@@ -869,6 +951,19 @@ controlPv "$(P)caputRecorderWaitCompletion"
 font "helvetica-medium-r-10.0"
 orientation "horizontal"
 endObjectProperties
+# (Group)
+object activeGroupClass
+beginObjectProperties
+major 4
+minor 0
+release 0
+x 10
+y 475
+w 341
+h 18
+
+beginGroup
+
 
 # (Choice Button)
 object activeChoiceButtonClass
@@ -877,7 +972,7 @@ major 4
 minor 0
 release 0
 x 181
-y 455
+y 475
 w 170
 h 18
 fgColor index 14
@@ -890,4 +985,9 @@ controlPv "$(P)caputRecorderIfMacroExists"
 font "helvetica-medium-r-10.0"
 orientation "horizontal"
 endObjectProperties
+
+endGroup
+
+endObjectProperties
+
 
