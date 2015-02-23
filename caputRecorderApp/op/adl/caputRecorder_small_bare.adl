@@ -386,22 +386,6 @@ text {
 	textix="caput recorder $(P)"
 	align="horiz. centered"
 }
-"shell command" {
-	object {
-		x=230
-		y=3
-		width=140
-		height=20
-	}
-	command[0] {
-		label="start putrecorder"
-		name="../../../start_putrecorder"
-		args="$(P)"
-	}
-	clr=14
-	bclr=32
-	label="(re)start recorder"
-}
 polygon {
 	object {
 		x=375
@@ -492,4 +476,20 @@ text {
 	}
 	textix="REFRESH"
 	align="horiz. centered"
+}
+"shell command" {
+	object {
+		x=230
+		y=3
+		width=140
+		height=20
+	}
+	command[0] {
+		label="start putrecorder"
+		name="${START_PUTRECORDER}"
+		args="$(P)"
+	}
+	clr=14
+	bclr=32
+	label="(re)start recorder"
 }
