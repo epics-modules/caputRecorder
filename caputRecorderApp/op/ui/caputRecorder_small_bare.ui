@@ -815,42 +815,6 @@ QPushButton::menu-indicator {image: url(none.png); width: 0}
                 </rect>
             </property>
         </widget>
-        <widget class="caShellCommand" name="caShellCommand_0">
-            <property name="geometry">
-                <rect>
-                    <x>230</x>
-                    <y>3</y>
-                    <width>140</width>
-                    <height>20</height>
-                </rect>
-            </property>
-            <property name="foreground">
-                <color alpha="255">
-                    <red>0</red>
-                    <green>0</green>
-                    <blue>0</blue>
-                </color>
-            </property>
-            <property name="background">
-                <color alpha="255">
-                    <red>238</red>
-                    <green>182</green>
-                    <blue>43</blue>
-                </color>
-            </property>
-            <property name="label">
-                <string>(re)start recorder</string>
-            </property>
-            <property name="labels">
-                <string>start putrecorder</string>
-            </property>
-            <property name="files">
-                <string>../../../start_putrecorder</string>
-            </property>
-            <property name="args">
-                <string>$(P)</string>
-            </property>
-        </widget>
         <widget class="caPolyLine" name="caPolygon_0">
             <property name="geometry">
                 <rect>
@@ -1029,6 +993,42 @@ QPushButton::menu-indicator {image: url(none.png); width: 0}
                     <width>45</width>
                     <height>10</height>
                 </rect>
+            </property>
+        </widget>
+        <widget class="caShellCommand" name="caShellCommand_0">
+            <property name="geometry">
+                <rect>
+                    <x>230</x>
+                    <y>3</y>
+                    <width>140</width>
+                    <height>20</height>
+                </rect>
+            </property>
+            <property name="foreground">
+                <color alpha="255">
+                    <red>0</red>
+                    <green>0</green>
+                    <blue>0</blue>
+                </color>
+            </property>
+            <property name="background">
+                <color alpha="255">
+                    <red>238</red>
+                    <green>182</green>
+                    <blue>43</blue>
+                </color>
+            </property>
+            <property name="label">
+                <string>(re)start recorder</string>
+            </property>
+            <property name="labels">
+                <string>start putrecorder</string>
+            </property>
+            <property name="files">
+                <string>${START_PUTRECORDER}</string>
+            </property>
+            <property name="args">
+                <string>$(P)</string>
             </property>
         </widget>
         <zorder>caLabel_0</zorder>
