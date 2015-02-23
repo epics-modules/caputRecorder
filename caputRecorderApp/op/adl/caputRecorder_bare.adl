@@ -102,13 +102,13 @@ text {
 	object {
 		x=10
 		y=0
-		width=200
-		height=23
+		width=215
+		height=20
 	}
 	"basic attribute" {
 		clr=14
 	}
-	textix="caput recorder"
+	textix="caput recorder $(P)"
 	align="horiz. centered"
 }
 polyline {
@@ -135,7 +135,7 @@ polyline {
 		height=14
 	}
 	monitor {
-		chan="$(P)caputRecorderCommand.VAL"
+		chan="$(L)caputRecorderCommand.VAL"
 		clr=14
 		bclr=1
 	}
@@ -186,9 +186,9 @@ text {
 }
 "shell command" {
 	object {
-		x=210
+		x=230
 		y=3
-		width=150
+		width=140
 		height=20
 	}
 	command[0] {
@@ -479,21 +479,6 @@ polyline {
 		(1,211)
 		(397,211)
 	}
-}
-"shell command" {
-	object {
-		x=240
-		y=215
-		width=150
-		height=20
-	}
-	command[0] {
-		label="edit macros.py"
-		name="${EDITOR} ${MACROS_PY}&"
-	}
-	clr=14
-	bclr=32
-	label="edit macros.py"
 }
 "choice button" {
 	object {
@@ -1101,4 +1086,19 @@ text {
 	}
 	textix="REFRESH"
 	align="horiz. centered"
+}
+"message button" {
+	object {
+		x=280
+		y=215
+		width=100
+		height=20
+	}
+	control {
+		chan="$(P)caputRecorderEditMacros"
+		clr=14
+		bclr=51
+	}
+	label="edit macros"
+	press_msg="1"
 }

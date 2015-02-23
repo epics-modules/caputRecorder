@@ -96,7 +96,7 @@ display {
 	}
 	display[0] {
 		name="caputRecorder.adl"
-		args="P=$(P)"
+		args="P=$(P),L=$(L)"
 		policy="replace display"
 	}
 	clr=0
@@ -111,7 +111,7 @@ composite {
 		height=481
 	}
 	"composite name"=""
-	"composite file"="caputRecorder_bare.adl;P=$(P)"
+	"composite file"="caputRecorder_bare.adl;P=$(P),L=$(L)"
 }
 "related display" {
 	object {
@@ -137,7 +137,7 @@ composite {
 	}
 	display[0] {
 		name="caputRecorder1_small.adl"
-		args="P=$(P)"
+		args="P=$(P),L=$(L)"
 		policy="replace display"
 	}
 	clr=0
