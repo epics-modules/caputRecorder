@@ -1,3 +1,5 @@
+record(bo, "$(P)caputRecorderEditMacros") {
+}
 record(mbbo, "$(P)caputRecorderIfMacroExists") {
 	field(ZRST, "Fail")
 	field(ONST, "Append")
@@ -43,10 +45,6 @@ record(longout, "$(P)caputRecorderDebug") {
 }
 record(bo, "$(P)caputRecorderHeartbeat") {
 	field(HIGH, "1")
-}
-record(waveform, "$(P)caputRecorderCommand") {
-    field(FTVL, "CHAR")
-    field(NELM, "$(N)")
 }
 record(waveform, "$(P)caputRecorderComment") {
     field(FTVL, "CHAR")
