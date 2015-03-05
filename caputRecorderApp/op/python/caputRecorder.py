@@ -75,6 +75,7 @@ timeOfLastPut = None
 recordTiming = 0
 waitCompletion = 1
 ifMacroExists = "Fail"
+recordingActive = False
 
 ########################################################################
 def deleteFunction(fileName, functionName):
@@ -154,9 +155,12 @@ def hostsMonFunc(pvname, value, char_value, **kwd):
 ## All we're going to do is send (pvname,value) information to the message queue
 
 def commandMonFunc(pvname, value, char_value, **kwd):
-	global debug, macroFile, prefix, msgQueue
+	global debug, macroFile, prefix, msgQueue, recordingActive
 	if debug: print "commandMonFunc: char_value='%s'" % char_value
-	msgQueue.put((MSG_COMMAND, char_value))
+	if recordingActive:
+		msgQueue.put((MSG_COMMAND, char_value))
+	else:
+		if debug: print "commandMonFunc: char_value='%s' while recordingActive==False" % char_value
 
 def commentMonFunc(pvname, value, char_value, **kwd):
 	global debug, macroFile, msgQueue
@@ -196,7 +200,7 @@ def userHostAllowed(user, host):
 
 def writer():
 	global debug, macroFile, prefix, msgQueue, doexecuteMacro, executeLevel, postponeStop
-	global doStartMacro, doStopMacro, connected, recordTiming, timeOfLastPut, waitCompletion
+	global doStartMacro, doStopMacro, connected, recordTiming, timeOfLastPut, waitCompletion, recordingActive
 
 	while(1):
 		(msg, char_value) = msgQueue.get()
@@ -224,11 +228,20 @@ def writer():
 					if debug: print "writer: user=%s, host=%s" % (user, host)
 					allowed = userHostAllowed(user, host)
 				if allowed:
+					# If DBF_UCHAR (TPRO, DISP, PROC, UDF, syn.AQR, mbbiDirect.Bn), write int value to avoid bug in PyEpics 3.4.2
+					# None but PROC are at all likely
+					dbf_uchar_fields = (".PROC", ".TPRO", ".DISP", ".UDF")
 					if waitCompletion:
 						putWaitSeconds = epics.caget(prefix+"caputRecorderWaitCBSec", use_monitor=True)
-						macroFile.write("\tepics.caput(\"%s\",\"%s\", wait=True, timeout=%.1f)\n" % (pvname,value,putWaitSeconds))
+						if pvname.endswith(dbf_uchar_fields):
+							macroFile.write("\tepics.caput(\"%s\",%d, wait=True, timeout=%.1f)\n" % (pvname,int(value),putWaitSeconds))
+						else:
+							macroFile.write("\tepics.caput(\"%s\",\"%s\", wait=True, timeout=%.1f)\n" % (pvname,value,putWaitSeconds))
 					else:
-						macroFile.write("\tepics.caput(\"%s\",\"%s\")\n" % (pvname,value))
+						if pvname.endswith(dbf_uchar_fields):
+							macroFile.write("\tepics.caput(\"%s\",%d)\n" % (pvname,int(value)))
+						else:
+							macroFile.write("\tepics.caput(\"%s\",\"%s\")\n" % (pvname,value))
 					macroFile.flush()
 			msgQueue.task_done()
 		elif msg == MSG_COMMENT:
@@ -315,7 +328,7 @@ def stopStartMonFunc(pvname, value, char_value, **kwd):
 def startMacro():
 	global debug, macroFile, prefix, macroFunctionNames
 	global commandMonitorList, connected, timeOfLastPut, ifMacroExists
-	global macroFileName
+	global macroFileName, recordingActive
 
 	if debug: print("startMacro: entry\n")
 	if not connected:
@@ -389,14 +402,28 @@ def startMacro():
 	timeOfLastPut = None
 	epics.camonitor(prefix+"caputRecorderComment",callback=commentMonFunc)
 	epics.camonitor(prefix+"caputRecorderAddDelayCmd",callback=delayMonFunc)
+
+	# If this is the first time we're connecting to a commandMonitorList pv,
+	# we might get an initial value callback.  We want to ignore that, because the
+	# user didn't do it.  So, monitor and unmonitor all the commandMonitorList pvs,
+	# to flush out any initial value callbacks, then monitor the pvs and set
+	# recordingActive==True.
 	for pv in commandMonitorList:
 		epics.camonitor(pv,callback=commandMonFunc)
 
+	for pv in commandMonitorList:
+		epics.camonitor_clear(pv)
+
+	for pv in commandMonitorList:
+		epics.camonitor(pv,callback=commandMonFunc)
+	recordingActive = True
+
 def endMacro():
 	global debug, macroFile, prefix, doReloadMacros
-	global commandMonitorList, connected
+	global commandMonitorList, connected, recordingActive
 
 	if debug: print("endMacro: entry\n")
+	recordingActive = False
 	if not connected:
 		return
 
