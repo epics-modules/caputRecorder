@@ -9,6 +9,23 @@
 
 <h1 align="center">caputRecorder Release Notes</h1>
 
+<h2 align="center">Release 1-4-1</h2>
+<ul>
+
+<li>Previously, the first recording after caputRecorder.py was restarted could
+record a monitor that actually resulted from the ca-connection process, not from
+any user action.  Now caputRecorder defends against monitors that aren't the
+results of user action. 
+
+<li>Previously, the default wait-for-completion time was 300 seconds; now it's
+-1 (wait forever).
+
+<li>In PyEpics 3.2.4, string writes to DBF_UCHAR fields (such as PROC) caused an
+error.  Now we write to those fields with a number.
+
+</ul>
+
+
 <h2 align="center">Release 1-4</h2>
 <ul>
 
