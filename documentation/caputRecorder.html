@@ -93,11 +93,11 @@ program file macros.py.  Here's what a typical command looks like:
 
 <blockquote>
 <pre>
-epics.caput("xxx:scan1.P1PV","xxx:m2.VAL", wait=True, timeout=300)
+epics.caput("xxx:scan1.P1PV","xxx:m2.VAL", wait=True, timeout=-1.0)
 </pre>
 
-This writes the string "xxx:m2.VAL" to "xxx:scan1.P1PV", and waits up to 300
-seconds for any EPICS processing that might result from the command to complete.
+This writes the string "xxx:m2.VAL" to "xxx:scan1.P1PV", and waits forever for
+any EPICS processing that might result from the command to complete.
 
 </blockquote>
 
@@ -182,7 +182,7 @@ command must be executed <i>after</i> iocInit.)
 
 <blockquote>
 <pre>
-registerCaputRecorderTrapListener('xxx:caputRecorderCommand')
+registerCaputRecorderTrapListener("xxx:caputRecorderCommand")
 </pre>
 </blockquote>
 
@@ -222,9 +222,9 @@ ASG(DEFAULT) {
 
 <P>This file grants write permission to anybody on any host, and specifies that
 TRAPWRITE is in effect only for user <i>mooney</i> on workstation
-<i>mooneylinux</i>.  You probably don't want TRAPWRITE in effect for caputs from
-an IOC, but do want it for caputs from channel-access clients, such as MEDM, that
-aren't in an IOC.
+<i>mooneylinux</i>.  For the purposes of caputRecorder, you probably don't want
+TRAPWRITE in effect for caputs from an IOC, but do want it for caputs from
+channel-access clients, such as MEDM, that aren't in an IOC.
 
 <P>Note that the order in which rules occur in the file matters for TRAPWRITE. 
 If <code>RULE(1,WRITE)</code> were encountered before
@@ -512,15 +512,11 @@ by pressing the "!(re)start recorder" button.
 caputRecorder records a caput with the following python code:
 
 <pre>
-epics.caput("xxx:scan1.P1PV","xxx:m2.VAL", wait=True, timeout=300.0)
+epics.caput("xxx:scan1.P1PV","xxx:m2.VAL", wait=True, timeout=-1.0)
 </pre>
 
-This code will request a completion callback from EPICS, and will wait as long
-as 300 seconds for the callback to arrive.  This is probably much longer than
-most operations will take to complete, but five minutes is not long enough for
-many scans.  If you use caputRecorder to execute scans, you'll probably want to
-increase the "time to wait for completion" described in the "How to
-use"/"Inputs" section.
+This code will request a completion callback from EPICS, and will wait forever
+for the callback to arrive.
 
 <P>Currently, it is not an error for a macro to timeout while waiting for a
 callback.  Python will simply move on to the next command and execute it.
