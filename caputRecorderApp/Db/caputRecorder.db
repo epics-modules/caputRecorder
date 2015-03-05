@@ -61,7 +61,7 @@ record(busy, "$(P)caputRecorderAddDelayCmd") {
 }
 record(ao, "$(P)caputRecorderWaitCBSec") {
 	field(DESC, "wait time in seconds")
-	field(DOL, "300")
+	field(DOL, "-1")
 	field(PREC, "1")
 }
 
