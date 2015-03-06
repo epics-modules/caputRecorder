@@ -5,10 +5,10 @@ file {
 }
 display {
 	object {
-		x=806
-		y=487
+		x=563
+		y=73
 		width=400
-		height=460
+		height=480
 	}
 	clr=14
 	bclr=2
@@ -102,13 +102,13 @@ text {
 	object {
 		x=10
 		y=0
-		width=230
-		height=23
+		width=215
+		height=20
 	}
 	"basic attribute" {
 		clr=14
 	}
-	textix="caput recorder"
+	textix="caput recorder $(P)"
 	align="horiz. centered"
 }
 polyline {
@@ -135,7 +135,7 @@ polyline {
 		height=14
 	}
 	monitor {
-		chan="$(P)caputRecorderCommand.VAL"
+		chan="$(L)caputRecorderCommand.VAL"
 		clr=14
 		bclr=1
 	}
@@ -186,9 +186,9 @@ text {
 }
 "shell command" {
 	object {
-		x=240
+		x=230
 		y=3
-		width=150
+		width=140
 		height=20
 	}
 	command[0] {
@@ -223,617 +223,8 @@ text {
 	"basic attribute" {
 		clr=14
 	}
-	textix="delay"
+	textix="delay:"
 	align="horiz. right"
-}
-text {
-	object {
-		x=285
-		y=185
-		width=90
-		height=20
-	}
-	"basic attribute" {
-		clr=33
-	}
-	"dynamic attribute" {
-		vis="calc"
-		calc="a"
-		chan="$(P)caputRecorderMacroRecording"
-	}
-	textix="Recording"
-}
-polyline {
-	object {
-		x=0
-		y=145
-		width=399
-		height=3
-	}
-	"basic attribute" {
-		clr=54
-		width=3
-	}
-	points {
-		(1,146)
-		(397,146)
-	}
-}
-"text update" {
-	object {
-		x=70
-		y=215
-		width=320
-		height=14
-	}
-	monitor {
-		chan="$(P)caputRecorderUserMessage"
-		clr=14
-		bclr=1
-	}
-	format="string"
-	limits {
-	}
-}
-text {
-	object {
-		x=285
-		y=185
-		width=90
-		height=20
-	}
-	"basic attribute" {
-		clr=20
-	}
-	"dynamic attribute" {
-		vis="calc"
-		calc="a&b"
-		chan="$(P)caputRecorderMacroRecording"
-		chanB="$(P)caputRecorderPulse"
-	}
-	textix="Recording"
-}
-text {
-	object {
-		x=10
-		y=215
-		width=60
-		height=14
-	}
-	"basic attribute" {
-		clr=14
-	}
-	textix="status:"
-}
-text {
-	object {
-		x=170
-		y=170
-		width=110
-		height=14
-	}
-	"basic attribute" {
-		clr=14
-	}
-	textix="record puts"
-	align="horiz. centered"
-}
-text {
-	object {
-		x=10
-		y=170
-		width=150
-		height=14
-	}
-	"basic attribute" {
-		clr=14
-	}
-	textix="function name"
-	align="horiz. centered"
-}
-text {
-	object {
-		x=10
-		y=150
-		width=380
-		height=20
-	}
-	"basic attribute" {
-		clr=14
-	}
-	textix="Record"
-}
-"choice button" {
-	object {
-		x=10
-		y=265
-		width=230
-		height=20
-	}
-	control {
-		chan="$(P)caputRecorderReloadMacros"
-		clr=14
-		bclr=51
-	}
-	stacking="column"
-}
-text {
-	object {
-		x=10
-		y=240
-		width=380
-		height=20
-	}
-	"basic attribute" {
-		clr=14
-	}
-	textix="Select"
-}
-"text update" {
-	object {
-		x=140
-		y=293
-		width=150
-		height=14
-	}
-	monitor {
-		chan="$(P)caputRecorderMacro"
-		clr=14
-		bclr=1
-	}
-	format="string"
-	limits {
-	}
-}
-polyline {
-	object {
-		x=0
-		y=235
-		width=399
-		height=3
-	}
-	"basic attribute" {
-		clr=54
-		width=3
-	}
-	points {
-		(1,236)
-		(397,236)
-	}
-}
-text {
-	object {
-		x=10
-		y=293
-		width=130
-		height=14
-	}
-	"basic attribute" {
-		clr=14
-	}
-	textix="selected function:"
-}
-composite {
-	object {
-		x=10
-		y=330
-		width=370
-		height=35
-	}
-	"composite name"=""
-	children {
-		composite {
-			object {
-				x=10
-				y=330
-				width=70
-				height=35
-			}
-			"composite name"=""
-			children {
-				"text update" {
-					object {
-						x=10
-						y=330
-						width=70
-						height=14
-					}
-					monitor {
-						chan="$(P)caputRecorderArg1Name"
-						clr=14
-						bclr=1
-					}
-					format="string"
-					limits {
-					}
-				}
-				"text entry" {
-					object {
-						x=10
-						y=345
-						width=70
-						height=20
-					}
-					control {
-						chan="$(P)caputRecorderArg1Value"
-						clr=14
-						bclr=51
-					}
-					format="string"
-					limits {
-					}
-				}
-			}
-		}
-		composite {
-			object {
-				x=85
-				y=330
-				width=70
-				height=35
-			}
-			"composite name"=""
-			children {
-				"text update" {
-					object {
-						x=85
-						y=330
-						width=70
-						height=14
-					}
-					monitor {
-						chan="$(P)caputRecorderArg2Name"
-						clr=14
-						bclr=1
-					}
-					format="string"
-					limits {
-					}
-				}
-				"text entry" {
-					object {
-						x=85
-						y=345
-						width=70
-						height=20
-					}
-					control {
-						chan="$(P)caputRecorderArg2Value"
-						clr=14
-						bclr=51
-					}
-					format="string"
-					limits {
-					}
-				}
-			}
-		}
-		composite {
-			object {
-				x=160
-				y=330
-				width=70
-				height=35
-			}
-			"composite name"=""
-			children {
-				"text update" {
-					object {
-						x=160
-						y=330
-						width=70
-						height=14
-					}
-					monitor {
-						chan="$(P)caputRecorderArg3Name"
-						clr=14
-						bclr=1
-					}
-					format="string"
-					limits {
-					}
-				}
-				"text entry" {
-					object {
-						x=160
-						y=345
-						width=70
-						height=20
-					}
-					control {
-						chan="$(P)caputRecorderArg3Value"
-						clr=14
-						bclr=51
-					}
-					format="string"
-					limits {
-					}
-				}
-			}
-		}
-		"text update" {
-			object {
-				x=235
-				y=330
-				width=70
-				height=14
-			}
-			monitor {
-				chan="$(P)caputRecorderArg4Name"
-				clr=14
-				bclr=1
-			}
-			format="string"
-			limits {
-			}
-		}
-		"text entry" {
-			object {
-				x=235
-				y=345
-				width=70
-				height=20
-			}
-			control {
-				chan="$(P)caputRecorderArg4Value"
-				clr=14
-				bclr=51
-			}
-			format="string"
-			limits {
-			}
-		}
-		"text update" {
-			object {
-				x=310
-				y=330
-				width=70
-				height=14
-			}
-			monitor {
-				chan="$(P)caputRecorderArg5Name"
-				clr=14
-				bclr=1
-			}
-			format="string"
-			limits {
-			}
-		}
-		"text entry" {
-			object {
-				x=310
-				y=345
-				width=70
-				height=20
-			}
-			control {
-				chan="$(P)caputRecorderArg5Value"
-				clr=14
-				bclr=51
-			}
-			format="string"
-			limits {
-			}
-		}
-	}
-}
-text {
-	object {
-		x=10
-		y=315
-		width=230
-		height=14
-	}
-	"basic attribute" {
-		clr=14
-	}
-	textix="arguments for selected function:"
-}
-menu {
-	object {
-		x=10
-		y=385
-		width=150
-		height=20
-	}
-	control {
-		chan="$(P)caputRecorderMacros1"
-		clr=14
-		bclr=51
-	}
-}
-menu {
-	object {
-		x=165
-		y=385
-		width=150
-		height=20
-	}
-	control {
-		chan="$(P)caputRecorderMacros2"
-		clr=14
-		bclr=51
-	}
-}
-text {
-	object {
-		x=10
-		y=416
-		width=380
-		height=20
-	}
-	"basic attribute" {
-		clr=14
-	}
-	textix="Playback"
-}
-"choice button" {
-	object {
-		x=170
-		y=441
-		width=90
-		height=20
-	}
-	control {
-		chan="$(P)caputRecorderExecuteMacro"
-		clr=14
-		bclr=51
-	}
-	stacking="column"
-}
-"message button" {
-	object {
-		x=345
-		y=436
-		width=50
-		height=20
-	}
-	control {
-		chan="$(P)caputRecorderAbortMacro"
-		clr=30
-		bclr=20
-	}
-	label="Abort"
-	press_msg="1"
-}
-composite {
-	object {
-		x=265
-		y=441
-		width=72
-		height=20
-	}
-	"composite name"=""
-	children {
-		"text entry" {
-			object {
-				x=265
-				y=441
-				width=30
-				height=20
-			}
-			control {
-				chan="$(P)caputRecorderExecuteLoops"
-				clr=14
-				bclr=51
-			}
-			format="string"
-			limits {
-			}
-		}
-		text {
-			object {
-				x=297
-				y=444
-				width=40
-				height=14
-			}
-			"basic attribute" {
-				clr=14
-			}
-			textix="times"
-		}
-	}
-}
-"text update" {
-	object {
-		x=10
-		y=444
-		width=150
-		height=14
-	}
-	monitor {
-		chan="$(P)caputRecorderMacro"
-		clr=14
-		bclr=1
-	}
-	format="string"
-	limits {
-	}
-}
-polyline {
-	object {
-		x=0
-		y=411
-		width=399
-		height=3
-	}
-	"basic attribute" {
-		clr=54
-		width=3
-	}
-	points {
-		(1,412)
-		(397,412)
-	}
-}
-text {
-	object {
-		x=10
-		y=370
-		width=200
-		height=14
-	}
-	"basic attribute" {
-		clr=14
-	}
-	textix="menus of function names:"
-}
-"shell command" {
-	object {
-		x=240
-		y=240
-		width=150
-		height=20
-	}
-	command[0] {
-		label="edit macros.py"
-		name="${EDITOR} ${MACROS_PY}&"
-	}
-	clr=14
-	bclr=32
-	label="edit macros.py"
-}
-composite {
-	object {
-		x=10
-		y=185
-		width=270
-		height=20
-	}
-	"composite name"=""
-	children {
-		"choice button" {
-			object {
-				x=170
-				y=185
-				width=110
-				height=20
-			}
-			control {
-				chan="$(P)caputRecorderMacroStopStart"
-				clr=14
-				bclr=51
-			}
-			stacking="column"
-		}
-		"text entry" {
-			object {
-				x=10
-				y=185
-				width=150
-				height=20
-			}
-			control {
-				chan="$(P)caputRecorderMacroName"
-				clr=14
-				bclr=51
-			}
-			format="string"
-			limits {
-			}
-		}
-	}
 }
 "choice button" {
 	object {
@@ -867,7 +258,7 @@ composite {
 }
 text {
 	object {
-		x=125
+		x=123
 		y=97
 		width=50
 		height=14
@@ -877,55 +268,837 @@ text {
 	}
 	textix="seconds"
 }
+polygon {
+	object {
+		x=375
+		y=5
+		width=17
+		height=20
+	}
+	"basic attribute" {
+		clr=20
+	}
+	"dynamic attribute" {
+		vis="if not zero"
+		chan="$(P)caputRecorderHeartbeat"
+	}
+	points {
+		(383,25)
+		(379,22)
+		(376,18)
+		(375,13)
+		(375,9)
+		(375,6)
+		(377,5)
+		(380,5)
+		(383,7)
+		(383,10)
+		(384,7)
+		(387,5)
+		(390,5)
+		(391,6)
+		(392,9)
+		(392,13)
+		(390,18)
+		(387,22)
+		(384,25)
+		(383,25)
+	}
+}
+rectangle {
+	object {
+		x=380
+		y=35
+		width=5
+		height=5
+	}
+	"basic attribute" {
+		clr=5
+	}
+	"dynamic attribute" {
+		vis="calc"
+		calc="a"
+		chan="$(P)caputRecorderSubMLIS"
+	}
+}
+text {
+	object {
+		x=285
+		y=165
+		width=90
+		height=20
+	}
+	"basic attribute" {
+		clr=33
+	}
+	"dynamic attribute" {
+		vis="calc"
+		calc="a"
+		chan="$(P)caputRecorderMacroRecording"
+	}
+	textix="Recording"
+}
+polyline {
+	object {
+		x=0
+		y=125
+		width=399
+		height=3
+	}
+	"basic attribute" {
+		clr=54
+		width=3
+	}
+	points {
+		(1,126)
+		(397,126)
+	}
+}
+"text update" {
+	object {
+		x=70
+		y=190
+		width=320
+		height=14
+	}
+	monitor {
+		chan="$(P)caputRecorderUserMessage"
+		clr=14
+		bclr=1
+	}
+	format="string"
+	limits {
+	}
+}
+text {
+	object {
+		x=285
+		y=165
+		width=90
+		height=20
+	}
+	"basic attribute" {
+		clr=20
+	}
+	"dynamic attribute" {
+		vis="calc"
+		calc="a&b"
+		chan="$(P)caputRecorderMacroRecording"
+		chanB="$(P)caputRecorderPulse"
+	}
+	textix="Recording"
+}
 text {
 	object {
 		x=10
-		y=122
+		y=190
+		width=60
+		height=14
+	}
+	"basic attribute" {
+		clr=14
+	}
+	textix="status:"
+}
+text {
+	object {
+		x=170
+		y=146
+		width=110
+		height=14
+	}
+	"basic attribute" {
+		clr=14
+	}
+	textix="record puts"
+	align="horiz. centered"
+}
+text {
+	object {
+		x=10
+		y=150
+		width=150
+		height=14
+	}
+	"basic attribute" {
+		clr=14
+	}
+	textix="macro name"
+	align="horiz. centered"
+}
+text {
+	object {
+		x=10
+		y=130
+		width=380
+		height=20
+	}
+	"basic attribute" {
+		clr=14
+	}
+	textix="Record Macro"
+}
+"choice button" {
+	object {
+		x=10
+		y=405
+		width=230
+		height=18
+	}
+	control {
+		chan="$(P)caputRecorderReloadMacros"
+		clr=14
+		bclr=51
+	}
+	stacking="column"
+}
+text {
+	object {
+		x=10
+		y=215
+		width=380
+		height=20
+	}
+	"basic attribute" {
+		clr=14
+	}
+	textix="Select Macro"
+}
+polyline {
+	object {
+		x=0
+		y=210
+		width=399
+		height=3
+	}
+	"basic attribute" {
+		clr=54
+		width=3
+	}
+	points {
+		(1,211)
+		(397,211)
+	}
+}
+"choice button" {
+	object {
+		x=170
+		y=161
+		width=110
+		height=24
+	}
+	control {
+		chan="$(P)caputRecorderMacroStopStart"
+		clr=14
+		bclr=51
+	}
+	stacking="column"
+}
+"text entry" {
+	object {
+		x=10
+		y=165
+		width=150
+		height=20
+	}
+	control {
+		chan="$(P)caputRecorderMacroName"
+		clr=14
+		bclr=51
+	}
+	format="string"
+	limits {
+	}
+}
+text {
+	object {
+		x=10
+		y=436
+		width=380
+		height=20
+	}
+	"basic attribute" {
+		clr=14
+	}
+	textix="Playback Macro"
+}
+"choice button" {
+	object {
+		x=170
+		y=457
+		width=90
+		height=24
+	}
+	control {
+		chan="$(P)caputRecorderExecuteMacro"
+		clr=14
+		bclr=51
+	}
+	stacking="column"
+}
+"message button" {
+	object {
+		x=345
+		y=456
+		width=50
+		height=20
+	}
+	control {
+		chan="$(P)caputRecorderAbortMacro"
+		clr=30
+		bclr=20
+	}
+	label="Abort"
+	press_msg="1"
+}
+"text entry" {
+	object {
+		x=265
+		y=461
+		width=30
+		height=20
+	}
+	control {
+		chan="$(P)caputRecorderExecuteLoops"
+		clr=14
+		bclr=51
+	}
+	format="string"
+	limits {
+	}
+}
+text {
+	object {
+		x=297
+		y=464
+		width=40
+		height=14
+	}
+	"basic attribute" {
+		clr=14
+	}
+	textix="times"
+}
+"text update" {
+	object {
+		x=10
+		y=464
+		width=150
+		height=14
+	}
+	monitor {
+		chan="$(P)caputRecorderMacro"
+		clr=14
+		bclr=1
+	}
+	format="string"
+	limits {
+	}
+}
+polyline {
+	object {
+		x=0
+		y=431
+		width=399
+		height=3
+	}
+	"basic attribute" {
+		clr=54
+		width=3
+	}
+	points {
+		(1,432)
+		(397,432)
+	}
+}
+"text update" {
+	object {
+		x=10
+		y=325
+		width=70
+		height=14
+	}
+	monitor {
+		chan="$(P)caputRecorderArg1Name"
+		clr=14
+		bclr=1
+	}
+	format="string"
+	limits {
+	}
+}
+"text entry" {
+	object {
+		x=10
+		y=340
+		width=70
+		height=20
+	}
+	control {
+		chan="$(P)caputRecorderArg1Value"
+		clr=14
+		bclr=51
+	}
+	format="string"
+	limits {
+	}
+}
+"text update" {
+	object {
+		x=85
+		y=325
+		width=70
+		height=14
+	}
+	monitor {
+		chan="$(P)caputRecorderArg2Name"
+		clr=14
+		bclr=1
+	}
+	format="string"
+	limits {
+	}
+}
+"text entry" {
+	object {
+		x=85
+		y=340
+		width=70
+		height=20
+	}
+	control {
+		chan="$(P)caputRecorderArg2Value"
+		clr=14
+		bclr=51
+	}
+	format="string"
+	limits {
+	}
+}
+"text update" {
+	object {
+		x=160
+		y=325
+		width=70
+		height=14
+	}
+	monitor {
+		chan="$(P)caputRecorderArg3Name"
+		clr=14
+		bclr=1
+	}
+	format="string"
+	limits {
+	}
+}
+"text entry" {
+	object {
+		x=160
+		y=340
+		width=70
+		height=20
+	}
+	control {
+		chan="$(P)caputRecorderArg3Value"
+		clr=14
+		bclr=51
+	}
+	format="string"
+	limits {
+	}
+}
+"text update" {
+	object {
+		x=235
+		y=325
+		width=70
+		height=14
+	}
+	monitor {
+		chan="$(P)caputRecorderArg4Name"
+		clr=14
+		bclr=1
+	}
+	format="string"
+	limits {
+	}
+}
+"text entry" {
+	object {
+		x=235
+		y=340
+		width=70
+		height=20
+	}
+	control {
+		chan="$(P)caputRecorderArg4Value"
+		clr=14
+		bclr=51
+	}
+	format="string"
+	limits {
+	}
+}
+"text update" {
+	object {
+		x=310
+		y=325
+		width=70
+		height=14
+	}
+	monitor {
+		chan="$(P)caputRecorderArg5Name"
+		clr=14
+		bclr=1
+	}
+	format="string"
+	limits {
+	}
+}
+"text entry" {
+	object {
+		x=310
+		y=340
+		width=70
+		height=20
+	}
+	control {
+		chan="$(P)caputRecorderArg5Value"
+		clr=14
+		bclr=51
+	}
+	format="string"
+	limits {
+	}
+}
+text {
+	object {
+		x=10
+		y=305
 		width=200
 		height=14
 	}
 	"basic attribute" {
 		clr=14
 	}
-	textix="time to wait for completion:"
-	align="horiz. right"
+	textix="arguments for selected macro"
 }
-composite {
+"text update" {
 	object {
-		x=215
-		y=120
-		width=123
+		x=10
+		y=365
+		width=70
+		height=14
+	}
+	monitor {
+		chan="$(P)caputRecorderArg6Name"
+		clr=14
+		bclr=1
+	}
+	format="string"
+	limits {
+	}
+}
+"text entry" {
+	object {
+		x=10
+		y=380
+		width=70
 		height=20
 	}
-	"composite name"=""
-	children {
-		"text entry" {
-			object {
-				x=215
-				y=120
-				width=70
-				height=20
-			}
-			control {
-				chan="$(P)caputRecorderWaitCBSec"
-				clr=14
-				bclr=51
-			}
-			format="string"
-			limits {
-			}
-		}
-		text {
-			object {
-				x=288
-				y=122
-				width=50
-				height=14
-			}
-			"basic attribute" {
-				clr=14
-			}
-			textix="seconds"
-		}
+	control {
+		chan="$(P)caputRecorderArg6Value"
+		clr=14
+		bclr=51
 	}
+	format="string"
+	limits {
+	}
+}
+"text update" {
+	object {
+		x=85
+		y=365
+		width=70
+		height=14
+	}
+	monitor {
+		chan="$(P)caputRecorderArg7Name"
+		clr=14
+		bclr=1
+	}
+	format="string"
+	limits {
+	}
+}
+"text entry" {
+	object {
+		x=85
+		y=380
+		width=70
+		height=20
+	}
+	control {
+		chan="$(P)caputRecorderArg7Value"
+		clr=14
+		bclr=51
+	}
+	format="string"
+	limits {
+	}
+}
+"text update" {
+	object {
+		x=160
+		y=365
+		width=70
+		height=14
+	}
+	monitor {
+		chan="$(P)caputRecorderArg8Name"
+		clr=14
+		bclr=1
+	}
+	format="string"
+	limits {
+	}
+}
+"text entry" {
+	object {
+		x=160
+		y=380
+		width=70
+		height=20
+	}
+	control {
+		chan="$(P)caputRecorderArg8Value"
+		clr=14
+		bclr=51
+	}
+	format="string"
+	limits {
+	}
+}
+"text update" {
+	object {
+		x=235
+		y=365
+		width=70
+		height=14
+	}
+	monitor {
+		chan="$(P)caputRecorderArg9Name"
+		clr=14
+		bclr=1
+	}
+	format="string"
+	limits {
+	}
+}
+"text entry" {
+	object {
+		x=235
+		y=380
+		width=70
+		height=20
+	}
+	control {
+		chan="$(P)caputRecorderArg9Value"
+		clr=14
+		bclr=51
+	}
+	format="string"
+	limits {
+	}
+}
+"text update" {
+	object {
+		x=310
+		y=365
+		width=70
+		height=14
+	}
+	monitor {
+		chan="$(P)caputRecorderArg10Name"
+		clr=14
+		bclr=1
+	}
+	format="string"
+	limits {
+	}
+}
+"text entry" {
+	object {
+		x=310
+		y=380
+		width=70
+		height=20
+	}
+	control {
+		chan="$(P)caputRecorderArg10Value"
+		clr=14
+		bclr=51
+	}
+	format="string"
+	limits {
+	}
+}
+menu {
+	object {
+		x=10
+		y=240
+		width=190
+		height=20
+	}
+	control {
+		chan="$(P)caputRecorderMacros1"
+		clr=14
+		bclr=51
+	}
+}
+menu {
+	object {
+		x=10
+		y=260
+		width=190
+		height=20
+	}
+	control {
+		chan="$(P)caputRecorderMacros3"
+		clr=14
+		bclr=51
+	}
+}
+menu {
+	object {
+		x=10
+		y=280
+		width=190
+		height=20
+	}
+	control {
+		chan="$(P)caputRecorderMacros5"
+		clr=14
+		bclr=51
+	}
+}
+menu {
+	object {
+		x=200
+		y=240
+		width=190
+		height=20
+	}
+	control {
+		chan="$(P)caputRecorderMacros2"
+		clr=14
+		bclr=51
+	}
+}
+menu {
+	object {
+		x=200
+		y=260
+		width=190
+		height=20
+	}
+	control {
+		chan="$(P)caputRecorderMacros4"
+		clr=14
+		bclr=51
+	}
+}
+menu {
+	object {
+		x=200
+		y=280
+		width=190
+		height=20
+	}
+	control {
+		chan="$(P)caputRecorderMacros6"
+		clr=14
+		bclr=51
+	}
+}
+"text update" {
+	object {
+		x=215
+		y=305
+		width=150
+		height=14
+	}
+	monitor {
+		chan="$(P)caputRecorderMacro"
+		clr=14
+		bclr=1
+	}
+	format="string"
+	limits {
+	}
+}
+text {
+	object {
+		x=370
+		y=305
+		width=10
+		height=14
+	}
+	"basic attribute" {
+		clr=14
+	}
+	textix=":"
+}
+text {
+	object {
+		x=355
+		y=405
+		width=45
+		height=10
+	}
+	"basic attribute" {
+		clr=20
+	}
+	"dynamic attribute" {
+		vis="calc"
+		calc="a&b"
+		chan="$(P)caputRecorderNeedRefresh"
+		chanB="$(P)caputRecorderNeedRefreshB"
+	}
+	textix="PRESS"
+	align="horiz. centered"
+}
+text {
+	object {
+		x=355
+		y=415
+		width=45
+		height=10
+	}
+	"basic attribute" {
+		clr=20
+	}
+	"dynamic attribute" {
+		vis="calc"
+		calc="a&b"
+		chan="$(P)caputRecorderNeedRefresh"
+		chanB="$(P)caputRecorderNeedRefreshB"
+	}
+	textix="REFRESH"
+	align="horiz. centered"
+}
+"message button" {
+	object {
+		x=280
+		y=215
+		width=100
+		height=20
+	}
+	control {
+		chan="$(P)caputRecorderEditMacros"
+		clr=14
+		bclr=51
+	}
+	label="edit macros"
+	press_msg="1"
 }

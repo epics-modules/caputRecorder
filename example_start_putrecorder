@@ -15,27 +15,15 @@ eval $output
 
 CAPUTRECORDER_PY=${CAPUTRECORDER}/caputRecorderApp/op/python/caputRecorder.py
 
-COMMAND="python ${CAPUTRECORDER_PY} ${PREFIX}"
+arch=`uname -p`
+COMMAND="/APSshare/anaconda/${arch}/bin/python ${CAPUTRECORDER_PY}"
 
-MY_UID=`id -u`
-CAPUTRECORDER_PID=`pgrep -f "${COMMAND}" -u $MY_UID`
-
-if [ "" != "${CAPUTRECORDER_PID}" ] ; then
-	kill ${CAPUTRECORDER_PID}
-fi
-
-
-cd ${MACROS_PY_DIR}
 export PYTHONPATH=${MACROS_PY_DIR}:$PYTHONPATH
+MACROS_PY=${MACROS_PY_DIR}/"macros_"${PREFIX}.py
 
 # start caputRecorder.py
-# The first prefix specifies the caputRecorder.db database instance that will
-# function as a user interface for caputRecorder.py, and notify it when a
-# caput occurrs.
-$COMMAND&
+$COMMAND ${PREFIX} ${MACROS_PY}&
 
-# To record caputs to other iocs, add their prefixes to the command line:
-# All iocs must be running access security configured to trap writes, and
-# must load caputRecorder.db.
-#${COMMAND} yyy: zzz:&
+# start caputRecorder.py, and give it a list of additional prefixes to monitor
+#$COMMAND ${PREFIX} yyy: zzz: ${MACROS_PY}&
 

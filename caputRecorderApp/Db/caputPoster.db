@@ -1,0 +1,4 @@
+record(waveform, "$(P)caputRecorderCommand") {
+    field(FTVL, "CHAR")
+    field(NELM, "$(N)")
+}

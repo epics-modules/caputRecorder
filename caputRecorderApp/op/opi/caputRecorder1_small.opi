@@ -3,7 +3,7 @@
   <macros>
     <include_parent_macros>true</include_parent_macros>
   </macros>
-  <wuid>642bbcdf:14abaf6fe74:-7fe9</wuid>
+  <wuid>-545ca464:14bb824bc55:-7fe5</wuid>
   <boy_version>3.2.10.20140131</boy_version>
   <scripts />
   <show_ruler>true</show_ruler>
@@ -36,11 +36,11 @@
       <include_parent_macros>true</include_parent_macros>
     </macros>
     <visible>true</visible>
-    <wuid>642bbcdf:14abaf6fe74:-7fe7</wuid>
+    <wuid>-545ca464:14bb824bc55:-7fe3</wuid>
     <auto_size>false</auto_size>
     <scripts />
     <zoom_to_fit>true</zoom_to_fit>
-    <height>150</height>
+    <height>175</height>
     <name>Linking Container</name>
     <scale_options>
       <width_scalable>true</width_scalable>
@@ -76,7 +76,7 @@
     <border_alarm_sensitive>false</border_alarm_sensitive>
     <visible>true</visible>
     <actions_from_pv>false</actions_from_pv>
-    <wuid>642bbcdf:14abaf6fe74:-7fe8</wuid>
+    <wuid>-545ca464:14bb824bc55:-7fe4</wuid>
     <scripts />
     <height>20</height>
     <name>Menu Button</name>
@@ -128,7 +128,7 @@ $(pv_value)</tooltip>
     <border_alarm_sensitive>false</border_alarm_sensitive>
     <visible>true</visible>
     <actions_from_pv>false</actions_from_pv>
-    <wuid>642bbcdf:14abaf6fe74:-7fe6</wuid>
+    <wuid>-545ca464:14bb824bc55:-7fe2</wuid>
     <scripts />
     <height>20</height>
     <name>Menu Button</name>

@@ -53,7 +53,9 @@ ed st.cmd&
 	exit
 
 	# caputRecorder
-	dbLoadRecords("$(CAPUTRECORDER)/caputRecorderApp/Db/caputRecorder.db","P=mlab:,N=300")
+	dbLoadRecords("$(CAPUTRECORDER)/caputRecorderApp/Db/caputPoster.db","P=mlab:,N=300")
+	# if this IOC will host caputRecorder's user interface
+	dbLoadRecords("$(CAPUTRECORDER)/caputRecorderApp/Db/caputRecorder.db","P=mlab:,N=100")
 	...
 	iocInit
 	...

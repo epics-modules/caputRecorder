@@ -4,16 +4,17 @@
 <widget class="QMainWindow" name="MainWindow">
     <property name="geometry">
         <rect>
-            <x>799</x>
-            <y>495</y>
+            <x>86</x>
+            <y>458</y>
             <width>400</width>
-            <height>485</height>
+            <height>505</height>
         </rect>
     </property>
     <property name="styleSheet">
         <string>
 
 QWidget#centralWidget {background: rgba(218, 218, 218, 255);}
+QPushButton::menu-indicator {image: url(none.png); width: 0}
 
 </string>
     </property>
@@ -22,7 +23,7 @@ QWidget#centralWidget {background: rgba(218, 218, 218, 255);}
             <property name="geometry">
                 <rect>
                     <x>250</x>
-                    <y>265</y>
+                    <y>405</y>
                     <width>100</width>
                     <height>20</height>
                 </rect>
@@ -54,7 +55,7 @@ QWidget#centralWidget {background: rgba(218, 218, 218, 255);}
                 <string>caputRecorder.adl</string>
             </property>
             <property name="args">
-                <string>P=$(P)</string>
+                <string>P=$(P),L=$(L)</string>
             </property>
             <property name="removeParent">
                 <string>true</string>
@@ -66,7 +67,7 @@ QWidget#centralWidget {background: rgba(218, 218, 218, 255);}
                     <x>0</x>
                     <y>0</y>
                     <width>402</width>
-                    <height>462</height>
+                    <height>482</height>
                 </rect>
             </property>
             <property name="geometry">
@@ -74,112 +75,101 @@ QWidget#centralWidget {background: rgba(218, 218, 218, 255);}
                     <x>0</x>
                     <y>0</y>
                     <width>400</width>
-                    <height>460</height>
+                    <height>480</height>
                 </rect>
             </property>
             <property name="filename">
                 <string>caputRecorder_bare.adl</string>
             </property>
             <property name="macro">
-                <string>P=$(P)</string>
+                <string>P=$(P),L=$(L)</string>
             </property>
         </widget>
-        <widget class="caFrame" name="caFrame_1">
+        <widget class="caRelatedDisplay" name="caRelatedDisplay_1">
             <property name="geometry">
                 <rect>
                     <x>270</x>
-                    <y>465</y>
-                    <width>132</width>
-                    <height>22</height>
+                    <y>485</y>
+                    <width>80</width>
+                    <height>20</height>
                 </rect>
             </property>
-            <widget class="caRelatedDisplay" name="caRelatedDisplay_1">
-                <property name="geometry">
-                    <rect>
-                        <x>80</x>
-                        <y>0</y>
-                        <width>50</width>
-                        <height>20</height>
-                    </rect>
-                </property>
-                <property name="foreground">
-                    <color alpha="255">
-                        <red>255</red>
-                        <green>255</green>
-                        <blue>255</blue>
-                    </color>
-                </property>
-                <property name="background">
-                    <color alpha="255">
-                        <red>51</red>
-                        <green>153</green>
-                        <blue>0</blue>
-                    </color>
-                </property>
-                <property name="label">
-                    <string>-Less</string>
-                </property>
-                <property name="stackingMode">
-                    <enum>Menu</enum>
-                </property>
-                <property name="labels">
-                    <string></string>
-                </property>
-                <property name="files">
-                    <string>caputRecorder1_small.adl</string>
-                </property>
-                <property name="args">
-                    <string>P=$(P)</string>
-                </property>
-                <property name="removeParent">
-                    <string>true</string>
-                </property>
-            </widget>
-            <widget class="caRelatedDisplay" name="caRelatedDisplay_2">
-                <property name="geometry">
-                    <rect>
-                        <x>0</x>
-                        <y>0</y>
-                        <width>80</width>
-                        <height>20</height>
-                    </rect>
-                </property>
-                <property name="foreground">
-                    <color alpha="255">
-                        <red>255</red>
-                        <green>255</green>
-                        <blue>255</blue>
-                    </color>
-                </property>
-                <property name="background">
-                    <color alpha="255">
-                        <red>51</red>
-                        <green>153</green>
-                        <blue>0</blue>
-                    </color>
-                </property>
-                <property name="label">
-                    <string>-Configure</string>
-                </property>
-                <property name="stackingMode">
-                    <enum>Menu</enum>
-                </property>
-                <property name="labels">
-                    <string></string>
-                </property>
-                <property name="files">
-                    <string>caputRecorderConfigure.adl</string>
-                </property>
-                <property name="args">
-                    <string>P=$(P)</string>
-                </property>
-                <property name="removeParent">
-                    <string>false</string>
-                </property>
-            </widget>
+            <property name="foreground">
+                <color alpha="255">
+                    <red>255</red>
+                    <green>255</green>
+                    <blue>255</blue>
+                </color>
+            </property>
+            <property name="background">
+                <color alpha="255">
+                    <red>51</red>
+                    <green>153</green>
+                    <blue>0</blue>
+                </color>
+            </property>
+            <property name="label">
+                <string>-Configure</string>
+            </property>
+            <property name="stackingMode">
+                <enum>Menu</enum>
+            </property>
+            <property name="labels">
+                <string></string>
+            </property>
+            <property name="files">
+                <string>caputRecorderConfigure.adl</string>
+            </property>
+            <property name="args">
+                <string>P=$(P)</string>
+            </property>
+            <property name="removeParent">
+                <string>false</string>
+            </property>
+        </widget>
+        <widget class="caRelatedDisplay" name="caRelatedDisplay_2">
+            <property name="geometry">
+                <rect>
+                    <x>350</x>
+                    <y>485</y>
+                    <width>50</width>
+                    <height>20</height>
+                </rect>
+            </property>
+            <property name="foreground">
+                <color alpha="255">
+                    <red>255</red>
+                    <green>255</green>
+                    <blue>255</blue>
+                </color>
+            </property>
+            <property name="background">
+                <color alpha="255">
+                    <red>51</red>
+                    <green>153</green>
+                    <blue>0</blue>
+                </color>
+            </property>
+            <property name="label">
+                <string>-Less</string>
+            </property>
+            <property name="stackingMode">
+                <enum>Menu</enum>
+            </property>
+            <property name="labels">
+                <string></string>
+            </property>
+            <property name="files">
+                <string>caputRecorder1_small.adl</string>
+            </property>
+            <property name="args">
+                <string>P=$(P),L=$(L)</string>
+            </property>
+            <property name="removeParent">
+                <string>true</string>
+            </property>
         </widget>
         <zorder>caInclude_0</zorder>
-        <zorder>caFrame_1</zorder>
         <zorder>caRelatedDisplay_0</zorder>
         <zorder>caRelatedDisplay_1</zorder>
         <zorder>caRelatedDisplay_2</zorder>

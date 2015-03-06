@@ -1,6 +1,50 @@
-record(waveform, "$(P)caputRecorderCommand") {
-    field(FTVL, "CHAR")
-    field(NELM, "$(N)")
+record(bo, "$(P)caputRecorderEditMacros") {
+}
+record(mbbo, "$(P)caputRecorderIfMacroExists") {
+	field(ZRST, "Fail")
+	field(ONST, "Append")
+	field(TWST, "Replace")
+}
+record(bo, "$(P)caputRecorderWaitCompletion") {
+	field(ZNAM, "No")
+	field(ONAM, "Yes")
+	field(DOL, "1")
+}
+record(bo, "$(P)caputRecorderRecordTiming") {
+	field(ZNAM, "No")
+	field(ONAM, "Yes")
+}
+
+record(sub, "$(P)caputRecorderSubMLIS") {
+	field(SCAN, "1 second")
+	field(INAM, "initSubMLIS")
+	field(SNAM, "SubMLIS")
+}
+record(bo, "$(P)caputRecorderRefreshed") {
+	field(DOL, "$(P)caputRecorderSubMLIS CP")
+	field(FLNK, "$(P)caputRecorderRefreshedPut")
+}
+record(bo, "$(P)caputRecorderRefreshedPut") {
+	field(OUT, "$(P)caputRecorderNeedRefresh PP")
+}
+record(bo, "$(P)caputRecorderNeedRefresh") {
+}
+record(bo, "$(P)caputRecorderBlink") {
+	field(SCAN, "1 second")
+	field(DOL, "1")
+	field(OUT, "$(P)caputRecorderNeedRefreshB PP")
+}
+record(bo, "$(P)caputRecorderNeedRefreshB") {
+	field(HIGH, ".5")
+}
+
+
+record(stringout, "$(P)caputRecorderStartTime") {
+}
+record(longout, "$(P)caputRecorderDebug") {
+}
+record(bo, "$(P)caputRecorderHeartbeat") {
+	field(HIGH, "1")
 }
 record(waveform, "$(P)caputRecorderComment") {
     field(FTVL, "CHAR")
@@ -17,7 +61,7 @@ record(busy, "$(P)caputRecorderAddDelayCmd") {
 }
 record(ao, "$(P)caputRecorderWaitCBSec") {
 	field(DESC, "wait time in seconds")
-	field(DOL, "300")
+	field(DOL, "-1")
 	field(PREC, "1")
 }
 
@@ -56,6 +100,7 @@ record(busy, "$(P)caputRecorderReloadMacros") {
 }
 
 record(stringout, "$(P)caputRecorderMacro") {
+	field(MPST, "Always")
 	field(FLNK, "$(P)caputRecorderSetMacrosBusy.PROC")
 }
 record(bo, "$(P)caputRecorderSetMacrosBusy") {
@@ -89,6 +134,308 @@ record(sseq, "$(P)caputRecorderMacros2Put") {
 	field(LNK1, "$(P)caputRecorderMacro PP")
 }
 
+record(mbbo, "$(P)caputRecorderMacros3") {
+	field(PINI, "YES")
+	field(ZRST,"Not loaded")
+	field(FLNK, "$(P)caputRecorderMacros3Put")
+}
+record(sseq, "$(P)caputRecorderMacros3Put") {
+	field(DOL1, "$(P)caputRecorderMacros3")
+	field(LNK1, "$(P)caputRecorderMacro PP")
+}
+
+record(mbbo, "$(P)caputRecorderMacros4") {
+	field(PINI, "YES")
+	field(ZRST,"Not loaded")
+	field(FLNK, "$(P)caputRecorderMacros4Put")
+}
+record(sseq, "$(P)caputRecorderMacros4Put") {
+	field(DOL1, "$(P)caputRecorderMacros4")
+	field(LNK1, "$(P)caputRecorderMacro PP")
+}
+
+record(mbbo, "$(P)caputRecorderMacros5") {
+	field(PINI, "YES")
+	field(ZRST,"Not loaded")
+	field(FLNK, "$(P)caputRecorderMacros5Put")
+}
+record(sseq, "$(P)caputRecorderMacros5Put") {
+	field(DOL1, "$(P)caputRecorderMacros5")
+	field(LNK1, "$(P)caputRecorderMacro PP")
+}
+
+record(mbbo, "$(P)caputRecorderMacros6") {
+	field(PINI, "YES")
+	field(ZRST,"Not loaded")
+	field(FLNK, "$(P)caputRecorderMacros6Put")
+}
+record(sseq, "$(P)caputRecorderMacros6Put") {
+	field(DOL1, "$(P)caputRecorderMacros6")
+	field(LNK1, "$(P)caputRecorderMacro PP")
+}
+
+
+##################################################
+record(bo, "$(P)caputRecorderClearMacros") {
+	field(FLNK, "$(P)caputRecorderClearMacros0")
+}
+record(sseq, "$(P)caputRecorderClearMacros0") {
+	field(STR1, " ")
+	field(LNK1, "$(P)caputRecorderMacros1.ZRST")
+	field(STR2, " ")
+	field(LNK2, "$(P)caputRecorderMacros2.ZRST")
+	field(STR3, " ")
+	field(LNK3, "$(P)caputRecorderMacros3.ZRST")
+	field(STR4, " ")
+	field(LNK4, "$(P)caputRecorderMacros4.ZRST")
+	field(STR5, " ")
+	field(LNK5, "$(P)caputRecorderMacros5.ZRST")
+	field(STR6, " ")
+	field(LNK6, "$(P)caputRecorderMacros6.ZRST")
+	field(FLNK, "$(P)caputRecorderClearMacros1")
+}
+
+record(sseq, "$(P)caputRecorderClearMacros1") {
+	field(DOL1, "$(P)caputRecorderEmptyString")
+	field(LNK1, "$(P)caputRecorderMacros1.ONST")
+	field(DOL2, "$(P)caputRecorderEmptyString")
+	field(LNK2, "$(P)caputRecorderMacros2.ONST")
+	field(DOL3, "$(P)caputRecorderEmptyString")
+	field(LNK3, "$(P)caputRecorderMacros3.ONST")
+	field(DOL4, "$(P)caputRecorderEmptyString")
+	field(LNK4, "$(P)caputRecorderMacros4.ONST")
+	field(DOL5, "$(P)caputRecorderEmptyString")
+	field(LNK5, "$(P)caputRecorderMacros5.ONST")
+	field(DOL6, "$(P)caputRecorderEmptyString")
+	field(LNK6, "$(P)caputRecorderMacros6.ONST")
+	field(FLNK, "$(P)caputRecorderClearMacros2")
+}
+
+record(sseq, "$(P)caputRecorderClearMacros2") {
+	field(DOL1, "$(P)caputRecorderEmptyString")
+	field(LNK1, "$(P)caputRecorderMacros1.TWST")
+	field(DOL2, "$(P)caputRecorderEmptyString")
+	field(LNK2, "$(P)caputRecorderMacros2.TWST")
+	field(DOL3, "$(P)caputRecorderEmptyString")
+	field(LNK3, "$(P)caputRecorderMacros3.TWST")
+	field(DOL4, "$(P)caputRecorderEmptyString")
+	field(LNK4, "$(P)caputRecorderMacros4.TWST")
+	field(DOL5, "$(P)caputRecorderEmptyString")
+	field(LNK5, "$(P)caputRecorderMacros5.TWST")
+	field(DOL6, "$(P)caputRecorderEmptyString")
+	field(LNK6, "$(P)caputRecorderMacros6.TWST")
+	field(FLNK, "$(P)caputRecorderClearMacros3")
+}
+
+record(sseq, "$(P)caputRecorderClearMacros3") {
+	field(DOL1, "$(P)caputRecorderEmptyString")
+	field(LNK1, "$(P)caputRecorderMacros1.THST")
+	field(DOL2, "$(P)caputRecorderEmptyString")
+	field(LNK2, "$(P)caputRecorderMacros2.THST")
+	field(DOL3, "$(P)caputRecorderEmptyString")
+	field(LNK3, "$(P)caputRecorderMacros3.THST")
+	field(DOL4, "$(P)caputRecorderEmptyString")
+	field(LNK4, "$(P)caputRecorderMacros4.THST")
+	field(DOL5, "$(P)caputRecorderEmptyString")
+	field(LNK5, "$(P)caputRecorderMacros5.THST")
+	field(DOL6, "$(P)caputRecorderEmptyString")
+	field(LNK6, "$(P)caputRecorderMacros6.THST")
+	field(FLNK, "$(P)caputRecorderClearMacros4")
+}
+
+record(sseq, "$(P)caputRecorderClearMacros4") {
+	field(DOL1, "$(P)caputRecorderEmptyString")
+	field(LNK1, "$(P)caputRecorderMacros1.FRST")
+	field(DOL2, "$(P)caputRecorderEmptyString")
+	field(LNK2, "$(P)caputRecorderMacros2.FRST")
+	field(DOL3, "$(P)caputRecorderEmptyString")
+	field(LNK3, "$(P)caputRecorderMacros3.FRST")
+	field(DOL4, "$(P)caputRecorderEmptyString")
+	field(LNK4, "$(P)caputRecorderMacros4.FRST")
+	field(DOL5, "$(P)caputRecorderEmptyString")
+	field(LNK5, "$(P)caputRecorderMacros5.FRST")
+	field(DOL6, "$(P)caputRecorderEmptyString")
+	field(LNK6, "$(P)caputRecorderMacros6.FRST")
+	field(FLNK, "$(P)caputRecorderClearMacros5")
+}
+
+record(sseq, "$(P)caputRecorderClearMacros5") {
+	field(DOL1, "$(P)caputRecorderEmptyString")
+	field(LNK1, "$(P)caputRecorderMacros1.FVST")
+	field(DOL2, "$(P)caputRecorderEmptyString")
+	field(LNK2, "$(P)caputRecorderMacros2.FVST")
+	field(DOL3, "$(P)caputRecorderEmptyString")
+	field(LNK3, "$(P)caputRecorderMacros3.FVST")
+	field(DOL4, "$(P)caputRecorderEmptyString")
+	field(LNK4, "$(P)caputRecorderMacros4.FVST")
+	field(DOL5, "$(P)caputRecorderEmptyString")
+	field(LNK5, "$(P)caputRecorderMacros5.FVST")
+	field(DOL6, "$(P)caputRecorderEmptyString")
+	field(LNK6, "$(P)caputRecorderMacros6.FVST")
+	field(FLNK, "$(P)caputRecorderClearMacros6")
+}
+
+record(sseq, "$(P)caputRecorderClearMacros6") {
+	field(DOL1, "$(P)caputRecorderEmptyString")
+	field(LNK1, "$(P)caputRecorderMacros1.SXST")
+	field(DOL2, "$(P)caputRecorderEmptyString")
+	field(LNK2, "$(P)caputRecorderMacros2.SXST")
+	field(DOL3, "$(P)caputRecorderEmptyString")
+	field(LNK3, "$(P)caputRecorderMacros3.SXST")
+	field(DOL4, "$(P)caputRecorderEmptyString")
+	field(LNK4, "$(P)caputRecorderMacros4.SXST")
+	field(DOL5, "$(P)caputRecorderEmptyString")
+	field(LNK5, "$(P)caputRecorderMacros5.SXST")
+	field(DOL6, "$(P)caputRecorderEmptyString")
+	field(LNK6, "$(P)caputRecorderMacros6.SXST")
+	field(FLNK, "$(P)caputRecorderClearMacros7")
+}
+
+record(sseq, "$(P)caputRecorderClearMacros7") {
+	field(DOL1, "$(P)caputRecorderEmptyString")
+	field(LNK1, "$(P)caputRecorderMacros1.SVST")
+	field(DOL2, "$(P)caputRecorderEmptyString")
+	field(LNK2, "$(P)caputRecorderMacros2.SVST")
+	field(DOL3, "$(P)caputRecorderEmptyString")
+	field(LNK3, "$(P)caputRecorderMacros3.SVST")
+	field(DOL4, "$(P)caputRecorderEmptyString")
+	field(LNK4, "$(P)caputRecorderMacros4.SVST")
+	field(DOL5, "$(P)caputRecorderEmptyString")
+	field(LNK5, "$(P)caputRecorderMacros5.SVST")
+	field(DOL6, "$(P)caputRecorderEmptyString")
+	field(LNK6, "$(P)caputRecorderMacros6.SVST")
+	field(FLNK, "$(P)caputRecorderClearMacros8")
+}
+
+record(sseq, "$(P)caputRecorderClearMacros8") {
+	field(DOL1, "$(P)caputRecorderEmptyString")
+	field(LNK1, "$(P)caputRecorderMacros1.EIST")
+	field(DOL2, "$(P)caputRecorderEmptyString")
+	field(LNK2, "$(P)caputRecorderMacros2.EIST")
+	field(DOL3, "$(P)caputRecorderEmptyString")
+	field(LNK3, "$(P)caputRecorderMacros3.EIST")
+	field(DOL4, "$(P)caputRecorderEmptyString")
+	field(LNK4, "$(P)caputRecorderMacros4.EIST")
+	field(DOL5, "$(P)caputRecorderEmptyString")
+	field(LNK5, "$(P)caputRecorderMacros5.EIST")
+	field(DOL6, "$(P)caputRecorderEmptyString")
+	field(LNK6, "$(P)caputRecorderMacros6.EIST")
+	field(FLNK, "$(P)caputRecorderClearMacros9")
+}
+
+record(sseq, "$(P)caputRecorderClearMacros9") {
+	field(DOL1, "$(P)caputRecorderEmptyString")
+	field(LNK1, "$(P)caputRecorderMacros1.NIST")
+	field(DOL2, "$(P)caputRecorderEmptyString")
+	field(LNK2, "$(P)caputRecorderMacros2.NIST")
+	field(DOL3, "$(P)caputRecorderEmptyString")
+	field(LNK3, "$(P)caputRecorderMacros3.NIST")
+	field(DOL4, "$(P)caputRecorderEmptyString")
+	field(LNK4, "$(P)caputRecorderMacros4.NIST")
+	field(DOL5, "$(P)caputRecorderEmptyString")
+	field(LNK5, "$(P)caputRecorderMacros5.NIST")
+	field(DOL6, "$(P)caputRecorderEmptyString")
+	field(LNK6, "$(P)caputRecorderMacros6.NIST")
+	field(FLNK, "$(P)caputRecorderClearMacros10")
+}
+
+record(sseq, "$(P)caputRecorderClearMacros10") {
+	field(DOL1, "$(P)caputRecorderEmptyString")
+	field(LNK1, "$(P)caputRecorderMacros1.TEST")
+	field(DOL2, "$(P)caputRecorderEmptyString")
+	field(LNK2, "$(P)caputRecorderMacros2.TEST")
+	field(DOL3, "$(P)caputRecorderEmptyString")
+	field(LNK3, "$(P)caputRecorderMacros3.TEST")
+	field(DOL4, "$(P)caputRecorderEmptyString")
+	field(LNK4, "$(P)caputRecorderMacros4.TEST")
+	field(DOL5, "$(P)caputRecorderEmptyString")
+	field(LNK5, "$(P)caputRecorderMacros5.TEST")
+	field(DOL6, "$(P)caputRecorderEmptyString")
+	field(LNK6, "$(P)caputRecorderMacros6.TEST")
+	field(FLNK, "$(P)caputRecorderClearMacros11")
+}
+
+record(sseq, "$(P)caputRecorderClearMacros11") {
+	field(DOL1, "$(P)caputRecorderEmptyString")
+	field(LNK1, "$(P)caputRecorderMacros1.ELST")
+	field(DOL2, "$(P)caputRecorderEmptyString")
+	field(LNK2, "$(P)caputRecorderMacros2.ELST")
+	field(DOL3, "$(P)caputRecorderEmptyString")
+	field(LNK3, "$(P)caputRecorderMacros3.ELST")
+	field(DOL4, "$(P)caputRecorderEmptyString")
+	field(LNK4, "$(P)caputRecorderMacros4.ELST")
+	field(DOL5, "$(P)caputRecorderEmptyString")
+	field(LNK5, "$(P)caputRecorderMacros5.ELST")
+	field(DOL6, "$(P)caputRecorderEmptyString")
+	field(LNK6, "$(P)caputRecorderMacros6.ELST")
+	field(FLNK, "$(P)caputRecorderClearMacros12")
+}
+
+record(sseq, "$(P)caputRecorderClearMacros12") {
+	field(DOL1, "$(P)caputRecorderEmptyString")
+	field(LNK1, "$(P)caputRecorderMacros1.TVST")
+	field(DOL2, "$(P)caputRecorderEmptyString")
+	field(LNK2, "$(P)caputRecorderMacros2.TVST")
+	field(DOL3, "$(P)caputRecorderEmptyString")
+	field(LNK3, "$(P)caputRecorderMacros3.TVST")
+	field(DOL4, "$(P)caputRecorderEmptyString")
+	field(LNK4, "$(P)caputRecorderMacros4.TVST")
+	field(DOL5, "$(P)caputRecorderEmptyString")
+	field(LNK5, "$(P)caputRecorderMacros5.TVST")
+	field(DOL6, "$(P)caputRecorderEmptyString")
+	field(LNK6, "$(P)caputRecorderMacros6.TVST")
+	field(FLNK, "$(P)caputRecorderClearMacros13")
+}
+
+record(sseq, "$(P)caputRecorderClearMacros13") {
+	field(DOL1, "$(P)caputRecorderEmptyString")
+	field(LNK1, "$(P)caputRecorderMacros1.TTST")
+	field(DOL2, "$(P)caputRecorderEmptyString")
+	field(LNK2, "$(P)caputRecorderMacros2.TTST")
+	field(DOL3, "$(P)caputRecorderEmptyString")
+	field(LNK3, "$(P)caputRecorderMacros3.TTST")
+	field(DOL4, "$(P)caputRecorderEmptyString")
+	field(LNK4, "$(P)caputRecorderMacros4.TTST")
+	field(DOL5, "$(P)caputRecorderEmptyString")
+	field(LNK5, "$(P)caputRecorderMacros5.TTST")
+	field(DOL6, "$(P)caputRecorderEmptyString")
+	field(LNK6, "$(P)caputRecorderMacros6.TTST")
+	field(FLNK, "$(P)caputRecorderClearMacros14")
+}
+
+record(sseq, "$(P)caputRecorderClearMacros14") {
+	field(DOL1, "$(P)caputRecorderEmptyString")
+	field(LNK1, "$(P)caputRecorderMacros1.FTST")
+	field(DOL2, "$(P)caputRecorderEmptyString")
+	field(LNK2, "$(P)caputRecorderMacros2.FTST")
+	field(DOL3, "$(P)caputRecorderEmptyString")
+	field(LNK3, "$(P)caputRecorderMacros3.FTST")
+	field(DOL4, "$(P)caputRecorderEmptyString")
+	field(LNK4, "$(P)caputRecorderMacros4.FTST")
+	field(DOL5, "$(P)caputRecorderEmptyString")
+	field(LNK5, "$(P)caputRecorderMacros5.FTST")
+	field(DOL6, "$(P)caputRecorderEmptyString")
+	field(LNK6, "$(P)caputRecorderMacros6.FTST")
+	field(FLNK, "$(P)caputRecorderClearMacros15")
+}
+
+record(sseq, "$(P)caputRecorderClearMacros15") {
+	field(DOL1, "$(P)caputRecorderEmptyString")
+	field(LNK1, "$(P)caputRecorderMacros1.FFST")
+	field(DOL2, "$(P)caputRecorderEmptyString")
+	field(LNK2, "$(P)caputRecorderMacros2.FFST")
+	field(DOL3, "$(P)caputRecorderEmptyString")
+	field(LNK3, "$(P)caputRecorderMacros3.FFST")
+	field(DOL4, "$(P)caputRecorderEmptyString")
+	field(LNK4, "$(P)caputRecorderMacros4.FFST")
+	field(DOL5, "$(P)caputRecorderEmptyString")
+	field(LNK5, "$(P)caputRecorderMacros5.FFST")
+	field(DOL6, "$(P)caputRecorderEmptyString")
+	field(LNK6, "$(P)caputRecorderMacros6.FFST")
+}
+
+
+###########################################################
 record(busy, "$(P)caputRecorderExecuteMacro") {
 	field(ZNAM, "Done")
 	field(ONAM, "Do")
@@ -100,6 +447,8 @@ record(busy, "$(P)caputRecorderAbortMacro") {
 	field(ZNAM, "Done")
 	field(ONAM, "Abort")
 }
+
+# macro arguments
 record(stringout, "$(P)caputRecorderArg1Name") {
 }
 record(stringout, "$(P)caputRecorderArg1Value") {
@@ -119,4 +468,76 @@ record(stringout, "$(P)caputRecorderArg4Value") {
 record(stringout, "$(P)caputRecorderArg5Name") {
 }
 record(stringout, "$(P)caputRecorderArg5Value") {
+}
+record(stringout, "$(P)caputRecorderArg6Name") {
+}
+record(stringout, "$(P)caputRecorderArg6Value") {
+}
+record(stringout, "$(P)caputRecorderArg7Name") {
+}
+record(stringout, "$(P)caputRecorderArg7Value") {
+}
+record(stringout, "$(P)caputRecorderArg8Name") {
+}
+record(stringout, "$(P)caputRecorderArg8Value") {
+}
+record(stringout, "$(P)caputRecorderArg9Name") {
+}
+record(stringout, "$(P)caputRecorderArg9Value") {
+}
+record(stringout, "$(P)caputRecorderArg10Name") {
+}
+record(stringout, "$(P)caputRecorderArg10Value") {
+}
+
+# clear all arguments and values
+record(stringout, "$(P)caputRecorderEmptyString") {
+}
+record(bo, "$(P)caputRecorderClearArgs") {
+	field(FLNK, "$(P)caputRecorderClearArgs1")
+}
+record(sseq, "$(P)caputRecorderClearArgs1") {
+	field(DOL1, "$(P)caputRecorderEmptyString")
+	field(LNK1, "$(P)caputRecorderArg1Name PP")
+	field(DOL2, "$(P)caputRecorderClearArgs1.STR1")
+	field(LNK2, "$(P)caputRecorderArg1Value PP")
+	field(DOL3, "$(P)caputRecorderClearArgs1.STR1")
+	field(LNK3, "$(P)caputRecorderArg2Name PP")
+	field(DOL4, "$(P)caputRecorderClearArgs1.STR1")
+	field(LNK4, "$(P)caputRecorderArg2Value PP")
+	field(DOL5, "$(P)caputRecorderClearArgs1.STR1")
+	field(LNK5, "$(P)caputRecorderArg3Name PP")
+	field(DOL6, "$(P)caputRecorderClearArgs1.STR1")
+	field(LNK6, "$(P)caputRecorderArg3Value PP")
+	field(DOL7, "$(P)caputRecorderClearArgs1.STR1")
+	field(LNK7, "$(P)caputRecorderArg4Name PP")
+	field(DOL8, "$(P)caputRecorderClearArgs1.STR1")
+	field(LNK8, "$(P)caputRecorderArg4Value PP")
+	field(DOL9, "$(P)caputRecorderClearArgs1.STR1")
+	field(LNK9, "$(P)caputRecorderArg5Name PP")
+	field(DOLA, "$(P)caputRecorderClearArgs1.STR1")
+	field(LNKA, "$(P)caputRecorderArg5Value PP")
+	field(FLNK, "$(P)caputRecorderClearArgs2")
+}
+record(sseq, "$(P)caputRecorderClearArgs2") {
+	field(DOL1, "$(P)caputRecorderEmptyString")
+	field(LNK1, "$(P)caputRecorderArg6Name PP")
+	field(DOL2, "$(P)caputRecorderClearArgs2.STR1")
+	field(LNK2, "$(P)caputRecorderArg6Value PP")
+	field(DOL3, "$(P)caputRecorderClearArgs2.STR1")
+	field(LNK3, "$(P)caputRecorderArg7Name PP")
+	field(DOL4, "$(P)caputRecorderClearArgs2.STR1")
+	field(LNK4, "$(P)caputRecorderArg7Value PP")
+	field(DOL5, "$(P)caputRecorderClearArgs2.STR1")
+	field(LNK5, "$(P)caputRecorderArg8Name PP")
+	field(DOL6, "$(P)caputRecorderClearArgs2.STR1")
+	field(LNK6, "$(P)caputRecorderArg8Value PP")
+	field(DOL7, "$(P)caputRecorderClearArgs2.STR1")
+	field(LNK7, "$(P)caputRecorderArg9Name PP")
+	field(DOL8, "$(P)caputRecorderClearArgs2.STR1")
+	field(LNK8, "$(P)caputRecorderArg9Value PP")
+	field(DOL9, "$(P)caputRecorderClearArgs2.STR1")
+	field(LNK9, "$(P)caputRecorderArg10Name PP")
+	field(DOLA, "$(P)caputRecorderClearArgs2.STR1")
+	field(LNKA, "$(P)caputRecorderArg10Value PP")
 }
