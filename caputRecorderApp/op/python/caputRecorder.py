@@ -197,6 +197,11 @@ def userHostAllowed(user, host):
 		return False
 	return True
 
+# caputs to PVs whose names are prefix+"caputRecorder" followed by any of the following suffixes are to be recorded.
+recordableSuffix = ("Macros1.VAL", "Macros2.VAL", "Macros3.VAL", "Macros4.VAL", "Macros5.VAL", "Macros6.VAL",
+"Arg1Value.VAL", "Arg2Value.VAL", "Arg3Value.VAL", "Arg4Value.VAL", "Arg5Value.VAL",
+"Arg6Value.VAL", "Arg7Value.VAL", "Arg8Value.VAL", "Arg9Value.VAL", "Arg10Value.VAL", 
+"ExecuteLoops.VAL")
 
 def writer():
 	global debug, macroFile, prefix, msgQueue, doexecuteMacro, executeLevel, postponeStop
@@ -218,8 +223,15 @@ def writer():
 					macroFile.write("\ttime.sleep(%.3f)\n" % dt)
 			timeOfLastPut = now
 
-			if char_value.find(prefix+"caputRecorder") == -1:
-				(pvname,value,user_host) = char_value.split(',')
+			(pvname,value,user_host) = char_value.split(',')
+			recordablePV = 1
+			# Ignore caputs to all but selected caputRecorder PVs
+			if char_value.find(prefix+"caputRecorder") >= 0:
+				recordablePV = 0
+				if pvname.endswith(recordableSuffix):
+					recordablePV = 1
+
+			if recordablePV:
 				# check user and host
 				allowed = True
 				if user_host:
@@ -634,7 +646,8 @@ def executeMacro():
 			if debug: print "executeMacro:exception: KeyboardInterrupt"
 			if "_abort" in _macroFunctionNames:
 				eval("macros._abort(prefix)")
-		print "error executing '%s'\n" % commandString
+		else:
+			print "error executing '%s'\n" % commandString
 	executingMacro = 0
 
 
