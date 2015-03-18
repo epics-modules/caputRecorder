@@ -526,10 +526,19 @@ def reloadMacros():
 				i += 1
 		if debug: print "reloadMacros:macroFunctionNames=", macroFunctionNames
 		i = 0
+		numItems = [0]*maxMacroMenus
+		itemNames = [""]*16*maxMacroMenus
 		for (name, func, field) in zip(macroFunctionNames, macroFunctions, menuFields*maxMacroMenus):
 			menu = i/len(menuFields) + 1
 			epics.caput(prefix + ("caputRecorderMacros%d." % menu) + field, name)
 			i += 1
+			numItems[menu] += 1
+		
+		for i in range(maxMacroMenus):
+			itemNum = epics.caget(prefix + ("caputRecorderMacros%d" % (i+1)))
+			if itemNum > numItems[i]:
+				epics.caput(prefix + ("caputRecorderMacros%d" % menu), 0)
+		
 
 	selectMacro()
 	epics.caput(prefix+"caputRecorderUserMessage", "Macro (re)load succeeded")
