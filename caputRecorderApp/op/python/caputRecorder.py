@@ -197,11 +197,6 @@ def userHostAllowed(user, host):
 		return False
 	return True
 
-# caputs to PVs whose names are prefix+"caputRecorder" followed by any of the following suffixes are to be recorded.
-recordableSuffix = ("Macros1.VAL", "Macros2.VAL", "Macros3.VAL", "Macros4.VAL", "Macros5.VAL", "Macros6.VAL",
-"Arg1Value.VAL", "Arg2Value.VAL", "Arg3Value.VAL", "Arg4Value.VAL", "Arg5Value.VAL",
-"Arg6Value.VAL", "Arg7Value.VAL", "Arg8Value.VAL", "Arg9Value.VAL", "Arg10Value.VAL", 
-"ExecuteLoops.VAL")
 
 def writer():
 	global debug, macroFile, prefix, msgQueue, doexecuteMacro, executeLevel, postponeStop
@@ -225,11 +220,9 @@ def writer():
 
 			(pvname,value,user_host) = char_value.split(',')
 			recordablePV = 1
-			# Ignore caputs to all but selected caputRecorder PVs
+			# Ignore caputs to caputRecorder PVs
 			if char_value.find(prefix+"caputRecorder") >= 0:
 				recordablePV = 0
-				if pvname.endswith(recordableSuffix):
-					recordablePV = 1
 
 			if recordablePV:
 				# check user and host
@@ -272,9 +265,20 @@ def writer():
 				return
 			if char_value == "Do":
 				if (busy):
+
+					# if ExecuteLoops > 1, write a loop
+					loops = epics.caget(prefix+"caputRecorderExecuteLoops")
+					loops = max(1, loops)
+					if loops>1:
+						indent = "\t\t"
+						cmd = "\tfor i in range(%s):\n" % loops
+					else:
+						indent = "\t"
+					macroFile.write(cmd)
+
 					# add call to selected function to macro file
 					fname = epics.caget(prefix+"caputRecorderMacro")
-					cmd = "\t" + fname+"("
+					cmd = indent + fname+"("
 					for j in range(1,maxArgs+1):
 						argName = epics.caget(prefix+("caputRecorderArg%dName" % j))
 						argValue = epics.caget(prefix+("caputRecorderArg%dValue" % j))
@@ -745,7 +749,11 @@ def start():
 	writeThread.start()
 
 	while (1):
-		wake.wait(1)
+		try:
+			wake.wait(1)
+		except:
+			pass
+
 		if wake.is_set():
 			if debug: print "start: wake.is_set()"
 			wake.clear()
