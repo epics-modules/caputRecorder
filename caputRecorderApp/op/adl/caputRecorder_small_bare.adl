@@ -230,7 +230,7 @@ text {
 	"basic attribute" {
 		clr=14
 	}
-	textix="function name"
+	textix="macro name"
 	align="horiz. centered"
 }
 polyline {
