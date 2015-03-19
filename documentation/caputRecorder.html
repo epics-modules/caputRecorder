@@ -93,10 +93,10 @@ program file macros.py.  Here's what a typical command looks like:
 
 <blockquote>
 <pre>
-epics.caput("xxx:scan1.P1PV","xxx:m2.VAL", wait=True, timeout=-1.0)
+epics.caput("xxx:scan1.P1PV","xxx:m2.VAL", wait=True, timeout=1000000.0)
 </pre>
 
-This writes the string "xxx:m2.VAL" to "xxx:scan1.P1PV", and waits forever for
+This writes the string "xxx:m2.VAL" to "xxx:scan1.P1PV", and waits ~forever for
 any EPICS processing that might result from the command to complete.
 
 </blockquote>
@@ -512,10 +512,10 @@ by pressing the "!(re)start recorder" button.
 caputRecorder records a caput with the following python code:
 
 <pre>
-epics.caput("xxx:scan1.P1PV","xxx:m2.VAL", wait=True, timeout=-1.0)
+epics.caput("xxx:scan1.P1PV","xxx:m2.VAL", wait=True, timeout=1000000.0)
 </pre>
 
-This code will request a completion callback from EPICS, and will wait forever
+This code will request a completion callback from EPICS, and will wait ~forever
 for the callback to arrive.
 
 <P>Currently, it is not an error for a macro to timeout while waiting for a

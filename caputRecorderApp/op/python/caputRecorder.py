@@ -218,8 +218,13 @@ def writer():
 					macroFile.write("\ttime.sleep(%.3f)\n" % dt)
 			timeOfLastPut = now
 
-			if char_value.find(prefix+"caputRecorder") == -1:
-				(pvname,value,user_host) = char_value.split(',')
+			(pvname,value,user_host) = char_value.split(',')
+			recordablePV = 1
+			# Ignore caputs to caputRecorder PVs
+			if char_value.find(prefix+"caputRecorder") >= 0:
+				recordablePV = 0
+
+			if recordablePV:
 				# check user and host
 				allowed = True
 				if user_host:
@@ -260,9 +265,20 @@ def writer():
 				return
 			if char_value == "Do":
 				if (busy):
+
+					# if ExecuteLoops > 1, write a loop
+					loops = epics.caget(prefix+"caputRecorderExecuteLoops")
+					loops = max(1, loops)
+					if loops>1:
+						indent = "\t\t"
+						cmd = "\tfor i in range(%s):\n" % loops
+						macroFile.write(cmd)
+					else:
+						indent = "\t"
+
 					# add call to selected function to macro file
 					fname = epics.caget(prefix+"caputRecorderMacro")
-					cmd = "\t" + fname+"("
+					cmd = indent + fname+"("
 					for j in range(1,maxArgs+1):
 						argName = epics.caget(prefix+("caputRecorderArg%dName" % j))
 						argValue = epics.caget(prefix+("caputRecorderArg%dValue" % j))
@@ -510,10 +526,19 @@ def reloadMacros():
 				i += 1
 		if debug: print "reloadMacros:macroFunctionNames=", macroFunctionNames
 		i = 0
+		numItems = [0]*maxMacroMenus
+		itemNames = [""]*16*maxMacroMenus
 		for (name, func, field) in zip(macroFunctionNames, macroFunctions, menuFields*maxMacroMenus):
 			menu = i/len(menuFields) + 1
 			epics.caput(prefix + ("caputRecorderMacros%d." % menu) + field, name)
 			i += 1
+			numItems[menu] += 1
+		
+		for i in range(maxMacroMenus):
+			itemNum = epics.caget(prefix + ("caputRecorderMacros%d" % (i+1)))
+			if itemNum > numItems[i]:
+				epics.caput(prefix + ("caputRecorderMacros%d" % menu), 0)
+		
 
 	selectMacro()
 	epics.caput(prefix+"caputRecorderUserMessage", "Macro (re)load succeeded")
@@ -634,7 +659,8 @@ def executeMacro():
 			if debug: print "executeMacro:exception: KeyboardInterrupt"
 			if "_abort" in _macroFunctionNames:
 				eval("macros._abort(prefix)")
-		print "error executing '%s'\n" % commandString
+		else:
+			print "error executing '%s'\n" % commandString
 	executingMacro = 0
 
 
@@ -732,7 +758,11 @@ def start():
 	writeThread.start()
 
 	while (1):
-		wake.wait(1)
+		try:
+			wake.wait(1)
+		except:
+			pass
+
 		if wake.is_set():
 			if debug: print "start: wake.is_set()"
 			wake.clear()
