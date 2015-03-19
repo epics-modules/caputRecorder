@@ -19,6 +19,9 @@ abort.
 <li>If erasing a macro leaves an mbbo record with a value greater than the
 number_of_items-1, set the value to zero.
 
+<li>In R1-4-1, the default time to wait for a callback was -1 seconds, but this
+doesn't mean "forever" to pyepics.  Changed to 1000000.
+
 </ul>
 
 <h2 align="center">Release 1-4-1</h2>
