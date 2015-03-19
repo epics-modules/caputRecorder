@@ -272,9 +272,9 @@ def writer():
 					if loops>1:
 						indent = "\t\t"
 						cmd = "\tfor i in range(%s):\n" % loops
+						macroFile.write(cmd)
 					else:
 						indent = "\t"
-					macroFile.write(cmd)
 
 					# add call to selected function to macro file
 					fname = epics.caget(prefix+"caputRecorderMacro")
