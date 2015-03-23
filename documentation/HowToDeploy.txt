@@ -76,33 +76,28 @@ ed auto_settings.req:
 If deploying for an ioc using synApps earlier than 5.8, copy the 5.8 version
 of release.pl to $TOP
 
-Make sure the environment variable EDITOR contains the name of a text editor.
-MEDM must have this environment variable, so it could go in start_epics_xxx.
-
 cd $TOP
 cp $CAPUTRECORDER/example_start_putrecorder start_putrecorder
-ed start_putrecorder, fixing the following lines:
+
+edit start_putrecorder, fixing the following lines:
 	EPICS_APP=/net/s100dserv/xorApps/epics/synApps_5_7/ioc/mlab
 	MACROS_PY_DIR=${EPICS_APP}/mlabApp/op/python
-	PREFIX="mlab:"
-set the environment variable START_PUTRECORDER to the path to start_putrecorder.
-(This allows you to put it anywhere you like.)
+
+edit start_epics to set the following environment variables:
+	START_PUTRECORDER = path to start_putrecorder
+	EDITOR = your preferred text editor for python files
 
 edit start_epics, or setup_epics_common, to modify the EPICS_DISPLAY_PATH
 	setenv myEPICS_DISPLAY_PATH $myEPICS_DISPLAY_PATH':'$CAPUTRECORDER/caputRecorderApp/op/adl
 
-cd $TOP
 mkdir mlabApp/op/python
 cd $TOP/mlabApp/op/python
-cp $CAPUTRECORDER/caputRecorderApp/op/python/example_macros.py macros.py
-chmod a+w macros.py
-ed macros.py
+# note that"mlab" in the following is the ioc's prefix, less any trailing ":"
+cp $CAPUTRECORDER/caputRecorderApp/op/python/example_macros.py macros_mlab.py
+chmod a+w macros_mlab.py
+edit macros_mlab.py
 	delete everything but the _abort function, and the blank line after it
-
-set the environment variable MACROS_PY to the path to macros.py.  For example,
-setenv MACROS_PY ${EPICS_APP}/mlabApp/op/python/macros.py. (This allows you to
-put it anywhere you like.)
-
+	edit the _abort function so it does what the user wants when a macro is aborted
 
 cd $TOP/mlabApp/op/adl
 medm mlab.adl
