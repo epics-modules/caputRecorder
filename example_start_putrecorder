@@ -19,7 +19,8 @@ arch=`uname -p`
 COMMAND="/APSshare/anaconda/${arch}/bin/python ${CAPUTRECORDER_PY}"
 
 export PYTHONPATH=${MACROS_PY_DIR}:$PYTHONPATH
-MACROS_PY=${MACROS_PY_DIR}/"macros_"${PREFIX}.py
+namePrefix=$( echo $PREFIX | sed s/://g )
+MACROS_PY=${MACROS_PY_DIR}/"macros_"${namePrefix}.py
 
 # start caputRecorder.py
 $COMMAND ${PREFIX} ${MACROS_PY}&
