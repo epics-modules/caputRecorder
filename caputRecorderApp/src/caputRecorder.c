@@ -252,6 +252,18 @@ void myGetValueString(dbAddr *paddr, long n, char *value, int valueSize) {
 	value[valueSize-1] = '\0';
 }
 
+unsigned my_dbNameOfPV(const dbAddr *paddr, char *pBuf, unsigned bufLen) {
+    dbFldDes * pfldDes = paddr->pfldDes;
+    char * pBufTmp = pBuf;
+
+    if (bufLen==0) return(0);
+
+	strncpy(pBufTmp, paddr->precord->name, bufLen-1);
+	strncat(pBufTmp, ".", (bufLen-1)-(pBufTmp-pBuf));
+	strncat(pBufTmp, pfldDes->name, (bufLen-1)-(pBufTmp-pBuf));
+    return(pBufTmp - pBuf);
+}
+
 void myAsDataListener(asTrapWriteMessage *pmessage, int after) {
 #if GE_EPICSBASE(3,15,0)
 	dbChannel *pchannel;
@@ -290,7 +302,8 @@ void myAsDataListener(asTrapWriteMessage *pmessage, int after) {
 	no_elements = paddr->no_elements;
 	field_type = paddr->field_type;
 	field_size = paddr->field_size;
-	numChar = dbNameOfPV(paddr, pvname, BUFFER_SIZE);
+	/*numChar = dbNameOfPV(paddr, pvname, BUFFER_SIZE);*/
+	numChar = my_dbNameOfPV(paddr, pvname, BUFFER_SIZE);
 #endif
 
 	if (strstr(pvname, "caputRecorderHeartbeat")) {
