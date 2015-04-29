@@ -65,7 +65,7 @@ epicsExportAddress(int,caputRecorderDebug);
 #define oldDBR_LONG        5
 #define oldDBR_DOUBLE      6
 
-void getEnumString(dbAddr *paddr, char *destString, unsigned short us) {
+static void getEnumString(dbAddr *paddr, char *destString, unsigned short us) {
 	struct rset *prset = 0;
 	struct dbr_enumStrs	enumStrs;
 	int status;
@@ -84,7 +84,7 @@ void getEnumString(dbAddr *paddr, char *destString, unsigned short us) {
 	}
 }
 
-void getMenuString(dbAddr *paddr, char *destString, unsigned short us) {
+static void getMenuString(dbAddr *paddr, char *destString, unsigned short us) {
     dbFldDes *pdbFldDes = 0;
     dbMenu *pdbMenu = 0;
     char **papChoiceValue = 0;
@@ -109,7 +109,7 @@ void getMenuString(dbAddr *paddr, char *destString, unsigned short us) {
 	}
 }
 
-int myConvert(dbAddr *paddr, char *destString, int dbrType, dbfType field_type, void *data, int no_elements, int maxSize) {
+static int myConvert(dbAddr *paddr, char *destString, int dbrType, dbfType field_type, void *data, int no_elements, int maxSize) {
 	char *pchar =  (char *)data;
 	short *pshort = (short *)data;
 	unsigned short *pushort = (unsigned short *)data;
@@ -229,7 +229,7 @@ int myConvert(dbAddr *paddr, char *destString, int dbrType, dbfType field_type, 
 	return(0);
 }
 
-void myGetValueString(dbAddr *paddr, long n, char *value, int valueSize) {
+static void myGetValueString(dbAddr *paddr, long n, char *value, int valueSize) {
 	dbfType field_type = paddr->field_type;
 	short field_size = paddr->field_size;
 	long one=1, options=0;
@@ -252,7 +252,7 @@ void myGetValueString(dbAddr *paddr, long n, char *value, int valueSize) {
 	value[valueSize-1] = '\0';
 }
 
-unsigned my_dbNameOfPV(const dbAddr *paddr, char *pBuf, unsigned bufLen) {
+static unsigned my_dbNameOfPV(const dbAddr *paddr, char *pBuf, unsigned bufLen) {
     dbFldDes * pfldDes = paddr->pfldDes;
     char * pBufTmp = pBuf;
 
@@ -264,7 +264,7 @@ unsigned my_dbNameOfPV(const dbAddr *paddr, char *pBuf, unsigned bufLen) {
     return(pBufTmp - pBuf);
 }
 
-void myAsDataListener(asTrapWriteMessage *pmessage, int after) {
+static void myAsDataListener(asTrapWriteMessage *pmessage, int after) {
 #if GE_EPICSBASE(3,15,0)
 	dbChannel *pchannel;
 	dbAddr addr;
@@ -377,7 +377,7 @@ static void caputRecorderTask() {
 	}
 }
 
-void registerCaputRecorderTrapListener(char *PVname) {
+static void registerCaputRecorderTrapListener(char *PVname) {
 	asTrapWriteId id;
 	long status;
 
