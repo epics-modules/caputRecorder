@@ -197,10 +197,43 @@ def userHostAllowed(user, host):
 		return False
 	return True
 
+def asString(argValue):
+	""" if arg type is string, make sure argValue contains quotes """
+
+	if argValue[0] == "'":
+		if argValue[-1] == "'":
+			return(argValue)
+		elif argValue[-1] == '"':
+			argValue = argValue[0:-1] + "'"
+			return(argValue)
+		else:
+			return(argValue + "'")
+
+	elif argValue[0] == '"':
+		if argValue[-1] == '"':
+			return(argValue)
+		elif argValue[-1] == "'":
+			argValue = argValue[0:-1] + '"'
+			return(argValue)
+		else:
+			return(argValue + '"')
+
+	else:
+		argValue = "'" + argValue
+		if argValue[-1] == "'":
+			return(argValue)
+		elif argValue[-1] == '"':
+			argValue = argValue[0:-1] + "'"
+			return(argValue)
+		else:
+			return(argValue + "'")
 
 def writer():
 	global debug, macroFile, prefix, msgQueue, doexecuteMacro, executeLevel, postponeStop
 	global doStartMacro, doStopMacro, connected, recordTiming, timeOfLastPut, waitCompletion, recordingActive
+	global macroFunctionNames, macroFunctions
+	
+	epics.ca.use_initial_context()
 
 	while(1):
 		(msg, char_value) = msgQueue.get()
@@ -277,14 +310,29 @@ def writer():
 						indent = "\t"
 
 					# add call to selected function to macro file
-					fname = epics.caget(prefix+"caputRecorderMacro")
-					cmd = indent + fname+"("
+					funcName = epics.caget(prefix+"caputRecorderMacro")
+					
+					# get argument types from default_vals
+					try:
+						func = macroFunctions[macroFunctionNames.index(funcName)]
+						(args, vdummy, kdummy, default_vals) = getargspec(func)
+					except:
+						func = None
+						default_vals = None
+
+					cmd = indent + funcName+"("
 					for j in range(1,maxArgs+1):
+						k = j-1
 						argName = epics.caget(prefix+("caputRecorderArg%dName" % j))
 						argValue = epics.caget(prefix+("caputRecorderArg%dValue" % j))
 						if argName:
 							if j>1:
 								cmd = cmd + ","
+
+							# if arg type is string, make sure argValue contains quotes
+							if default_vals and k < len(default_vals) and type(default_vals[k]) == type(""):
+								argValue = asString(argValue)
+
 							cmd = cmd + argName + "=" + argValue
 						else:
 							break
@@ -425,13 +473,22 @@ def startMacro():
 	# to flush out any initial value callbacks, then monitor the pvs and set
 	# recordingActive==True.
 	for pv in commandMonitorList:
-		epics.camonitor(pv,callback=commandMonFunc)
+		try:
+			epics.camonitor(pv,callback=commandMonFunc)
+		except:
+			pass
 
 	for pv in commandMonitorList:
-		epics.camonitor_clear(pv)
+		try:
+			epics.camonitor_clear(pv)
+		except:
+			pass
 
 	for pv in commandMonitorList:
-		epics.camonitor(pv,callback=commandMonFunc)
+		try:
+			epics.camonitor(pv,callback=commandMonFunc)
+		except:
+			print "Can't monitor '%s'" % pv
 	recordingActive = True
 
 def endMacro():
@@ -624,8 +681,8 @@ def executeMacro():
 	funcName = epics.caget(prefix+"caputRecorderMacro")
 	try:
 		func = macroFunctions[macroFunctionNames.index(funcName)]
+		(args, vdummy, kdummy, default_vals) = getargspec(func)
 	except:
-		func = None
 		executingMacro = 0
 		return
 
@@ -636,15 +693,18 @@ def executeMacro():
 	else:
 		commandString = ""
 	commandString += "macros.%s(" % funcName
-	argname = []
-	argvalue = []
 	numArgs = len(getargspec(func)[0])
 	for j in range(min(maxArgs, numArgs)):
 		if j>0:
 			commandString += ","
 		commandString += getargspec(func)[0][j]+"="
-		value = epics.caget(prefix+("caputRecorderArg%dValue" % (j+1)), as_string=True)
-		commandString += value
+		argValue = epics.caget(prefix+("caputRecorderArg%dValue" % (j+1)), as_string=True)
+
+		# if arg type is string, make sure argValue contains quotes
+		if default_vals and j < len(default_vals) and type(default_vals[j]) == type(""):
+			argValue = asString(argValue)
+
+		commandString += argValue
 	commandString += ")"
 	if debug: print "commandString='%s'" % commandString
 	try:
@@ -666,8 +726,7 @@ def executeMacro():
 
 ############################################################################
 def startTimeMonFunc(pvname, value, char_value, **kwd):
-	global debug, startTime, wake, exitProgram, connected
-
+	global debug, startTime, wake, exitProgram, connected, executingMacro
 	if not char_value:
 		epics.caput(prefix+"caputRecorderStartTime", startTime)
 	else:
@@ -675,6 +734,8 @@ def startTimeMonFunc(pvname, value, char_value, **kwd):
 			# Another instance of the program wrote a new start time.
 			# We don't ever want two copies of the program that use the same control PVs
 			# running simultaneously
+			if executingMacro:
+				thread.interrupt_main()
 			exitProgram = 1
 			wake.set()
 
@@ -695,6 +756,9 @@ def onConnectionChange(pvname=None, conn= None, **kws):
 
 def heartbeat():
 	global debug, prefix, wake, exitProgram
+
+	epics.ca.use_initial_context()
+	
 	maxDisconnectTime = 10
 	hb = epics.PV(prefix+"caputRecorderHeartbeat", connection_callback=onConnectionChange)
 	disconnectTime = 0
@@ -848,7 +912,7 @@ def editMacrosMonFunc(pvname, value, char_value, **kwd):
 
 usage = """
 usage:   python caputRecorder.py prefix [other_prefixes] [macrofile]
-example: python caputRecorder.py 1bmb: 1bma: 1bmc: macros_1bmb:.py
+example: python caputRecorder.py 1bmb: 1bma: 1bmc: macros_1bmb.py
 """
 
 def go(argv=[]):
