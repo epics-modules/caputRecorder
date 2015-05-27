@@ -251,8 +251,13 @@ def writer():
 					macroFile.write("\ttime.sleep(%.3f)\n" % dt)
 			timeOfLastPut = now
 
-			(pvname,value,user_host) = char_value.split(',')
-			recordablePV = 1
+			try:
+				(pvname,value,user_host) = char_value.split(',')
+				recordablePV = 1
+			except:
+				print "could not extract name,value,user@host"
+				recordablePV = 0
+
 			# Ignore caputs to caputRecorder PVs
 			if char_value.find(prefix+"caputRecorder") >= 0:
 				recordablePV = 0
