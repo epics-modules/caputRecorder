@@ -280,26 +280,26 @@ static void myAsDataListener(asTrapWriteMessage *pmessage, int after) {
 	dbfType field_type;
 	int i, j, dbrType;
 
-	if (caputRecorderDebug) errlogPrintf("myAsDataListener: after=%d\n", after);
+	if (caputRecorderDebug > 1) errlogPrintf("myAsDataListener: after=%d\n", after);
 	if (after==0) return;
 
-	if (caputRecorderDebug) errlogPrintf("myAsDataListener: %s@%s\n", pmessage->userid, pmessage->hostid);
+	if (caputRecorderDebug > 1) errlogPrintf("myAsDataListener: %s@%s\n", pmessage->userid, pmessage->hostid);
 
 #if GE_EPICSBASE(3,15,0)
 	/* Haven't tested this with asTrapWriteWithData */
-	if (caputRecorderDebug) errlogPrintf("myAsDataListener: GE_EPICSBASE(3,15,0)\n");
+	if (caputRecorderDebug > 1) errlogPrintf("myAsDataListener: GE_EPICSBASE(3,15,0)\n");
 	pchannel = pmessage->serverSpecific;
 	addr = pchannel->addr;
 	paddr = &addr;
 	no_elements = pchannel->final_no_elements;
 	field_type = pchannel->final_type;
 	field_size = pchannel->final_field_size;
-	if (caputRecorderDebug) errlogPrintf("myAsDataListener:final_type=%d\n", pchannel->final_type);
-	if (caputRecorderDebug) errlogPrintf("myAsDataListener:no_elements=%d, field_size=%d\n", no_elements, field_size);
+	if (caputRecorderDebug > 1) errlogPrintf("myAsDataListener:final_type=%d\n", pchannel->final_type);
+	if (caputRecorderDebug > 1) errlogPrintf("myAsDataListener:no_elements=%d, field_size=%d\n", no_elements, field_size);
 	strncpy(pvname, dbChannelName(pchannel), BUFFER_SIZE-1);
 	numChar = strlen(pvname);
 #else
-	if (caputRecorderDebug) errlogPrintf("myAsDataListener: LT_EPICSBASE(3,15,0)\n");
+	if (caputRecorderDebug > 1) errlogPrintf("myAsDataListener: LT_EPICSBASE(3,15,0)\n");
 	paddr = pmessage->serverSpecific;
 	no_elements = paddr->no_elements;
 	field_type = paddr->field_type;
@@ -311,7 +311,7 @@ static void myAsDataListener(asTrapWriteMessage *pmessage, int after) {
 	if (strstr(pvname, "caputRecorderHeartbeat")) {
 		return;
 	}
-	if (caputRecorderDebug) errlogPrintf("myAsDataListener: no_elements==%ld, field_size==%d\n", no_elements, field_size);
+	if (caputRecorderDebug) errlogPrintf("myAsDataListener: pvname='%s', no_elements==%ld, field_size==%d\n", pvname, no_elements, field_size);
 
 	no_elements = MIN(COMMAND_SIZE-1, no_elements);
 	dbrType = -1;
