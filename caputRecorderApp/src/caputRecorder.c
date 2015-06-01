@@ -50,6 +50,8 @@ typedef struct {
 } MSG;
 #define MSG_SIZE sizeof(MSG)
 
+#define MIN(a,b) (a)>(b)?(b):(a);
+
 volatile int caputRecorderDebug=0;
 epicsExportAddress(int,caputRecorderDebug);
 
@@ -311,19 +313,20 @@ static void myAsDataListener(asTrapWriteMessage *pmessage, int after) {
 	}
 	if (caputRecorderDebug) errlogPrintf("myAsDataListener: no_elements==%ld, field_size==%d\n", no_elements, field_size);
 
-
+	no_elements = MIN(COMMAND_SIZE-1, no_elements);
 	dbrType = -1;
 #ifdef asTrapWriteWithData
 	if (pmessage->data) {
 		dbrType = pmessage->dbrType;
 		no_elements = pmessage->no_elements;
+		no_elements = MIN(COMMAND_SIZE-1, no_elements);
 		if (caputRecorderDebug) errlogPrintf("myAsDataListener: pvname='%s'\n", pvname);
-		myConvert(paddr, value, dbrType, field_type, pmessage->data, pmessage->no_elements, COMMAND_SIZE);
+		myConvert(paddr, value, dbrType, field_type, pmessage->data, pmessage->no_elements, COMMAND_SIZE-1);
 	} else {
-		myGetValueString(paddr, no_elements, value, COMMAND_SIZE);
+		myGetValueString(paddr, no_elements, value, COMMAND_SIZE-1);
 	}
 #else
-	myGetValueString(paddr, no_elements, value, COMMAND_SIZE);
+	myGetValueString(paddr, no_elements, value, COMMAND_SIZE-1);
 #endif
 
 	/* long strings */
