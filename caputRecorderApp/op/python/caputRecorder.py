@@ -255,7 +255,15 @@ def writer():
 				(pvname,value,user_host) = char_value.split(',')
 				recordablePV = 1
 			except:
-				print "could not extract name,value,user@host"
+				try:
+					(pvname,value) = char_value.split(',')
+					print "caputRecorder: could not extract pvname,value,user@host"
+					macroFile.write("\t# unrecorded write to %s\n" % pvname)
+					macroFile.flush()
+				except:
+					print "caputRecorder: could not extract pvname"
+					macroFile.write("\t# unrecorded write to unknown PV\n")
+					macroFile.flush()
 				recordablePV = 0
 
 			# Ignore caputs to caputRecorder PVs
