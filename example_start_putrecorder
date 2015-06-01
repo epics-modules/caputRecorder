@@ -3,9 +3,6 @@
 # start, or restart, caputRecorder.py
 
 PREFIX=$1
-if [ "" == "${PREFIX}" ] ; then
-	PREFIX="xxx:"
-fi
 
 EPICS_APP=/home/oxygen/MOONEY/epics/synApps/support/xxx
 MACROS_PY_DIR=${EPICS_APP}/xxxApp/op/python
