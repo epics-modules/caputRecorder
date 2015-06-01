@@ -9,6 +9,21 @@
 
 <h1 align="center">caputRecorder Release Notes</h1>
 
+<h2 align="center">Release 1-4-3</h2>
+<ul>
+<li>defend against very long strings in caputRecorder.c.
+<li>defend against malformed caput-notification strings in caputRecorder.py
+<li>Added powerpoint presentation
+<li>delete reference to dbChannel.final_dbr_type.  Doesn't exist in 3.15.2
+<li>don't use dbNameOfPV from base; it's not public to windows dynamic build
+<li>If macro argument is of type string, make user's value (from EPICS PV) a string
+<li>try/except around camonitor calls
+<li>If program is restarted while executing a macro, old copy now kills macro execution
+
+</ul>
+
+<li>If ExecuteLoops>1 while a macro is executed while recording, write a loop
+
 <h2 align="center">Release 1-4-2</h2>
 <ul>
 
