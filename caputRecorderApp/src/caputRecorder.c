@@ -31,8 +31,8 @@
  */
 
 #endif
-#include <epicsExport.h>
 #include <iocsh.h>
+#include <epicsExport.h>
 
 
 static epicsMessageQueueId caputRecorderMsgQueue=0;
