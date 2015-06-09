@@ -381,7 +381,7 @@ static void caputRecorderTask() {
 	}
 }
 
-static void registerCaputRecorderTrapListener(char *PVname) {
+void registerCaputRecorderTrapListener(char *PVname) {
 	asTrapWriteId id;
 	long status;
 
