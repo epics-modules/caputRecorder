@@ -32,6 +32,7 @@
 
 #endif
 #include <epicsExport.h>
+#include <iocsh.h>
 
 
 static epicsMessageQueueId caputRecorderMsgQueue=0;
@@ -406,8 +407,6 @@ static void registerCaputRecorderTrapListener(char *PVname) {
 
 /*-------------------------------------------------------------------------------*/
 /*** ioc-shell command registration ***/
-#include <epicsExport.h>
-#include <iocsh.h>
 
 #define IOCSH_ARG		static const iocshArg
 #define IOCSH_ARG_ARRAY	static const iocshArg * const
