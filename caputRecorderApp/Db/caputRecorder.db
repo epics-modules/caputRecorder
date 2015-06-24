@@ -541,3 +541,61 @@ record(sseq, "$(P)caputRecorderClearArgs2") {
 	field(DOLA, "$(P)caputRecorderClearArgs2.STR1")
 	field(LNKA, "$(P)caputRecorderArg10Value PP")
 }
+
+### global variables that any macro can use
+
+record(bo, "$(P)caputRecorderSelectFile") {
+}
+
+record(waveform, "$(P)caputRecorderGbl_filepath") {
+	field(DESC, "filepath")
+    field(FTVL, "CHAR")
+    field(NELM, "$(N)")
+}
+record(stringout, "$(P)caputRecorderGbl_filename") {
+	field(DESC, "filename")
+}
+
+record(longout, "$(P)caputRecorderNumGlobals") {
+	field(DOL, "10")
+}
+record(waveform, "$(P)caputRecorderGbl_1") {
+    field(FTVL, "CHAR")
+    field(NELM, "$(N)")
+}
+record(waveform, "$(P)caputRecorderGbl_2") {
+    field(FTVL, "CHAR")
+    field(NELM, "$(N)")
+}
+record(waveform, "$(P)caputRecorderGbl_3") {
+    field(FTVL, "CHAR")
+    field(NELM, "$(N)")
+}
+record(waveform, "$(P)caputRecorderGbl_4") {
+    field(FTVL, "CHAR")
+    field(NELM, "$(N)")
+}
+record(waveform, "$(P)caputRecorderGbl_5") {
+    field(FTVL, "CHAR")
+    field(NELM, "$(N)")
+}
+record(waveform, "$(P)caputRecorderGbl_6") {
+    field(FTVL, "CHAR")
+    field(NELM, "$(N)")
+}
+record(waveform, "$(P)caputRecorderGbl_7") {
+    field(FTVL, "CHAR")
+    field(NELM, "$(N)")
+}
+record(waveform, "$(P)caputRecorderGbl_8") {
+    field(FTVL, "CHAR")
+    field(NELM, "$(N)")
+}
+record(waveform, "$(P)caputRecorderGbl_9") {
+    field(FTVL, "CHAR")
+    field(NELM, "$(N)")
+}
+record(waveform, "$(P)caputRecorderGbl_10") {
+    field(FTVL, "CHAR")
+    field(NELM, "$(N)")
+}
