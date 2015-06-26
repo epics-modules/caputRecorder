@@ -13,6 +13,18 @@ import string
 import shutil
 import os
 
+# trial support for global variables
+def _getGlobals(prefix, debug=False):
+	g = {}
+	numGlobals = epics.caget(prefix+"caputRecorderNumGlobals")
+	g["filepath"] = epics.caget(prefix+"caputRecorderGbl_filepath", as_string=True)
+	g["filename"] = epics.caget(prefix+"caputRecorderGbl_filename", as_string=True)
+	for i in range(1, numGlobals+1):
+		name = epics.caget(prefix+"caputRecorderGbl_%d.DESC" % i, as_string=True)
+		if len(name)>0:
+			g[name] = epics.caget(prefix+"caputRecorderGbl_%d" % i, as_string=True)
+	return g
+
 HAVE_FILE_SELECTOR = False
 defaultPath = ""
 defaultFile = ""
