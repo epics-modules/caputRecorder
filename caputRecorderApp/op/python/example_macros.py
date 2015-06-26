@@ -3,6 +3,10 @@
 import time
 import epics
 
+# Leading underscore ensures that this function won't be displayed in an MEDM
+# menu.
+from caputRecorder import _getGlobals
+
 # The function "_abort" is special: it's used by asTrap to abort an executing
 # macro
 def _abort(prefix):
@@ -51,51 +55,6 @@ def motorscan(motor="m1", start=0, end=1, step=.1):
 	epics.caput("xxx:scan1.P1SI",step, wait=True, timeout=300)
 	epics.caput("xxx:scan1.EXSC","1", wait=True, timeout=300)
 
-def test3():
-	recordDate = "Fri Dec 19 10:44:18 2014"
-	epics.caput("xxx:scan1.P1PV","xxx:m2.VAL", wait=True, timeout=300)
-	epics.caput("xxx:scan1.P1SP","0.00000", wait=True, timeout=300)
-	epics.caput("xxx:scan1.P1EP","1.00000", wait=True, timeout=300)
-	epics.caput("xxx:scan1.P1SI","0.10000", wait=True, timeout=300)
-	epics.caput("xxx:scan1.P1AR","ABSOLUTE", wait=True, timeout=300)
-	epics.caput("xxx:scan1.PASM","STAY", wait=True, timeout=300)
-	epics.caput("xxx:scan1.D01PV","xxx:userCalcOut1.VAL", wait=True, timeout=300)
-	epics.caput("xxx:scan1.T1PV","xxx:scaler1.CNT", wait=True, timeout=300)
-	epics.caput("xxx:scan1.EXSC","1", wait=True, timeout=300)
-
-def a1():
-	recordDate = "Fri Dec 19 15:33:01 2014"
-
-def a2():
-	recordDate = "Fri Dec 19 15:33:06 2014"
-
-def a3():
-	recordDate = "Fri Dec 19 15:33:10 2014"
-
-def a4():
-	recordDate = "Fri Dec 19 15:33:14 2014"
-
-def a5():
-	recordDate = "Fri Dec 19 15:33:18 2014"
-
-def a6():
-	recordDate = "Fri Dec 19 15:33:22 2014"
-
-def a7():
-	recordDate = "Fri Dec 19 15:33:25 2014"
-
-def a8():
-	recordDate = "Fri Dec 19 15:33:29 2014"
-
-def a9():
-	recordDate = "Fri Dec 19 15:33:34 2014"
-
-def a10():
-	recordDate = "Fri Dec 19 15:33:40 2014"
-
-def a11():
-	recordDate = "Fri Dec 19 15:33:49 2014"
-
-def a12():
-	recordDate = "Fri Dec 19 15:33:55 2014"
-
+def testGlobalVars():
+	globals = _getGlobals("xxx:")
+	print "globals='%s'" % globals
