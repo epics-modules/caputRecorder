@@ -13,6 +13,15 @@ import string
 import shutil
 import os
 
+HAVE_FILE_SELECTOR = False
+defaultPath = ""
+defaultFile = ""
+try:
+	import wx
+	HAVE_FILE_SELECTOR = True
+except:
+	pass
+
 #import macros
 macros = None
 
@@ -40,6 +49,7 @@ doAbortMacro = 0
 doEditMacros = 0
 executingMacro = 0
 exitProgram = 0
+doSelectFile = 0
 
 # if execute while recording
 executeLevel = 0
@@ -177,6 +187,16 @@ def executeMacroMonFunc(pvname, value, char_value, **kwd):
 	if debug: print "executeMacroMonFunc: char_value=%s" % char_value
 	msgQueue.put((MSG_DO, char_value))
 
+def hostMatch(thisHost, hostList):
+	if len(hostList) == 0:
+		return False
+	for host in hostList:
+		if host.startswith(thisHost):
+			return True
+		if thisHost.startswith(host):
+			return True
+	return False
+
 ############################################################################
 ## writer thread
 # read from the message queue, and write to the macros.py file, which startMacro()
@@ -185,12 +205,16 @@ def executeMacroMonFunc(pvname, value, char_value, **kwd):
 def userHostAllowed(user, host):
 	global allowedHosts, forbiddenHosts, allowedUsers, forbiddenUsers
 
-	if debug: print "userHostAllowed: user=%s, host=%s" % (user, host)
+	if debug:
+		print "userHostAllowed: user=%s, host=%s" % (user, host)
+		print "userHostAllowed: allowedHosts=%s" % allowedHosts
+		print "userHostAllowed: allowedUsers=%s" % allowedUsers
 
-	if allowedHosts and host not in allowedHosts:
+	if allowedHosts and not hostMatch(host, allowedHosts):
 		return False
-	if forbiddenHosts and host in forbiddenHosts:
+	if forbiddenHosts and hostMatch(host, forbiddenHosts):
 		return False
+
 	if allowedUsers and user not in allowedUsers:
 		return False
 	if forbiddenUsers and user in forbiddenUsers:
@@ -275,7 +299,6 @@ def writer():
 				allowed = True
 				if user_host:
 					(user, host) = user_host.split("@")
-					host = host.split(".")[0]
 					if debug: print "writer: user=%s, host=%s" % (user, host)
 					allowed = userHostAllowed(user, host)
 				if allowed:
@@ -311,6 +334,8 @@ def writer():
 				return
 			if char_value == "Do":
 				if (busy):
+					# We're recording a macro.  While recording, commands to execute a macro
+					# become calls to that macro's python function
 
 					# if ExecuteLoops > 1, write a loop
 					loops = epics.caget(prefix+"caputRecorderExecuteLoops")
@@ -359,6 +384,7 @@ def writer():
 					doexecuteMacro = 1
 					wake.set()
 				else:
+					# wake up start() thread, and tell it to execute
 					doexecuteMacro = 1
 					wake.set()
 			else:
@@ -793,6 +819,7 @@ def start():
 	global doSelectMacro, doAbortMacro, executingMacro, msgQueue
 	global allowedUsers, forbiddenUsers, allowedHosts, forbiddenHosts
 	global commandMonitorList, exitProgram, doEditMacros, macroFileName
+	global doSelectFile, defaultPath, defaultFile
 
 	wake.clear()
 
@@ -872,6 +899,18 @@ def start():
 			epics.caput(prefix+"caputRecorderEditMacros", 0)
 			editor = os.environ['EDITOR']
 			os.system(editor + " " + macroFileName + "&")
+		if doSelectFile:
+			doSelectFile = 0
+			epics.caput(prefix+"caputRecorderSelectFile", 0)
+			if HAVE_FILE_SELECTOR:
+				app = wx.App()
+				path = wx.FileSelector("Choose a file", default_path=defaultPath,
+					default_filename=defaultFile, flags=wx.OPEN)
+				(defaultPath, defaultFile) = os.path.split(path)
+				app.Destroy()
+				if debug: print "path='%s', defaultPath='%s', defaultFile='%s'" % (path, defaultPath, defaultFile)
+				epics.caput(prefix+"caputRecorderGbl_filepath", defaultPath)
+				epics.caput(prefix+"caputRecorderGbl_filename", defaultFile)
 		if exitProgram:
 			sys.exit()
 	stop()
@@ -898,7 +937,8 @@ def stop():
 	epics.caput(prefix+"caputRecorderEditMacros", 0)
 	epics.caput(prefix+"caputRecorderAbortMacro", 0)
 	epics.caput(prefix+"caputRecorderAddDelayCmd", 0)
-	
+	epics.caput(prefix+"caputRecorderSelectFile", 0)
+
 
 def debugMonFunc(pvname, value, char_value, **kwd):
 	global debug
@@ -921,6 +961,13 @@ def editMacrosMonFunc(pvname, value, char_value, **kwd):
 	if debug: print "editMacrosMonFunc: entry"
 	if value:
 		doEditMacros = value
+		wake.set()
+
+def selectFileMonFunc(pvname, value, char_value, **kwd):
+	global debug, wake, doSelectFile
+	if debug: print "selectFileMonFunc: entry"
+	if value:
+		doSelectFile = value
 		wake.set()
 
 usage = """
@@ -969,6 +1016,8 @@ def go(argv=[]):
 	epics.camonitor(prefix+"caputRecorderIfMacroExists",callback=ifMacroExistsMonFunc)
 
 	epics.camonitor(prefix+"caputRecorderEditMacros",callback=editMacrosMonFunc)
+	if HAVE_FILE_SELECTOR:
+		epics.camonitor(prefix+"caputRecorderSelectFile",callback=selectFileMonFunc)
 
 	# This is part of our mechanism to exit when a new version of caputRecorder is launched
 	startTime = time.strftime("%c")
