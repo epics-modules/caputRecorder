@@ -131,16 +131,22 @@ composite {
 }
 "related display" {
 	object {
-		x=270
+		x=310
 		y=485
-		width=80
+		width=40
 		height=20
 	}
 	display[0] {
+		label="configure"
 		name="caputRecorderConfigure.adl"
+		args="P=$(P)"
+	}
+	display[1] {
+		label="global variables"
+		name="caputRecorderGlobals.adl"
 		args="P=$(P)"
 	}
 	clr=0
 	bclr=17
-	label="-Configure"
+	label="-More"
 }
