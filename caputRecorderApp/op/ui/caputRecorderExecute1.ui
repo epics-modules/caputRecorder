@@ -4,10 +4,10 @@
 <widget class="QMainWindow" name="MainWindow">
     <property name="geometry">
         <rect>
-            <x>86</x>
-            <y>458</y>
+            <x>454</x>
+            <y>297</y>
             <width>400</width>
-            <height>505</height>
+            <height>400</height>
         </rect>
     </property>
     <property name="styleSheet">
@@ -22,8 +22,8 @@ QPushButton::menu-indicator {image: url(none.png); width: 0}
         <widget class="caRelatedDisplay" name="caRelatedDisplay_0">
             <property name="geometry">
                 <rect>
-                    <x>250</x>
-                    <y>405</y>
+                    <x>245</x>
+                    <y>300</y>
                     <width>100</width>
                     <height>20</height>
                 </rect>
@@ -52,7 +52,7 @@ QPushButton::menu-indicator {image: url(none.png); width: 0}
                 <string></string>
             </property>
             <property name="files">
-                <string>caputRecorder.adl</string>
+                <string>caputRecorderExecute.adl</string>
             </property>
             <property name="args">
                 <string>P=$(P),L=$(L)</string>
@@ -67,7 +67,7 @@ QPushButton::menu-indicator {image: url(none.png); width: 0}
                     <x>0</x>
                     <y>0</y>
                     <width>402</width>
-                    <height>482</height>
+                    <height>382</height>
                 </rect>
             </property>
             <property name="geometry">
@@ -75,11 +75,11 @@ QPushButton::menu-indicator {image: url(none.png); width: 0}
                     <x>0</x>
                     <y>0</y>
                     <width>400</width>
-                    <height>480</height>
+                    <height>380</height>
                 </rect>
             </property>
             <property name="filename">
-                <string>caputRecorder_bare.adl</string>
+                <string>caputRecorderExecute_bare.adl</string>
             </property>
             <property name="macro">
                 <string>P=$(P),L=$(L)</string>
@@ -88,50 +88,8 @@ QPushButton::menu-indicator {image: url(none.png); width: 0}
         <widget class="caRelatedDisplay" name="caRelatedDisplay_1">
             <property name="geometry">
                 <rect>
-                    <x>310</x>
-                    <y>485</y>
-                    <width>40</width>
-                    <height>20</height>
-                </rect>
-            </property>
-            <property name="foreground">
-                <color alpha="255">
-                    <red>255</red>
-                    <green>255</green>
-                    <blue>255</blue>
-                </color>
-            </property>
-            <property name="background">
-                <color alpha="255">
-                    <red>51</red>
-                    <green>153</green>
-                    <blue>0</blue>
-                </color>
-            </property>
-            <property name="label">
-                <string>-More</string>
-            </property>
-            <property name="stackingMode">
-                <enum>Menu</enum>
-            </property>
-            <property name="labels">
-                <string>configure;global variables</string>
-            </property>
-            <property name="files">
-                <string>caputRecorderConfigure.adl;caputRecorderGlobals.adl</string>
-            </property>
-            <property name="args">
-                <string>P=$(P);P=$(P)</string>
-            </property>
-            <property name="removeParent">
-                <string>false;false</string>
-            </property>
-        </widget>
-        <widget class="caRelatedDisplay" name="caRelatedDisplay_2">
-            <property name="geometry">
-                <rect>
                     <x>350</x>
-                    <y>485</y>
+                    <y>380</y>
                     <width>50</width>
                     <height>20</height>
                 </rect>
@@ -157,16 +115,58 @@ QPushButton::menu-indicator {image: url(none.png); width: 0}
                 <enum>Menu</enum>
             </property>
             <property name="labels">
-                <string>small;execute only</string>
+                <string>small</string>
             </property>
             <property name="files">
-                <string>caputRecorder_small.adl;caputRecorderExecute.adl</string>
+                <string>caputRecorder_small.adl</string>
             </property>
             <property name="args">
-                <string>P=$(P),L=$(L);P=$(P),L=$(L)</string>
+                <string>P=$(P),L=$(L)</string>
             </property>
             <property name="removeParent">
-                <string>true;true</string>
+                <string>true</string>
+            </property>
+        </widget>
+        <widget class="caRelatedDisplay" name="caRelatedDisplay_2">
+            <property name="geometry">
+                <rect>
+                    <x>310</x>
+                    <y>380</y>
+                    <width>40</width>
+                    <height>20</height>
+                </rect>
+            </property>
+            <property name="foreground">
+                <color alpha="255">
+                    <red>255</red>
+                    <green>255</green>
+                    <blue>255</blue>
+                </color>
+            </property>
+            <property name="background">
+                <color alpha="255">
+                    <red>51</red>
+                    <green>153</green>
+                    <blue>0</blue>
+                </color>
+            </property>
+            <property name="label">
+                <string>-More</string>
+            </property>
+            <property name="stackingMode">
+                <enum>Menu</enum>
+            </property>
+            <property name="labels">
+                <string>configure;global variables;all</string>
+            </property>
+            <property name="files">
+                <string>caputRecorderConfigure.adl;caputRecorderGlobals.adl;caputRecorder.adl</string>
+            </property>
+            <property name="args">
+                <string>P=$(P),L=$(L);P=$(P),L=$(L);P=$(P),L=$(L)</string>
+            </property>
+            <property name="removeParent">
+                <string>false;false;true</string>
             </property>
         </widget>
         <zorder>caInclude_0</zorder>

@@ -115,24 +115,24 @@ QPushButton::menu-indicator {image: url(none.png); width: 0}
                 <enum>Menu</enum>
             </property>
             <property name="labels">
-                <string></string>
+                <string>small;execute only</string>
             </property>
             <property name="files">
-                <string>caputRecorder_small.adl</string>
+                <string>caputRecorder_small.adl;caputRecorderExecute.adl</string>
             </property>
             <property name="args">
-                <string>P=$(P),L=$(L)</string>
+                <string>P=$(P),L=$(L);P=$(P),L=$(L)</string>
             </property>
             <property name="removeParent">
-                <string>true</string>
+                <string>true;true</string>
             </property>
         </widget>
         <widget class="caRelatedDisplay" name="caRelatedDisplay_2">
             <property name="geometry">
                 <rect>
-                    <x>270</x>
+                    <x>310</x>
                     <y>485</y>
-                    <width>80</width>
+                    <width>40</width>
                     <height>20</height>
                 </rect>
             </property>
@@ -151,22 +151,22 @@ QPushButton::menu-indicator {image: url(none.png); width: 0}
                 </color>
             </property>
             <property name="label">
-                <string>-Configure</string>
+                <string>-More</string>
             </property>
             <property name="stackingMode">
                 <enum>Menu</enum>
             </property>
             <property name="labels">
-                <string></string>
+                <string>configure;global variables</string>
             </property>
             <property name="files">
-                <string>caputRecorderConfigure.adl</string>
+                <string>caputRecorderConfigure.adl;caputRecorderGlobals.adl</string>
             </property>
             <property name="args">
-                <string>P=$(P)</string>
+                <string>P=$(P),L=$(L);P=$(P),L=$(L)</string>
             </property>
             <property name="removeParent">
-                <string>false</string>
+                <string>false;false</string>
             </property>
         </widget>
         <zorder>caInclude_0</zorder>

@@ -410,7 +410,7 @@ QPushButton::menu-indicator {image: url(none.png); width: 0}
                 </color>
             </property>
             <property name="text">
-                <string>function name</string>
+                <string>macro name</string>
             </property>
             <property name="fontScaleMode">
                 <enum>ESimpleLabel::WidthAndHeight</enum>
