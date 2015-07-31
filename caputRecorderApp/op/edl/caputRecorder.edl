@@ -116,22 +116,27 @@ topShadowColor index 2
 botShadowColor index 12
 font "helvetica-medium-r-10.0"
 buttonLabel "Less"
-numPvs 2
-numDsps 1
+numPvs 4
+numDsps 2
 displayFileName {
   0 caputRecorder_small.edl
+  1 caputRecorderExecute.edl
 }
 menuLabel {
-  0 
+  0 small
+  1 execute only
 }
 symbols {
   0 "P=$(P),L=$(L)"
+  1 "P=$(P),L=$(L)"
 }
 closeAction {
   0 1
+  1 1
 }
 closeDisplay {
   0 1
+  1 1
 }
 endObjectProperties
 
@@ -141,26 +146,29 @@ beginObjectProperties
 major 4
 minor 0
 release 0
-x 270
+x 310
 y 485
-w 80
+w 40
 h 20
 fgColor index 0
 bgColor index 17
 topShadowColor index 2
 botShadowColor index 12
 font "helvetica-medium-r-10.0"
-buttonLabel "Configure"
-numPvs 2
-numDsps 1
+buttonLabel "More"
+numPvs 4
+numDsps 2
 displayFileName {
   0 caputRecorderConfigure.edl
+  1 caputRecorderGlobals.edl
 }
 menuLabel {
-  0 
+  0 configure
+  1 global variables
 }
 symbols {
-  0 "P=$(P)"
+  0 "P=$(P),L=$(L)"
+  1 "P=$(P),L=$(L)"
 }
 endObjectProperties
 

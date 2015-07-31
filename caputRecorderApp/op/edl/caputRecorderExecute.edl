@@ -3,10 +3,10 @@ beginScreenProperties
 major 4
 minor 0
 release 0
-x 86
-y 458
+x 454
+y 297
 w 400
-h 505
+h 400
 font "helvetica-medium-r-18.0"
 ctlFont "helvetica-medium-r-8.0"
 btnFont "helvetica-medium-r-18.0"
@@ -33,7 +33,7 @@ release 0
 x 0
 y 0
 w 400
-h 481
+h 376
 
 beginGroup
 
@@ -46,14 +46,14 @@ release 0
 x 0
 y 0
 w 400
-h 481
+h 376
 fgColor index 14
 bgColor index 0
 topShadowColor index 0
 botShadowColor index 14
 noScroll
 displaySource "file"
-file "	composite file caputRecorder_bare.edl;P=$(P),L=$(L)"
+file "	composite file caputRecorderExecute_bare.edl;P=$(P),L=$(L)"
 sizeOfs 5
 numDsps 0
 endObjectProperties
@@ -71,8 +71,8 @@ beginObjectProperties
 major 4
 minor 0
 release 0
-x 250
-y 405
+x 245
+y 300
 w 100
 h 20
 fgColor index 0
@@ -84,7 +84,7 @@ buttonLabel "Refresh Menus"
 numPvs 2
 numDsps 1
 displayFileName {
-  0 caputRecorder.edl
+  0 caputRecorderExecute1.edl
 }
 menuLabel {
   0 
@@ -106,29 +106,32 @@ beginObjectProperties
 major 4
 minor 0
 release 0
-x 310
-y 485
-w 40
+x 350
+y 380
+w 50
 h 20
 fgColor index 0
 bgColor index 17
 topShadowColor index 2
 botShadowColor index 12
 font "helvetica-medium-r-10.0"
-buttonLabel "More"
-numPvs 4
-numDsps 2
+buttonLabel "Less"
+numPvs 2
+numDsps 1
 displayFileName {
-  0 caputRecorderConfigure.edl
-  1 caputRecorderGlobals.edl
+  0 caputRecorder_small.edl
 }
 menuLabel {
-  0 configure
-  1 global variables
+  0 small
 }
 symbols {
-  0 "P=$(P)"
-  1 "P=$(P)"
+  0 "P=$(P),L=$(L)"
+}
+closeAction {
+  0 1
+}
+closeDisplay {
+  0 1
 }
 endObjectProperties
 
@@ -138,37 +141,38 @@ beginObjectProperties
 major 4
 minor 0
 release 0
-x 350
-y 485
-w 50
+x 310
+y 380
+w 40
 h 20
 fgColor index 0
 bgColor index 17
 topShadowColor index 2
 botShadowColor index 12
 font "helvetica-medium-r-10.0"
-buttonLabel "Less"
-numPvs 4
-numDsps 2
+buttonLabel "More"
+numPvs 6
+numDsps 3
 displayFileName {
-  0 caputRecorder_small.edl
-  1 caputRecorderExecute.edl
+  0 caputRecorderConfigure.edl
+  1 caputRecorderGlobals.edl
+  2 caputRecorder.edl
 }
 menuLabel {
-  0 small
-  1 execute only
+  0 configure
+  1 global variables
+  2 all
 }
 symbols {
   0 "P=$(P),L=$(L)"
   1 "P=$(P),L=$(L)"
+  2 "P=$(P),L=$(L)"
 }
 closeAction {
-  0 1
-  1 1
+  2 1
 }
 closeDisplay {
-  0 1
-  1 1
+  2 1
 }
 endObjectProperties
 
