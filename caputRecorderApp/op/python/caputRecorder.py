@@ -68,7 +68,7 @@ executeLevel = 0
 postponeStop = 0
 
 from inspect import getmembers, isfunction, getargspec
-maxArgs = 10
+maxArgs = 20
 
 maxMacroMenus = 6
 
@@ -692,8 +692,7 @@ def selectMacro():
 		if vals:
 			args_with_vals = args[-len(vals):]
 		if len(args) > 0:
-			numFields = min(maxArgs, len(menuFields))
-			nums = range(1, numFields+1)
+			nums = range(1, maxArgs+1)
 			for (argname, j) in zip(args, nums):
 				epics.caput(prefix+("caputRecorderArg%dName" % j), argname)
 				if vals and argname in args_with_vals:
