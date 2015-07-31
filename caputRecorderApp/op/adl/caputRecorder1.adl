@@ -115,22 +115,6 @@ composite {
 }
 "related display" {
 	object {
-		x=350
-		y=485
-		width=50
-		height=20
-	}
-	display[0] {
-		name="caputRecorder1_small.adl"
-		args="P=$(P),L=$(L)"
-		policy="replace display"
-	}
-	clr=0
-	bclr=17
-	label="-Less"
-}
-"related display" {
-	object {
 		x=310
 		y=485
 		width=40
@@ -149,4 +133,27 @@ composite {
 	clr=0
 	bclr=17
 	label="-More"
+}
+"related display" {
+	object {
+		x=350
+		y=485
+		width=50
+		height=20
+	}
+	display[0] {
+		label="small"
+		name="caputRecorder_small.adl"
+		args="P=$(P),L=$(L)"
+		policy="replace display"
+	}
+	display[1] {
+		label="execute only"
+		name="caputRecorderExecute.adl"
+		args="P=$(P),L=$(L)"
+		policy="replace display"
+	}
+	clr=0
+	bclr=17
+	label="-Less"
 }

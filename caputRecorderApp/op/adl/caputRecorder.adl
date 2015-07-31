@@ -121,7 +121,14 @@ composite {
 		height=20
 	}
 	display[0] {
+		label="small"
 		name="caputRecorder_small.adl"
+		args="P=$(P),L=$(L)"
+		policy="replace display"
+	}
+	display[1] {
+		label="execute only"
+		name="caputRecorderExecute.adl"
 		args="P=$(P),L=$(L)"
 		policy="replace display"
 	}
@@ -139,12 +146,12 @@ composite {
 	display[0] {
 		label="configure"
 		name="caputRecorderConfigure.adl"
-		args="P=$(P)"
+		args="P=$(P),L=$(L)"
 	}
 	display[1] {
 		label="global variables"
 		name="caputRecorderGlobals.adl"
-		args="P=$(P)"
+		args="P=$(P),L=$(L)"
 	}
 	clr=0
 	bclr=17
