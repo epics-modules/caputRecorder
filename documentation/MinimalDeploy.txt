@@ -1,0 +1,38 @@
+Here's an example of how to add caputPoster to an existing IOC
+
+setenv TOP /net/s100dserv/xorApps/epics/synApps_5_7/ioc/mlab
+
+cd $TOP
+ed configure/RELEASE and add this:
+	CAPUTRECORDER=$(SUPPORT)/caputRecorder-1-0
+
+cd mlabApp/src
+edit Makefile and add something analogous to this:
+	ifdef CAPUTRECORDER
+		mlab_Common_DBD += caputRecorder.dbd
+		mlab_Common_LIBS += caputRecorder
+	endif
+
+cd $TOP
+make rebuild
+
+cd $TOP/iocBoot
+edit accessSecurity.acf and make it look like this:
+
+	ASG(DEFAULT) {
+		RULE(1,WRITE,TRAPWRITE)
+	}
+
+cd $TOP/iocBoot/iocmlab
+edit st.cmd and add this (if the IOC is a soft IOC, then "iocsh" and "exit" aren't needed):
+	iocsh
+	asSetFilename("$(TOP)/iocBoot/accessSecurity.acf")
+	exit
+
+	# caputRecorder
+	dbLoadRecords("$(CAPUTRECORDER)/caputRecorderApp/Db/caputPoster.db","P=mlab:,N=300")
+	...
+	iocInit
+	...
+	registerCaputRecorderTrapListener("mlab:caputRecorderCommand")
+
