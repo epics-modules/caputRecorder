@@ -490,6 +490,47 @@ record(stringout, "$(P)caputRecorderArg10Name") {
 record(stringout, "$(P)caputRecorderArg10Value") {
 }
 
+record(stringout, "$(P)caputRecorderArg11Name") {
+}
+record(stringout, "$(P)caputRecorderArg11Value") {
+}
+record(stringout, "$(P)caputRecorderArg12Name") {
+}
+record(stringout, "$(P)caputRecorderArg12Value") {
+}
+record(stringout, "$(P)caputRecorderArg13Name") {
+}
+record(stringout, "$(P)caputRecorderArg13Value") {
+}
+record(stringout, "$(P)caputRecorderArg14Name") {
+}
+record(stringout, "$(P)caputRecorderArg14Value") {
+}
+record(stringout, "$(P)caputRecorderArg15Name") {
+}
+record(stringout, "$(P)caputRecorderArg15Value") {
+}
+record(stringout, "$(P)caputRecorderArg16Name") {
+}
+record(stringout, "$(P)caputRecorderArg16Value") {
+}
+record(stringout, "$(P)caputRecorderArg17Name") {
+}
+record(stringout, "$(P)caputRecorderArg17Value") {
+}
+record(stringout, "$(P)caputRecorderArg18Name") {
+}
+record(stringout, "$(P)caputRecorderArg18Value") {
+}
+record(stringout, "$(P)caputRecorderArg19Name") {
+}
+record(stringout, "$(P)caputRecorderArg19Value") {
+}
+record(stringout, "$(P)caputRecorderArg20Name") {
+}
+record(stringout, "$(P)caputRecorderArg20Value") {
+}
+
 # clear all arguments and values
 record(stringout, "$(P)caputRecorderEmptyString") {
 }
@@ -540,6 +581,53 @@ record(sseq, "$(P)caputRecorderClearArgs2") {
 	field(LNK9, "$(P)caputRecorderArg10Name PP")
 	field(DOLA, "$(P)caputRecorderClearArgs2.STR1")
 	field(LNKA, "$(P)caputRecorderArg10Value PP")
+	field(FLNK, "$(P)caputRecorderClearArgs3")
+}
+
+record(sseq, "$(P)caputRecorderClearArgs3") {
+	field(DOL1, "$(P)caputRecorderEmptyString")
+	field(LNK1, "$(P)caputRecorderArg11Name PP")
+	field(DOL2, "$(P)caputRecorderClearArgs3.STR1")
+	field(LNK2, "$(P)caputRecorderArg11Value PP")
+	field(DOL3, "$(P)caputRecorderClearArgs3.STR1")
+	field(LNK3, "$(P)caputRecorderArg12Name PP")
+	field(DOL4, "$(P)caputRecorderClearArgs3.STR1")
+	field(LNK4, "$(P)caputRecorderArg12Value PP")
+	field(DOL5, "$(P)caputRecorderClearArgs3.STR1")
+	field(LNK5, "$(P)caputRecorderArg13Name PP")
+	field(DOL6, "$(P)caputRecorderClearArgs3.STR1")
+	field(LNK6, "$(P)caputRecorderArg13Value PP")
+	field(DOL7, "$(P)caputRecorderClearArgs3.STR1")
+	field(LNK7, "$(P)caputRecorderArg14Name PP")
+	field(DOL8, "$(P)caputRecorderClearArgs3.STR1")
+	field(LNK8, "$(P)caputRecorderArg14Value PP")
+	field(DOL9, "$(P)caputRecorderClearArgs3.STR1")
+	field(LNK9, "$(P)caputRecorderArg15Name PP")
+	field(DOLA, "$(P)caputRecorderClearArgs3.STR1")
+	field(LNKA, "$(P)caputRecorderArg15Value PP")
+	field(FLNK, "$(P)caputRecorderClearArgs4")
+}
+record(sseq, "$(P)caputRecorderClearArgs4") {
+	field(DOL1, "$(P)caputRecorderEmptyString")
+	field(LNK1, "$(P)caputRecorderArg16Name PP")
+	field(DOL2, "$(P)caputRecorderClearArgs4.STR1")
+	field(LNK2, "$(P)caputRecorderArg16Value PP")
+	field(DOL3, "$(P)caputRecorderClearArgs4.STR1")
+	field(LNK3, "$(P)caputRecorderArg17Name PP")
+	field(DOL4, "$(P)caputRecorderClearArgs4.STR1")
+	field(LNK4, "$(P)caputRecorderArg17Value PP")
+	field(DOL5, "$(P)caputRecorderClearArgs4.STR1")
+	field(LNK5, "$(P)caputRecorderArg18Name PP")
+	field(DOL6, "$(P)caputRecorderClearArgs4.STR1")
+	field(LNK6, "$(P)caputRecorderArg18Value PP")
+	field(DOL7, "$(P)caputRecorderClearArgs4.STR1")
+	field(LNK7, "$(P)caputRecorderArg19Name PP")
+	field(DOL8, "$(P)caputRecorderClearArgs4.STR1")
+	field(LNK8, "$(P)caputRecorderArg19Value PP")
+	field(DOL9, "$(P)caputRecorderClearArgs4.STR1")
+	field(LNK9, "$(P)caputRecorderArg20Name PP")
+	field(DOLA, "$(P)caputRecorderClearArgs4.STR1")
+	field(LNKA, "$(P)caputRecorderArg20Value PP")
 }
 
 ### global variables that any macro can use
