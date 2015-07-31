@@ -3,7 +3,7 @@
   <macros>
     <include_parent_macros>true</include_parent_macros>
   </macros>
-  <wuid>-545ca464:14bb824bc55:-7fff</wuid>
+  <wuid>-79047468:14ee5830427:-7fff</wuid>
   <boy_version>3.2.10.20140131</boy_version>
   <scripts />
   <show_ruler>true</show_ruler>
@@ -36,7 +36,7 @@
       <include_parent_macros>true</include_parent_macros>
     </macros>
     <visible>true</visible>
-    <wuid>-545ca464:14bb824bc55:-7ffd</wuid>
+    <wuid>-79047468:14ee5830427:-7ffd</wuid>
     <auto_size>false</auto_size>
     <scripts />
     <zoom_to_fit>true</zoom_to_fit>
@@ -76,7 +76,7 @@
     <border_alarm_sensitive>false</border_alarm_sensitive>
     <visible>true</visible>
     <actions_from_pv>false</actions_from_pv>
-    <wuid>-545ca464:14bb824bc55:-7ffe</wuid>
+    <wuid>-79047468:14ee5830427:-7ffe</wuid>
     <scripts />
     <height>20</height>
     <name>Menu Button</name>
@@ -128,7 +128,7 @@ $(pv_value)</tooltip>
     <border_alarm_sensitive>false</border_alarm_sensitive>
     <visible>true</visible>
     <actions_from_pv>false</actions_from_pv>
-    <wuid>-545ca464:14bb824bc55:-7ffc</wuid>
+    <wuid>-79047468:14ee5830427:-7ffc</wuid>
     <scripts />
     <height>20</height>
     <name>Menu Button</name>
@@ -169,7 +169,15 @@ $(pv_value)</tooltip>
           <include_parent_macros>true</include_parent_macros>
         </macros>
         <replace>1</replace>
-        <description></description>
+        <description>small</description>
+      </action>
+      <action type="OPEN_DISPLAY">
+        <path>caputRecorderExecute.opi</path>
+        <macros>
+          <include_parent_macros>true</include_parent_macros>
+        </macros>
+        <replace>1</replace>
+        <description>execute only</description>
       </action>
     </actions>
     <tooltip>$(pv_name)
@@ -180,7 +188,7 @@ $(pv_value)</tooltip>
     <border_alarm_sensitive>false</border_alarm_sensitive>
     <visible>true</visible>
     <actions_from_pv>false</actions_from_pv>
-    <wuid>-545ca464:14bb824bc55:-7ffb</wuid>
+    <wuid>-79047468:14ee5830427:-7ffb</wuid>
     <scripts />
     <height>20</height>
     <name>Menu Button</name>
@@ -204,9 +212,9 @@ $(pv_value)</tooltip>
     <font>
       <opifont.name fontName="Sans" height="10" style="0">Default</opifont.name>
     </font>
-    <width>80</width>
+    <width>40</width>
     <border_style>6</border_style>
-    <label>Configure</label>
+    <label>More</label>
     <rules />
     <pv_value />
     <border_width>1</border_width>
@@ -221,11 +229,19 @@ $(pv_value)</tooltip>
           <include_parent_macros>true</include_parent_macros>
         </macros>
         <replace>0</replace>
-        <description></description>
+        <description>configure</description>
+      </action>
+      <action type="OPEN_DISPLAY">
+        <path>caputRecorderGlobals.opi</path>
+        <macros>
+          <include_parent_macros>true</include_parent_macros>
+        </macros>
+        <replace>0</replace>
+        <description>global variables</description>
       </action>
     </actions>
     <tooltip>$(pv_name)
 $(pv_value)</tooltip>
-    <x>270</x>
+    <x>310</x>
   </widget>
 </display>

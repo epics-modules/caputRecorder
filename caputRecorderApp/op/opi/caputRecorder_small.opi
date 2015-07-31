@@ -3,7 +3,7 @@
   <macros>
     <include_parent_macros>true</include_parent_macros>
   </macros>
-  <wuid>-545ca464:14bb824bc55:-7f3b</wuid>
+  <wuid>-79047468:14ee5830427:-7ed7</wuid>
   <boy_version>3.2.10.20140131</boy_version>
   <scripts />
   <show_ruler>true</show_ruler>
@@ -36,7 +36,7 @@
       <include_parent_macros>true</include_parent_macros>
     </macros>
     <visible>true</visible>
-    <wuid>-545ca464:14bb824bc55:-7f39</wuid>
+    <wuid>-79047468:14ee5830427:-7ed5</wuid>
     <auto_size>false</auto_size>
     <scripts />
     <zoom_to_fit>true</zoom_to_fit>
@@ -76,7 +76,7 @@
     <border_alarm_sensitive>false</border_alarm_sensitive>
     <visible>true</visible>
     <actions_from_pv>false</actions_from_pv>
-    <wuid>-545ca464:14bb824bc55:-7f3a</wuid>
+    <wuid>-79047468:14ee5830427:-7ed6</wuid>
     <scripts />
     <height>20</height>
     <name>Menu Button</name>
@@ -128,7 +128,7 @@ $(pv_value)</tooltip>
     <border_alarm_sensitive>false</border_alarm_sensitive>
     <visible>true</visible>
     <actions_from_pv>false</actions_from_pv>
-    <wuid>-545ca464:14bb824bc55:-7f38</wuid>
+    <wuid>-79047468:14ee5830427:-7ed4</wuid>
     <scripts />
     <height>20</height>
     <name>Menu Button</name>
