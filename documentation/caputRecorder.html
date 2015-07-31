@@ -3,7 +3,7 @@
 </HEAD>
 <BODY>
 
-<H1><center>caputRecorder 1.4</center></h1>
+<H1><center>caputRecorder 1.5</center></h1>
 
 <P><center><IMG SRC="caputRecorder_small.adl.jpg"><br>caputRecorder_small.adl</IMG></center>
 
@@ -15,6 +15,7 @@
   <li><a href="#How to use">How to use</a></li>
   <li><a href="#Selecting what gets recorded">Selecting what gets recorded</a></li>
   <li><a href="#Record options">Record options</a></li>
+  <li><a href="#Global variables">Global variables</a></li>
   <li><a href="#Discussion">Discussion</a></li>
 </ul>
 
@@ -411,7 +412,9 @@ executing, and to wait for macro execution to finish.
 You probably don't want to record all caputs that happen among your IOCs and
 clients, but only those done by users.  One way of filtering was shown above, in
 "Requirements, configuration". User-specified filtering is easier, and can be
-done at run time with caputRecorder's user interface. <ol>
+done at run time with caputRecorder's user interface.
+
+<ol>
 
 <li>You can choose which users' caputs will be recorded by specifying usernames
 to <code>caputRecorderUsers</code>.  (See "Record caputs from whom?" in
@@ -437,6 +440,8 @@ override the initial list of iocs.
 through access security.
 
 <P><center><IMG SRC="caputRecorderConfigure.adl.jpg"><br>caputRecorderConfigure.adl</IMG></center>
+
+</ol>
 
 <a name="Record options"></a>
 <H2> Record options </h2>
@@ -481,6 +486,42 @@ the current date and time.
 </dl>
 
 </ul>
+
+<a name="Global variables"></a>
+<H2> Global variables </h2>
+
+caputRecorder maintains a small number of EPICS PVs that can be used as global
+variables in any macro.  The EPICS display for these variables is shown below.
+
+<P><center><IMG SRC="caputRecorderGlobals.adl.jpg"><br>caputRecorderGlobals.adl</IMG></center>
+
+<P>If wxPython is available, the variables 'filepath' and 'filename' are supported
+by a file requester.  If wxPython is not available, the variables can still be
+used, but values must be entered manually.
+
+<P>The rest of the variables are generic: both a variable name and its string
+value can be specified.  A macro can retrieve global variables by calling the
+function _getGlobals(prefix='xxx:') (imported from caputRecorder). 
+_getGlobals() returns a python dictionary with global variable names and values.  For the display above, the following dictionary would be returned:
+
+<pre>
+{'varName': 'string value',
+'filename': 'abc_0838.mda',
+'filepath': '/home/oxygen4/MOONEY/data'}
+</pre>
+
+<P>Here is sample code demonstrating the use of global variables in a macro:
+
+<pre>
+
+def testGlobals():
+	g = _getGlobals("xxx:")
+	print "globals=%s" % g
+
+	filename = g['filename']
+	print "filename = ", filename
+
+</pre>
 
 <a name="Discussion"></a>
 <H2> Discussion </h2>
