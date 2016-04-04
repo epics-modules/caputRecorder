@@ -334,7 +334,7 @@ static void myAsDataListener(asTrapWriteMessage *pmessage, int after) {
 	if (caputRecorderDebug) errlogPrintf("myAsDataListener: paddr->field_type=%d, no_elements==%ld\n", paddr->field_type, no_elements);
 	if ((paddr->field_type == DBF_CHAR) && (no_elements > MAX_STRING_SIZE)) {
 		i = strlen(pvname);
-		if (i < PVNAME_STRINGSZ-1) {
+		if (i > 0 && i < PVNAME_STRINGSZ-1 && pvname[i-1] != '$') {
 			pvname[i] = '$';
 			pvname[i+1] = '\0';
 		}
