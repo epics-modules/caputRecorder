@@ -15,6 +15,10 @@
 <li>Defend against user rapidly clicking the "(re)start recorder" button. 
 Previously, this could result in multiple copies of caputRecorder running simultaneously.
 
+<li>Previously caputRecorder could end up with '$$' at the end of a PV name, by
+helpfully appending '$' to a name that already ended with '$'. Now, it makes
+sure there is at most one '$'.
+
 </ul>
 
 
