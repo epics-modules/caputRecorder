@@ -296,7 +296,7 @@ static void myAsDataListener(asTrapWriteMessage *pmessage, int after) {
 	field_type = pchannel->final_type;
 	field_size = pchannel->final_field_size;
 	if (caputRecorderDebug > 1) errlogPrintf("myAsDataListener:final_type=%d\n", pchannel->final_type);
-	if (caputRecorderDebug > 1) errlogPrintf("myAsDataListener:no_elements=%d, field_size=%d\n", no_elements, field_size);
+	if (caputRecorderDebug > 1) errlogPrintf("myAsDataListener:no_elements=%ld, field_size=%d\n", no_elements, field_size);
 	strncpy(pvname, dbChannelName(pchannel), BUFFER_SIZE-1);
 	numChar = strlen(pvname);
 #else
