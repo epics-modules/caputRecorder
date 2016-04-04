@@ -775,15 +775,15 @@ def executeMacro():
 
 
 ############################################################################
-def startTimeMonFunc(pvname, value, char_value, **kwd):
-	global debug, startTime, wake, exitProgram, connected, executingMacro
+def startStringMonFunc(pvname, value, char_value, **kwd):
+	global debug, startString, wake, exitProgram, connected, executingMacro
 	if not char_value:
-		epics.caput(prefix+"caputRecorderStartTime", startTime)
+		epics.caput(prefix+"caputRecorderStartTime", startString)
 	else:
-		if startTime != char_value:
-			# Another instance of the program wrote a new start time.
+		if startString != char_value:
+			# Another instance of the program wrote a new start-time string.
 			# We don't ever want two copies of the program that use the same control PVs
-			# running simultaneously
+			# running simultaneously.
 			if executingMacro:
 				thread.interrupt_main()
 			exitProgram = 1
@@ -805,7 +805,7 @@ def onConnectionChange(pvname=None, conn= None, **kws):
 		
 
 def heartbeat():
-	global debug, prefix, wake, exitProgram
+	global debug, prefix, wake, exitProgram, startString
 
 	epics.ca.use_initial_context()
 	
@@ -823,6 +823,18 @@ def heartbeat():
 				if debug: print "caputRecorder: exiting"
 				exitProgram = 1
 				wake.set()
+
+		# While we're here, make sure we haven't missed any monitors on caputRecorderStartTime
+		ts = epics.caget(prefix+"caputRecorderStartTime")
+		if ts and startString != ts:
+			# Another instance of the program wrote a new start-time string.
+			# We don't ever want two copies of the program that use the same control PVs
+			# running simultaneously.
+			if executingMacro:
+				thread.interrupt_main()
+			exitProgram = 1
+			wake.set()
+		
 		time.sleep(waitTime)
 
 def start():
@@ -835,7 +847,7 @@ def start():
 	wake.clear()
 
 	# this monitor will kill us if a new copy of the program is executed
-	epics.camonitor(prefix+"caputRecorderStartTime",callback=startTimeMonFunc)
+	epics.camonitor(prefix+"caputRecorderStartTime",callback=startStringMonFunc)
 
 	# Build lists of the PVs we'll monitor while recording
 	userPrefixes = epics.caget(prefix+"caputRecorderPrefixes", as_string=True)
@@ -987,7 +999,7 @@ example: python caputRecorder.py 1bmb: 1bma: 1bmc: macros_1bmb.py
 """
 
 def go(argv=[]):
-	global debug, prefix, commandMonitorList, startTime, recordTiming, waitCompletion, ifMacroExists
+	global debug, prefix, commandMonitorList, startString, recordTiming, waitCompletion, ifMacroExists
 	global macroFileName, macros
 
 	if len(argv) > 0:
@@ -1031,8 +1043,11 @@ def go(argv=[]):
 		epics.camonitor(prefix+"caputRecorderSelectFile",callback=selectFileMonFunc)
 
 	# This is part of our mechanism to exit when a new version of caputRecorder is launched
-	startTime = time.strftime("%c")
-	epics.caput(prefix+"caputRecorderStartTime", startTime)
+	# Defend against user hammering on the "(re)start caputRecorder" button, launching
+	# multiple copies of caputRecorder that will have the same time string, by appending
+	# a string of random hex digits.
+	startString = time.strftime("%c_") + os.urandom(3).encode('hex')
+	epics.caput(prefix+"caputRecorderStartTime", startString)
 	stop()
 	start()
 	stop()
