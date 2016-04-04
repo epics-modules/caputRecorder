@@ -399,10 +399,11 @@ macros.py.  The supplied <i>example_macros.py</i> defines an abort
 function that aborts scans, halts motors, and stop the scaler named "scaler1".
 
 <li><P>Any EPICS client or record can trigger macro execution by writing a macro
-name to "$(P)caputRecorderMacro", and then writing "Do" (or the number 1) to 
-"$(P)caputRecorderExecuteMacro".  The client should wait for completion after
-both writes, to ensure that any default argument values are in place before
-executing, and to wait for macro execution to finish.
+name to "$(P)caputRecorderMacro", optionally writing to any argument fields, and
+then writing "Do" (or the number 1) to  "$(P)caputRecorderExecuteMacro".  The
+client <i>must</i> wait for completion after both writes, to ensure that
+arguments have been updated before writing to them or executing the macro, and
+to wait for macro execution to finish.
 
 </ul>
 
