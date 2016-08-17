@@ -1,0 +1,17 @@
+# ### caputRecorder.iocsh ###
+
+#- ###################################################
+#- PREFIX         - IOC Prefix
+#- CAPUTRECORDER  - Location of caputRecorder module
+#-
+#- SIZE           - Optional: Manages the size of certain elements
+#-                            in the caputRecorder database
+#-                  Default: 300
+#- ###################################################
+
+#- trap listener
+dbLoadRecords("$(CAPUTRECORDER)/caputRecorderApp/Db/caputPoster.db","P=$(PREFIX),N=300")
+doAfterIocInit("registerCaputRecorderTrapListener('$(PREFIX)caputRecorderCommand')")
+
+#- GUI database
+dbLoadRecords("$(CAPUTRECORDER)/caputRecorderApp/Db/caputRecorder.db","P=$(PREFIX),N=300")
