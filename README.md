@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/epics-modules/caputrecorder.svg?branch=master)](https://travis-ci.org/epics-modules/caputrecorder)
+[![Build Status](https://travis-ci.org/epics-modules/caputRecorder.svg?branch=master)](https://travis-ci.org/epics-modules/caputRecorder)
 
 # caputRecorder
 APS BCDA synApps module: caputRecorder
