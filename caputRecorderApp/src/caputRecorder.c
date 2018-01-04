@@ -11,9 +11,16 @@
 #include <epicsStdio.h>
 #include <epicsThread.h>
 #include <epicsVersion.h>
-#define GE_EPICSBASE(v,r,l) ((EPICS_VERSION >= (v)) && (EPICS_REVISION >= (r)) && (EPICS_MODIFICATION >= (l)))
 
-#if GE_EPICSBASE(3,15,0)
+/* EPICS base version test.*/
+#ifndef EPICS_VERSION_INT
+#define VERSION_INT(V,R,M,P) ( ((V)<<24) | ((R)<<16) | ((M)<<8) | (P))
+#define EPICS_VERSION_INT VERSION_INT(EPICS_VERSION, EPICS_REVISION, EPICS_MODIFICATION, EPICS_PATCH_LEVEL)
+#endif
+#define LT_EPICSBASE(V,R,M,P) (EPICS_VERSION_INT < VERSION_INT((V),(R),(M),(P)))
+#define GE_EPICSBASE(V,R,M,P) (EPICS_VERSION_INT >= VERSION_INT((V),(R),(M),(P)))
+
+#if GE_EPICSBASE(3,15,0,0)
 
 #include <dbChannel.h>
 
@@ -26,8 +33,7 @@
  * 
  * I just updated the 3.15.1 AppDevGuide to correct this in the Access
  * Security chapter, although we haven't actually documented the dbChannel
- * API there yet (see dbChannel.h and post questions here until that gets
- * written, sorry).
+ * API there yet (see dbChannel.h...).
  */
 
 #endif
@@ -268,7 +274,7 @@ static unsigned my_dbNameOfPV(const dbAddr *paddr, char *pBuf, unsigned bufLen) 
 }
 
 static void myAsDataListener(asTrapWriteMessage *pmessage, int after) {
-#if GE_EPICSBASE(3,15,0)
+#if GE_EPICSBASE(3,15,0,0)
 	dbChannel *pchannel;
 	dbAddr addr;
 #endif
@@ -286,9 +292,9 @@ static void myAsDataListener(asTrapWriteMessage *pmessage, int after) {
 
 	if (caputRecorderDebug > 1) errlogPrintf("myAsDataListener: %s@%s\n", pmessage->userid, pmessage->hostid);
 
-#if GE_EPICSBASE(3,15,0)
+#if GE_EPICSBASE(3,15,0,0)
 	/* Haven't tested this with asTrapWriteWithData */
-	if (caputRecorderDebug > 1) errlogPrintf("myAsDataListener: GE_EPICSBASE(3,15,0)\n");
+	if (caputRecorderDebug > 1) errlogPrintf("myAsDataListener: GE_EPICSBASE(3,15,0,0)\n");
 	pchannel = pmessage->serverSpecific;
 	addr = pchannel->addr;
 	paddr = &addr;
