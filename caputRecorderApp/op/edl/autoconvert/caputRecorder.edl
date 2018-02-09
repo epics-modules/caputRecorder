@@ -1,0 +1,174 @@
+4 0 0
+beginScreenProperties
+major 4
+minor 0
+release 0
+x 1078
+y 457
+w 400
+h 505
+font "helvetica-medium-r-18.0"
+ctlFont "helvetica-medium-r-8.0"
+btnFont "helvetica-medium-r-18.0"
+fgColor index 14
+bgColor index 2
+textColor index 14
+ctlFgColor1 index 30
+ctlFgColor2 index 32
+ctlBgColor1 index 34
+ctlBgColor2 index 35
+topShadowColor index 37
+botShadowColor index 44
+snapToGrid
+gridSize 5
+endScreenProperties
+
+
+# (Group)
+object activeGroupClass
+beginObjectProperties
+major 4
+minor 0
+release 0
+x 0
+y 0
+w 400
+h 481
+
+beginGroup
+
+# (Embedded Window)
+object activePipClass
+beginObjectProperties
+major 4
+minor 0
+release 0
+x 0
+y 0
+w 400
+h 481
+fgColor index 14
+bgColor index 0
+topShadowColor index 0
+botShadowColor index 14
+noScroll
+displaySource "file"
+file "	composite file caputRecorder_bare.edl;P=$(P),L=$(L)"
+sizeOfs 5
+numDsps 0
+endObjectProperties
+
+endGroup
+
+visPv ""
+visMin "A"
+visMax "1"
+endObjectProperties
+
+# (Related Display)
+object relatedDisplayClass
+beginObjectProperties
+major 4
+minor 0
+release 0
+x 250
+y 405
+w 100
+h 20
+fgColor index 0
+bgColor index 17
+topShadowColor index 2
+botShadowColor index 12
+font "helvetica-medium-r-10.0"
+buttonLabel "Refresh Menus"
+numPvs 2
+numDsps 1
+displayFileName {
+  0 caputRecorder1.edl
+}
+menuLabel {
+  0 
+}
+symbols {
+  0 "P=$(P),L=$(L)"
+}
+closeAction {
+  0 1
+}
+closeDisplay {
+  0 1
+}
+endObjectProperties
+
+# (Related Display)
+object relatedDisplayClass
+beginObjectProperties
+major 4
+minor 0
+release 0
+x 350
+y 485
+w 50
+h 20
+fgColor index 0
+bgColor index 17
+topShadowColor index 2
+botShadowColor index 12
+font "helvetica-medium-r-10.0"
+buttonLabel "Less"
+numPvs 4
+numDsps 2
+displayFileName {
+  0 caputRecorder_small.edl
+  1 caputRecorderExecute.edl
+}
+menuLabel {
+  0 small
+  1 execute only
+}
+symbols {
+  0 "P=$(P),L=$(L)"
+  1 "P=$(P),L=$(L)"
+}
+closeAction {
+  0 1
+  1 1
+}
+closeDisplay {
+  0 1
+  1 1
+}
+endObjectProperties
+
+# (Related Display)
+object relatedDisplayClass
+beginObjectProperties
+major 4
+minor 0
+release 0
+x 310
+y 485
+w 40
+h 20
+fgColor index 0
+bgColor index 17
+topShadowColor index 2
+botShadowColor index 12
+font "helvetica-medium-r-10.0"
+buttonLabel "More"
+numPvs 4
+numDsps 2
+displayFileName {
+  0 caputRecorderConfigure.edl
+  1 caputRecorderGlobals.edl
+}
+menuLabel {
+  0 configure
+  1 global variables
+}
+symbols {
+  0 "P=$(P),L=$(L)"
+  1 "P=$(P),L=$(L)"
+}
+endObjectProperties
+

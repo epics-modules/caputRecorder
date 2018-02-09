@@ -1,0 +1,477 @@
+4 0 0
+beginScreenProperties
+major 4
+minor 0
+release 0
+x 1072
+y 303
+w 400
+h 175
+font "helvetica-medium-r-18.0"
+ctlFont "helvetica-medium-r-8.0"
+btnFont "helvetica-medium-r-18.0"
+fgColor index 14
+bgColor index 2
+textColor index 14
+ctlFgColor1 index 30
+ctlFgColor2 index 32
+ctlBgColor1 index 34
+ctlBgColor2 index 35
+topShadowColor index 37
+botShadowColor index 44
+snapToGrid
+gridSize 5
+endScreenProperties
+
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 0
+release 0
+x 285
+y 45
+w 90
+h 20
+font "helvetica-medium-r-8.0"
+fgColor index 33
+useDisplayBg
+value {
+ "Recording"
+}
+visPv "CALC\\\{(a)\}($(P)caputRecorderMacroRecording)"
+visInvert
+visMin 0
+visMax 1
+endObjectProperties
+
+# (Rectangle)
+object activeRectangleClass
+beginObjectProperties
+major 4
+minor 0
+release 0
+x 0
+y 0
+w 399
+h 24
+lineColor index 0
+fill
+fillColor index 0
+lineWidth 0
+endObjectProperties
+
+# (Lines)
+object activeLineClass
+beginObjectProperties
+major 4
+minor 0
+release 0
+x 0
+y 25
+w 399
+h 3
+lineColor index 54
+fillColor index 54
+lineWidth 3
+numPoints 2 {
+xPoints  {
+0 1
+1 397
+}
+yPoints  {
+0 26
+1 26
+}
+endObjectProperties
+
+# (Text Control)
+object activeXTextDspClass
+beginObjectProperties
+major 4
+minor 0
+release 0
+x 70
+y 75
+w 320
+h 14
+controlPv "$(P)caputRecorderUserMessage"
+font "helvetica-medium-r-8.0"
+smartRefresh
+fastUpdate
+fgColor index 14
+bgColor index 1
+autoHeight
+format "string"
+nullColor index 32
+useHexPrefix
+objType "controls"
+newPos
+endObjectProperties
+
+# (Text Control)
+object activeXTextDspClass
+beginObjectProperties
+major 4
+minor 0
+release 0
+x 10
+y 45
+w 150
+h 20
+controlPv "$(P)caputRecorderMacroName"
+font "helvetica-medium-r-8.0"
+smartRefresh
+fastUpdate
+fgColor index 14
+bgColor index 51
+editable
+autoHeight
+format "string"
+motifWidget
+nullColor index 32
+useHexPrefix
+objType "controls"
+newPos
+endObjectProperties
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 0
+release 0
+x 285
+y 45
+w 90
+h 20
+font "helvetica-medium-r-8.0"
+fgColor index 20
+useDisplayBg
+value {
+ "Recording"
+}
+visPv "CALC\\\{(a&b)\}($(P)caputRecorderMacroRecording, $(P)caputRecorderPulse)"
+visInvert
+visMin 0
+visMax 1
+endObjectProperties
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 0
+release 0
+x 10
+y 75
+w 60
+h 14
+font "helvetica-medium-r-8.0"
+fgColor index 14
+useDisplayBg
+value {
+ "status:"
+}
+endObjectProperties
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 0
+release 0
+x 170
+y 30
+w 110
+h 14
+font "helvetica-medium-r-8.0"
+fontAlign "center"
+fgColor index 14
+useDisplayBg
+value {
+ "record puts"
+}
+endObjectProperties
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 0
+release 0
+x 10
+y 30
+w 150
+h 14
+font "helvetica-medium-r-8.0"
+fontAlign "center"
+fgColor index 14
+useDisplayBg
+value {
+ "macro name"
+}
+endObjectProperties
+
+# (Lines)
+object activeLineClass
+beginObjectProperties
+major 4
+minor 0
+release 0
+x 0
+y 95
+w 399
+h 3
+lineColor index 54
+fillColor index 54
+lineWidth 3
+numPoints 2 {
+xPoints  {
+0 1
+1 397
+}
+yPoints  {
+0 96
+1 96
+}
+endObjectProperties
+
+# (Group)
+object activeGroupClass
+beginObjectProperties
+major 4
+minor 0
+release 0
+x 265
+y 130
+w 72
+h 20
+
+beginGroup
+
+
+# (Text Control)
+object activeXTextDspClass
+beginObjectProperties
+major 4
+minor 0
+release 0
+x 265
+y 130
+w 30
+h 20
+controlPv "$(P)caputRecorderExecuteLoops"
+font "helvetica-medium-r-8.0"
+smartRefresh
+fastUpdate
+fgColor index 14
+bgColor index 51
+editable
+autoHeight
+format "string"
+motifWidget
+nullColor index 32
+useHexPrefix
+objType "controls"
+newPos
+endObjectProperties
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 0
+release 0
+x 297
+y 133
+w 40
+h 14
+font "helvetica-medium-r-8.0"
+fgColor index 14
+useDisplayBg
+value {
+ "times"
+}
+endObjectProperties
+
+endGroup
+
+endObjectProperties
+
+
+# (Text Control)
+object activeXTextDspClass
+beginObjectProperties
+major 4
+minor 0
+release 0
+x 10
+y 133
+w 150
+h 14
+controlPv "$(P)caputRecorderMacro"
+font "helvetica-medium-r-8.0"
+smartRefresh
+fastUpdate
+fgColor index 14
+bgColor index 1
+autoHeight
+format "string"
+nullColor index 32
+useHexPrefix
+objType "controls"
+newPos
+endObjectProperties
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 0
+release 0
+x 10
+y 0
+w 215
+h 20
+font "helvetica-medium-r-8.0"
+fontAlign "center"
+fgColor index 14
+useDisplayBg
+value {
+ "caput recorder $(P)"
+}
+endObjectProperties
+
+# (Lines)
+object activeLineClass
+beginObjectProperties
+major 4
+minor 0
+release 0
+x 375
+y 5
+w 17
+h 20
+lineColor index 21
+fill
+fillColor index 21
+lineWidth 0
+closePolygon
+numPoints 20 {
+xPoints  {
+0 383
+1 379
+2 376
+3 375
+4 375
+5 375
+6 377
+7 380
+8 383
+9 383
+10 384
+11 387
+12 390
+13 391
+14 392
+15 392
+16 390
+17 387
+18 384
+19 383
+}
+yPoints  {
+0 25
+1 22
+2 18
+3 13
+4 9
+5 6
+6 5
+7 5
+8 7
+9 10
+10 7
+11 5
+12 5
+13 6
+14 9
+15 13
+16 18
+17 22
+18 25
+19 25
+}
+visPv "CALC\\\{(A)\}($(P)caputRecorderHeartbeat)"
+visInvert
+visMin 0
+visMax 1
+endObjectProperties
+
+# (Rectangle)
+object activeRectangleClass
+beginObjectProperties
+major 4
+minor 0
+release 0
+x 380
+y 35
+w 4
+h 4
+lineColor index 5
+fill
+fillColor index 5
+lineWidth 0
+visPv "CALC\\\{(a)\}($(P)caputRecorderSubMLIS)"
+visInvert
+visMin 0
+visMax 1
+endObjectProperties
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 0
+release 0
+x 355
+y 105
+w 45
+h 10
+font "helvetica-medium-r-8.0"
+fontAlign "center"
+fgColor index 20
+useDisplayBg
+value {
+ "PRESS"
+}
+visPv "CALC\\\{(a&b)\}($(P)caputRecorderNeedRefresh, $(P)caputRecorderNeedRefreshB)"
+visInvert
+visMin 0
+visMax 1
+endObjectProperties
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 0
+release 0
+x 355
+y 115
+w 45
+h 10
+font "helvetica-medium-r-8.0"
+fontAlign "center"
+fgColor index 20
+useDisplayBg
+value {
+ "REFRESH"
+}
+visPv "CALC\\\{(a&b)\}($(P)caputRecorderNeedRefresh, $(P)caputRecorderNeedRefreshB)"
+visInvert
+visMin 0
+visMax 1
+endObjectProperties
