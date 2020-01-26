@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<display version="2.0.0">
+  <name>caputRecorder_small</name>
+  <x>561</x>
+  <y>302</y>
+  <width>400</width>
+  <height>175</height>
+  <background_color>
+    <color red="218" green="218" blue="218">
+    </color>
+  </background_color>
+  <grid_visible>false</grid_visible>
+  <grid_step_x>5</grid_step_x>
+  <widget type="action_button" version="3.0.0">
+    <name>related display #6</name>
+    <actions>
+      <action type="open_display">
+        <file>caputRecorder.opi</file>
+        <target>replace</target>
+      </action>
+    </actions>
+    <text>More</text>
+    <x>350</x>
+    <y>155</y>
+    <width>50</width>
+    <height>20</height>
+    <foreground_color>
+      <color red="255" green="255" blue="255">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color red="51" green="153" blue="0">
+      </color>
+    </background_color>
+  </widget>
+  <widget type="embedded" version="2.0.0">
+    <name>composite #9</name>
+    <file>caputRecorder_small_bare.bob</file>
+    <height>175</height>
+  </widget>
+  <widget type="action_button" version="3.0.0">
+    <name>related display #11</name>
+    <actions>
+      <action type="open_display">
+        <file>caputRecorder1_small.opi</file>
+        <target>replace</target>
+      </action>
+    </actions>
+    <text>Refresh Menu</text>
+    <x>250</x>
+    <y>105</y>
+    <height>20</height>
+    <foreground_color>
+      <color red="255" green="255" blue="255">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color red="51" green="153" blue="0">
+      </color>
+    </background_color>
+  </widget>
+</display>

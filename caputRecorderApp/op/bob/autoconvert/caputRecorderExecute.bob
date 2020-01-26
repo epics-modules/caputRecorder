@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<display version="2.0.0">
+  <name>caputRecorderExecute</name>
+  <x>454</x>
+  <y>297</y>
+  <width>400</width>
+  <height>400</height>
+  <background_color>
+    <color red="218" green="218" blue="218">
+    </color>
+  </background_color>
+  <grid_visible>false</grid_visible>
+  <grid_step_x>5</grid_step_x>
+  <widget type="action_button" version="3.0.0">
+    <name>related display #6</name>
+    <actions>
+      <action type="open_display">
+        <file>caputRecorderExecute1.opi</file>
+        <target>replace</target>
+      </action>
+    </actions>
+    <text>Refresh Menus</text>
+    <x>245</x>
+    <y>300</y>
+    <height>20</height>
+    <foreground_color>
+      <color red="255" green="255" blue="255">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color red="51" green="153" blue="0">
+      </color>
+    </background_color>
+  </widget>
+  <widget type="embedded" version="2.0.0">
+    <name>composite #9</name>
+    <file>caputRecorderExecute_bare.bob</file>
+    <height>376</height>
+  </widget>
+  <widget type="action_button" version="3.0.0">
+    <name>related display #11</name>
+    <actions>
+      <action type="open_display">
+        <file>caputRecorder_small.opi</file>
+        <target>replace</target>
+        <description>small</description>
+      </action>
+    </actions>
+    <text>Less</text>
+    <x>350</x>
+    <y>380</y>
+    <width>50</width>
+    <height>20</height>
+    <foreground_color>
+      <color red="255" green="255" blue="255">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color red="51" green="153" blue="0">
+      </color>
+    </background_color>
+  </widget>
+  <widget type="action_button" version="3.0.0">
+    <name>related display #14</name>
+    <actions>
+      <action type="open_display">
+        <file>caputRecorderConfigure.opi</file>
+        <target>tab</target>
+        <description>configure</description>
+      </action>
+      <action type="open_display">
+        <file>caputRecorderGlobals.opi</file>
+        <target>tab</target>
+        <description>global variables</description>
+      </action>
+      <action type="open_display">
+        <file>caputRecorder.opi</file>
+        <target>replace</target>
+        <description>all</description>
+      </action>
+    </actions>
+    <text>More</text>
+    <x>310</x>
+    <y>380</y>
+    <width>40</width>
+    <height>20</height>
+    <foreground_color>
+      <color red="255" green="255" blue="255">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color red="51" green="153" blue="0">
+      </color>
+    </background_color>
+  </widget>
+</display>

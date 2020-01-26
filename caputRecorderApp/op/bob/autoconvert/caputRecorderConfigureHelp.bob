@@ -1,0 +1,546 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<display version="2.0.0">
+  <name>caputRecorderConfigureHelp</name>
+  <x>670</x>
+  <y>418</y>
+  <width>400</width>
+  <height>500</height>
+  <background_color>
+    <color red="218" green="218" blue="218">
+    </color>
+  </background_color>
+  <grid_visible>false</grid_visible>
+  <grid_step_x>5</grid_step_x>
+  <widget type="rectangle" version="2.0.0">
+    <name>rectangle #6</name>
+    <x>70</x>
+    <y>140</y>
+    <width>320</width>
+    <line_color>
+      <color red="115" green="223" blue="255">
+      </color>
+    </line_color>
+    <background_color>
+      <color red="115" green="223" blue="255">
+      </color>
+    </background_color>
+  </widget>
+  <widget type="rectangle" version="2.0.0">
+    <name>rectangle #9</name>
+    <width>400</width>
+    <height>25</height>
+    <line_color>
+      <color red="255" green="255" blue="255">
+      </color>
+    </line_color>
+    <background_color>
+      <color red="255" green="255" blue="255">
+      </color>
+    </background_color>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>text #12</name>
+    <text>caput recorder configure</text>
+    <x>10</x>
+    <width>380</width>
+    <height>23</height>
+    <font>
+      <font family="Liberation Sans" style="REGULAR" size="16.0">
+      </font>
+    </font>
+    <horizontal_alignment>1</horizontal_alignment>
+  </widget>
+  <widget type="polyline" version="2.0.0">
+    <name>polyline #15</name>
+    <y>25</y>
+    <width>399</width>
+    <height>3</height>
+    <line_color>
+      <color red="10" green="0" blue="184">
+      </color>
+    </line_color>
+    <points>
+      <point x="1.0" y="1.0">
+      </point>
+      <point x="397.0" y="1.0">
+      </point>
+    </points>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>text #19</name>
+    <text>Record caputs from whom?</text>
+    <x>10</x>
+    <y>35</y>
+    <width>380</width>
+    <font>
+      <font family="Liberation Sans" style="REGULAR" size="16.0">
+      </font>
+    </font>
+    <horizontal_alignment>1</horizontal_alignment>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>text #22</name>
+    <text>users:</text>
+    <x>10</x>
+    <y>62</y>
+    <width>55</width>
+    <height>14</height>
+    <horizontal_alignment>2</horizontal_alignment>
+  </widget>
+  <widget type="textentry" version="3.0.0">
+    <name>text entry #25</name>
+    <pv_name>$(P)caputRecorderUsers</pv_name>
+    <x>70</x>
+    <y>60</y>
+    <width>320</width>
+    <font>
+      <font family="Liberation Sans" style="REGULAR" size="16.0">
+      </font>
+    </font>
+    <background_color>
+      <color red="115" green="223" blue="255">
+      </color>
+    </background_color>
+    <format>6</format>
+    <show_units>false</show_units>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>text #29</name>
+    <text>hosts:</text>
+    <x>10</x>
+    <y>87</y>
+    <width>55</width>
+    <height>14</height>
+    <horizontal_alignment>2</horizontal_alignment>
+  </widget>
+  <widget type="textentry" version="3.0.0">
+    <name>text entry #32</name>
+    <pv_name>$(P)caputRecorderHosts</pv_name>
+    <x>70</x>
+    <y>85</y>
+    <width>320</width>
+    <font>
+      <font family="Liberation Sans" style="REGULAR" size="16.0">
+      </font>
+    </font>
+    <background_color>
+      <color red="115" green="223" blue="255">
+      </color>
+    </background_color>
+    <format>6</format>
+    <show_units>false</show_units>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>text #36</name>
+    <text>everyone</text>
+    <x>70</x>
+    <y>165</y>
+    <width>316</width>
+    <height>14</height>
+    <auto_size>true</auto_size>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>text #39</name>
+    <text>only userA and userB</text>
+    <x>70</x>
+    <y>215</y>
+    <width>316</width>
+    <height>14</height>
+    <auto_size>true</auto_size>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>text #42</name>
+    <text>everyone except vw5</text>
+    <x>70</x>
+    <y>265</y>
+    <width>316</width>
+    <height>14</height>
+    <auto_size>true</auto_size>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>text #45</name>
+    <text>examples:</text>
+    <x>11</x>
+    <y>125</y>
+    <width>65</width>
+    <height>14</height>
+    <horizontal_alignment>2</horizontal_alignment>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>text #48</name>
+    <text></text>
+    <x>72</x>
+    <y>143</y>
+    <width>316</width>
+    <height>14</height>
+    <auto_size>true</auto_size>
+  </widget>
+  <widget type="polyline" version="2.0.0">
+    <name>polyline #51</name>
+    <x>1</x>
+    <y>116</y>
+    <width>397</width>
+    <height>1</height>
+    <line_width>1</line_width>
+    <line_color>
+      <color red="10" green="0" blue="184">
+      </color>
+    </line_color>
+    <points>
+      <point x="0.0" y="0.0">
+      </point>
+      <point x="396.0" y="0.0">
+      </point>
+    </points>
+  </widget>
+  <widget type="polyline" version="2.0.0">
+    <name>polyline #55</name>
+    <y>350</y>
+    <width>397</width>
+    <height>1</height>
+    <line_width>1</line_width>
+    <line_color>
+      <color red="10" green="0" blue="184">
+      </color>
+    </line_color>
+    <points>
+      <point x="0.0" y="0.0">
+      </point>
+      <point x="396.0" y="0.0">
+      </point>
+    </points>
+  </widget>
+  <widget type="group" version="2.0.0">
+    <name>composite #59</name>
+    <x>70</x>
+    <y>190</y>
+    <width>320</width>
+    <height>20</height>
+    <style>3</style>
+    <transparent>true</transparent>
+    <widget type="rectangle" version="2.0.0">
+      <name>rectangle #62</name>
+      <width>320</width>
+      <line_color>
+        <color red="115" green="223" blue="255">
+        </color>
+      </line_color>
+      <background_color>
+        <color red="115" green="223" blue="255">
+        </color>
+      </background_color>
+    </widget>
+    <widget type="label" version="2.0.0">
+      <name>text #65</name>
+      <text>userA userB</text>
+      <x>2</x>
+      <y>3</y>
+      <width>316</width>
+      <height>14</height>
+      <auto_size>true</auto_size>
+    </widget>
+  </widget>
+  <widget type="group" version="2.0.0">
+    <name>composite #68</name>
+    <x>70</x>
+    <y>240</y>
+    <width>320</width>
+    <height>20</height>
+    <style>3</style>
+    <transparent>true</transparent>
+    <widget type="rectangle" version="2.0.0">
+      <name>rectangle #71</name>
+      <width>320</width>
+      <line_color>
+        <color red="115" green="223" blue="255">
+        </color>
+      </line_color>
+      <background_color>
+        <color red="115" green="223" blue="255">
+        </color>
+      </background_color>
+    </widget>
+    <widget type="label" version="2.0.0">
+      <name>text #74</name>
+      <text>-vw5</text>
+      <x>2</x>
+      <y>3</y>
+      <width>316</width>
+      <height>14</height>
+      <auto_size>true</auto_size>
+    </widget>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>text #77</name>
+    <text>example:</text>
+    <x>10</x>
+    <y>360</y>
+    <width>65</width>
+    <height>14</height>
+    <horizontal_alignment>2</horizontal_alignment>
+  </widget>
+  <widget type="group" version="2.0.0">
+    <name>composite #80</name>
+    <x>70</x>
+    <y>375</y>
+    <width>320</width>
+    <height>20</height>
+    <style>3</style>
+    <transparent>true</transparent>
+    <widget type="rectangle" version="2.0.0">
+      <name>rectangle #83</name>
+      <width>320</width>
+      <line_color>
+        <color red="115" green="223" blue="255">
+        </color>
+      </line_color>
+      <background_color>
+        <color red="115" green="223" blue="255">
+        </color>
+      </background_color>
+    </widget>
+    <widget type="label" version="2.0.0">
+      <name>text #86</name>
+      <text>xxx: yyy:</text>
+      <x>2</x>
+      <y>3</y>
+      <width>316</width>
+      <height>14</height>
+      <auto_size>true</auto_size>
+    </widget>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>text #89</name>
+    <text>Record caputs to which IOCs?</text>
+    <x>9</x>
+    <y>297</y>
+    <width>380</width>
+    <font>
+      <font family="Liberation Sans" style="REGULAR" size="16.0">
+      </font>
+    </font>
+    <horizontal_alignment>1</horizontal_alignment>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>text #92</name>
+    <text>prefixes:</text>
+    <x>9</x>
+    <y>324</y>
+    <width>65</width>
+    <height>14</height>
+    <horizontal_alignment>2</horizontal_alignment>
+  </widget>
+  <widget type="textentry" version="3.0.0">
+    <name>text entry #95</name>
+    <pv_name>$(P)caputRecorderPrefixes</pv_name>
+    <x>79</x>
+    <y>322</y>
+    <width>310</width>
+    <font>
+      <font family="Liberation Sans" style="REGULAR" size="16.0">
+      </font>
+    </font>
+    <background_color>
+      <color red="115" green="223" blue="255">
+      </color>
+    </background_color>
+    <format>6</format>
+    <show_units>false</show_units>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+  </widget>
+  <widget type="polyline" version="2.0.0">
+    <name>polyline #99</name>
+    <y>285</y>
+    <width>399</width>
+    <height>3</height>
+    <line_color>
+      <color red="10" green="0" blue="184">
+      </color>
+    </line_color>
+    <points>
+      <point x="1.0" y="1.0">
+      </point>
+      <point x="397.0" y="1.0">
+      </point>
+    </points>
+  </widget>
+  <widget type="polyline" version="2.0.0">
+    <name>polyline #103</name>
+    <x>1</x>
+    <y>405</y>
+    <width>399</width>
+    <height>3</height>
+    <line_color>
+      <color red="10" green="0" blue="184">
+      </color>
+    </line_color>
+    <points>
+      <point x="1.0" y="1.0">
+      </point>
+      <point x="397.0" y="1.0">
+      </point>
+    </points>
+  </widget>
+  <widget type="group" version="2.0.0">
+    <name>composite #107</name>
+    <x>319</x>
+    <y>431</y>
+    <width>80</width>
+    <height>16</height>
+    <style>3</style>
+    <transparent>true</transparent>
+    <widget type="label" version="2.0.0">
+      <name>text #110</name>
+      <text>debug:</text>
+      <width>45</width>
+      <height>14</height>
+      <foreground_color>
+        <color red="174" green="174" blue="174">
+        </color>
+      </foreground_color>
+      <horizontal_alignment>2</horizontal_alignment>
+    </widget>
+    <widget type="textentry" version="3.0.0">
+      <name>text entry #113</name>
+      <pv_name>$(P)caputRecorderDebug</pv_name>
+      <x>50</x>
+      <width>30</width>
+      <height>16</height>
+      <font>
+        <font family="Liberation Sans" style="REGULAR" size="16.0">
+        </font>
+      </font>
+      <background_color>
+        <color red="218" green="218" blue="218">
+        </color>
+      </background_color>
+      <format>6</format>
+      <show_units>false</show_units>
+      <border_alarm_sensitive>false</border_alarm_sensitive>
+    </widget>
+  </widget>
+  <widget type="choice" version="2.0.0">
+    <name>choice button #117</name>
+    <pv_name>$(P)caputRecorderRecordTiming</pv_name>
+    <x>181</x>
+    <y>415</y>
+    <width>80</width>
+    <height>18</height>
+    <background_color>
+      <color red="115" green="223" blue="255">
+      </color>
+    </background_color>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <items>
+      <item>Item 1</item>
+      <item>Item 2</item>
+    </items>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>text #120</name>
+    <text>record timing of caputs?</text>
+    <x>10</x>
+    <y>417</y>
+    <width>170</width>
+    <height>14</height>
+    <horizontal_alignment>2</horizontal_alignment>
+  </widget>
+  <widget type="choice" version="2.0.0">
+    <name>choice button #123</name>
+    <pv_name>$(P)caputRecorderWaitCompletion</pv_name>
+    <x>181</x>
+    <y>435</y>
+    <width>80</width>
+    <height>18</height>
+    <background_color>
+      <color red="115" green="223" blue="255">
+      </color>
+    </background_color>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <items>
+      <item>Item 1</item>
+      <item>Item 2</item>
+    </items>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>text #126</name>
+    <text>wait for completion?</text>
+    <x>10</x>
+    <y>437</y>
+    <width>170</width>
+    <height>14</height>
+    <horizontal_alignment>2</horizontal_alignment>
+  </widget>
+  <widget type="group" version="2.0.0">
+    <name>composite #129</name>
+    <x>10</x>
+    <y>475</y>
+    <width>341</width>
+    <height>18</height>
+    <style>3</style>
+    <transparent>true</transparent>
+    <widget type="choice" version="2.0.0">
+      <name>choice button #132</name>
+      <pv_name>$(P)caputRecorderIfMacroExists</pv_name>
+      <x>171</x>
+      <width>170</width>
+      <height>18</height>
+      <background_color>
+        <color red="115" green="223" blue="255">
+        </color>
+      </background_color>
+      <border_alarm_sensitive>false</border_alarm_sensitive>
+      <items>
+        <item>Item 1</item>
+        <item>Item 2</item>
+      </items>
+    </widget>
+    <widget type="label" version="2.0.0">
+      <name>text #135</name>
+      <text>if macro already exists:</text>
+      <y>2</y>
+      <width>170</width>
+      <height>14</height>
+      <horizontal_alignment>2</horizontal_alignment>
+    </widget>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>text #138</name>
+    <text>wait for how long?</text>
+    <x>10</x>
+    <y>457</y>
+    <width>170</width>
+    <height>14</height>
+    <horizontal_alignment>2</horizontal_alignment>
+  </widget>
+  <widget type="textentry" version="3.0.0">
+    <name>text entry #141</name>
+    <pv_name>$(P)caputRecorderWaitCBSec</pv_name>
+    <x>181</x>
+    <y>455</y>
+    <width>70</width>
+    <height>18</height>
+    <font>
+      <font family="Liberation Sans" style="REGULAR" size="16.0">
+      </font>
+    </font>
+    <background_color>
+      <color red="115" green="223" blue="255">
+      </color>
+    </background_color>
+    <format>6</format>
+    <show_units>false</show_units>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>text #145</name>
+    <text>seconds</text>
+    <x>254</x>
+    <y>457</y>
+    <width>50</width>
+    <height>14</height>
+    <auto_size>true</auto_size>
+  </widget>
+</display>

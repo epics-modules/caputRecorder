@@ -1,0 +1,469 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<display version="2.0.0">
+  <name>caputRecorder_small_bare</name>
+  <x>1072</x>
+  <y>303</y>
+  <width>400</width>
+  <height>175</height>
+  <background_color>
+    <color red="218" green="218" blue="218">
+    </color>
+  </background_color>
+  <grid_visible>false</grid_visible>
+  <grid_step_x>5</grid_step_x>
+  <widget type="label" version="2.0.0">
+    <name>text #6</name>
+    <text>Recording</text>
+    <x>285</x>
+    <y>45</y>
+    <width>90</width>
+    <font>
+      <font family="Liberation Sans" style="REGULAR" size="16.0">
+      </font>
+    </font>
+    <foreground_color>
+      <color red="225" green="144" blue="21">
+      </color>
+    </foreground_color>
+    <auto_size>true</auto_size>
+    <rules>
+      <rule name="vis_calc" prop_id="visible" out_exp="false">
+        <exp bool_exp="!(a)">
+          <value>false</value>
+        </exp>
+        <pv_name>$(P)caputRecorderMacroRecording</pv_name>
+      </rule>
+    </rules>
+  </widget>
+  <widget type="rectangle" version="2.0.0">
+    <name>rectangle #10</name>
+    <width>400</width>
+    <height>25</height>
+    <line_color>
+      <color red="255" green="255" blue="255">
+      </color>
+    </line_color>
+    <background_color>
+      <color red="255" green="255" blue="255">
+      </color>
+    </background_color>
+  </widget>
+  <widget type="polyline" version="2.0.0">
+    <name>polyline #13</name>
+    <y>25</y>
+    <width>399</width>
+    <height>3</height>
+    <line_color>
+      <color red="10" green="0" blue="184">
+      </color>
+    </line_color>
+    <points>
+      <point x="1.0" y="1.0">
+      </point>
+      <point x="397.0" y="1.0">
+      </point>
+    </points>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>text update #17</name>
+    <pv_name>$(P)caputRecorderUserMessage</pv_name>
+    <x>70</x>
+    <y>75</y>
+    <width>320</width>
+    <height>14</height>
+    <background_color>
+      <color red="236" green="236" blue="236">
+      </color>
+    </background_color>
+    <format>6</format>
+    <show_units>false</show_units>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+  </widget>
+  <widget type="choice" version="2.0.0">
+    <name>choice button #21</name>
+    <pv_name>$(P)caputRecorderMacroStopStart</pv_name>
+    <x>170</x>
+    <y>45</y>
+    <width>110</width>
+    <height>24</height>
+    <background_color>
+      <color red="115" green="223" blue="255">
+      </color>
+    </background_color>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <items>
+      <item>Item 1</item>
+      <item>Item 2</item>
+    </items>
+  </widget>
+  <widget type="textentry" version="3.0.0">
+    <name>text entry #24</name>
+    <pv_name>$(P)caputRecorderMacroName</pv_name>
+    <x>10</x>
+    <y>45</y>
+    <width>150</width>
+    <font>
+      <font family="Liberation Sans" style="REGULAR" size="16.0">
+      </font>
+    </font>
+    <background_color>
+      <color red="115" green="223" blue="255">
+      </color>
+    </background_color>
+    <format>6</format>
+    <show_units>false</show_units>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>text #28</name>
+    <text>Recording</text>
+    <x>285</x>
+    <y>45</y>
+    <width>90</width>
+    <font>
+      <font family="Liberation Sans" style="REGULAR" size="16.0">
+      </font>
+    </font>
+    <foreground_color>
+      <color red="253" green="0" blue="0">
+      </color>
+    </foreground_color>
+    <auto_size>true</auto_size>
+    <rules>
+      <rule name="vis_calc" prop_id="visible" out_exp="false">
+        <exp bool_exp="!(a&amp;b)">
+          <value>false</value>
+        </exp>
+        <pv_name>$(P)caputRecorderMacroRecording</pv_name>
+        <pv_name>$(P)caputRecorderPulse</pv_name>
+      </rule>
+    </rules>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>text #32</name>
+    <text>status:</text>
+    <x>10</x>
+    <y>75</y>
+    <width>60</width>
+    <height>14</height>
+    <auto_size>true</auto_size>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>text #35</name>
+    <text>record puts</text>
+    <x>170</x>
+    <y>30</y>
+    <width>110</width>
+    <height>14</height>
+    <horizontal_alignment>1</horizontal_alignment>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>text #38</name>
+    <text>macro name</text>
+    <x>10</x>
+    <y>30</y>
+    <width>150</width>
+    <height>14</height>
+    <horizontal_alignment>1</horizontal_alignment>
+  </widget>
+  <widget type="polyline" version="2.0.0">
+    <name>polyline #41</name>
+    <y>95</y>
+    <width>399</width>
+    <height>3</height>
+    <line_color>
+      <color red="10" green="0" blue="184">
+      </color>
+    </line_color>
+    <points>
+      <point x="1.0" y="1.0">
+      </point>
+      <point x="397.0" y="1.0">
+      </point>
+    </points>
+  </widget>
+  <widget type="combo" version="2.0.0">
+    <name>menu #45</name>
+    <pv_name>$(P)caputRecorderMacros1</pv_name>
+    <x>10</x>
+    <y>155</y>
+    <width>150</width>
+    <height>20</height>
+    <background_color>
+      <color red="115" green="223" blue="255">
+      </color>
+    </background_color>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+  </widget>
+  <widget type="choice" version="2.0.0">
+    <name>choice button #48</name>
+    <pv_name>$(P)caputRecorderExecuteMacro</pv_name>
+    <x>170</x>
+    <y>129</y>
+    <width>90</width>
+    <height>24</height>
+    <background_color>
+      <color red="115" green="223" blue="255">
+      </color>
+    </background_color>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <items>
+      <item>Item 1</item>
+      <item>Item 2</item>
+    </items>
+  </widget>
+  <widget type="choice" version="2.0.0">
+    <name>choice button #51</name>
+    <pv_name>$(P)caputRecorderReloadMacros</pv_name>
+    <x>10</x>
+    <y>105</y>
+    <width>230</width>
+    <height>18</height>
+    <background_color>
+      <color red="115" green="223" blue="255">
+      </color>
+    </background_color>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <items>
+      <item>Item 1</item>
+      <item>Item 2</item>
+    </items>
+  </widget>
+  <widget type="action_button" version="3.0.0">
+    <name>message button #54</name>
+    <actions>
+      <action type="write_pv">
+        <pv_name>$(P)caputRecorderAbortMacro</pv_name>
+        <value>1</value>
+        <description>Write</description>
+      </action>
+    </actions>
+    <pv_name>$(P)caputRecorderAbortMacro</pv_name>
+    <text>Abort</text>
+    <x>346</x>
+    <y>130</y>
+    <width>50</width>
+    <height>20</height>
+    <foreground_color>
+      <color red="251" green="243" blue="74">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color red="253" green="0" blue="0">
+      </color>
+    </background_color>
+  </widget>
+  <widget type="group" version="2.0.0">
+    <name>composite #57</name>
+    <x>265</x>
+    <y>130</y>
+    <width>72</width>
+    <height>20</height>
+    <style>3</style>
+    <transparent>true</transparent>
+    <widget type="textentry" version="3.0.0">
+      <name>text entry #60</name>
+      <pv_name>$(P)caputRecorderExecuteLoops</pv_name>
+      <width>30</width>
+      <font>
+        <font family="Liberation Sans" style="REGULAR" size="16.0">
+        </font>
+      </font>
+      <background_color>
+        <color red="115" green="223" blue="255">
+        </color>
+      </background_color>
+      <format>6</format>
+      <show_units>false</show_units>
+      <border_alarm_sensitive>false</border_alarm_sensitive>
+    </widget>
+    <widget type="label" version="2.0.0">
+      <name>text #64</name>
+      <text>times</text>
+      <x>32</x>
+      <y>3</y>
+      <width>40</width>
+      <height>14</height>
+      <auto_size>true</auto_size>
+    </widget>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>text update #67</name>
+    <pv_name>$(P)caputRecorderMacro</pv_name>
+    <x>10</x>
+    <y>133</y>
+    <width>150</width>
+    <height>14</height>
+    <background_color>
+      <color red="236" green="236" blue="236">
+      </color>
+    </background_color>
+    <format>6</format>
+    <show_units>false</show_units>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+  </widget>
+  <widget type="combo" version="2.0.0">
+    <name>menu #71</name>
+    <pv_name>$(P)caputRecorderMacros2</pv_name>
+    <x>160</x>
+    <y>155</y>
+    <width>150</width>
+    <height>20</height>
+    <background_color>
+      <color red="115" green="223" blue="255">
+      </color>
+    </background_color>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>text #74</name>
+    <text>caput recorder $(P)</text>
+    <x>10</x>
+    <width>215</width>
+    <font>
+      <font family="Liberation Sans" style="REGULAR" size="16.0">
+      </font>
+    </font>
+    <horizontal_alignment>1</horizontal_alignment>
+  </widget>
+  <widget type="polygon" version="2.0.0">
+    <name>polygon #77</name>
+    <x>375</x>
+    <y>5</y>
+    <width>17</width>
+    <line_width>0</line_width>
+    <line_color>
+      <color red="222" green="19" blue="9">
+      </color>
+    </line_color>
+    <background_color>
+      <color red="222" green="19" blue="9">
+      </color>
+    </background_color>
+    <points>
+      <point x="8.0" y="20.0">
+      </point>
+      <point x="4.0" y="17.0">
+      </point>
+      <point x="1.0" y="13.0">
+      </point>
+      <point x="0.0" y="8.0">
+      </point>
+      <point x="0.0" y="4.0">
+      </point>
+      <point x="0.0" y="1.0">
+      </point>
+      <point x="2.0" y="0.0">
+      </point>
+      <point x="5.0" y="0.0">
+      </point>
+      <point x="8.0" y="2.0">
+      </point>
+      <point x="8.0" y="5.0">
+      </point>
+      <point x="9.0" y="2.0">
+      </point>
+      <point x="12.0" y="0.0">
+      </point>
+      <point x="15.0" y="0.0">
+      </point>
+      <point x="16.0" y="1.0">
+      </point>
+      <point x="17.0" y="4.0">
+      </point>
+      <point x="17.0" y="8.0">
+      </point>
+      <point x="15.0" y="13.0">
+      </point>
+      <point x="12.0" y="17.0">
+      </point>
+      <point x="9.0" y="20.0">
+      </point>
+      <point x="8.0" y="20.0">
+      </point>
+    </points>
+    <rules>
+      <rule name="vis_if_not_zero" prop_id="visible" out_exp="false">
+        <exp bool_exp="!(pv0!=0)">
+          <value>false</value>
+        </exp>
+        <pv_name>$(P)caputRecorderHeartbeat</pv_name>
+      </rule>
+    </rules>
+  </widget>
+  <widget type="rectangle" version="2.0.0">
+    <name>rectangle #82</name>
+    <x>380</x>
+    <y>35</y>
+    <width>5</width>
+    <height>5</height>
+    <line_color>
+      <color red="174" green="174" blue="174">
+      </color>
+    </line_color>
+    <background_color>
+      <color red="174" green="174" blue="174">
+      </color>
+    </background_color>
+    <rules>
+      <rule name="vis_calc" prop_id="visible" out_exp="false">
+        <exp bool_exp="!(a)">
+          <value>false</value>
+        </exp>
+        <pv_name>$(P)caputRecorderSubMLIS</pv_name>
+      </rule>
+    </rules>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>text #86</name>
+    <text>PRESS</text>
+    <x>355</x>
+    <y>105</y>
+    <width>45</width>
+    <height>10</height>
+    <font>
+      <font family="Liberation Sans" style="REGULAR" size="10.0">
+      </font>
+    </font>
+    <foreground_color>
+      <color red="253" green="0" blue="0">
+      </color>
+    </foreground_color>
+    <horizontal_alignment>1</horizontal_alignment>
+    <rules>
+      <rule name="vis_calc" prop_id="visible" out_exp="false">
+        <exp bool_exp="!(a&amp;b)">
+          <value>false</value>
+        </exp>
+        <pv_name>$(P)caputRecorderNeedRefresh</pv_name>
+        <pv_name>$(P)caputRecorderNeedRefreshB</pv_name>
+      </rule>
+    </rules>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>text #90</name>
+    <text>REFRESH</text>
+    <x>355</x>
+    <y>115</y>
+    <width>45</width>
+    <height>10</height>
+    <font>
+      <font family="Liberation Sans" style="REGULAR" size="10.0">
+      </font>
+    </font>
+    <foreground_color>
+      <color red="253" green="0" blue="0">
+      </color>
+    </foreground_color>
+    <horizontal_alignment>1</horizontal_alignment>
+    <rules>
+      <rule name="vis_calc" prop_id="visible" out_exp="false">
+        <exp bool_exp="!(a&amp;b)">
+          <value>false</value>
+        </exp>
+        <pv_name>$(P)caputRecorderNeedRefresh</pv_name>
+        <pv_name>$(P)caputRecorderNeedRefreshB</pv_name>
+      </rule>
+    </rules>
+  </widget>
+</display>
