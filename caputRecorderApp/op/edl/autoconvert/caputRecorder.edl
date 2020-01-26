@@ -1,28 +1,28 @@
-4 0 0
+4 0 1
 beginScreenProperties
 major 4
 minor 0
-release 0
+release 1
 x 1078
 y 457
 w 400
 h 505
 font "helvetica-medium-r-18.0"
-ctlFont "helvetica-medium-r-8.0"
+ctlFont "helvetica-bold-r-10.0"
 btnFont "helvetica-medium-r-18.0"
-fgColor index 14
-bgColor index 2
-textColor index 14
-ctlFgColor1 index 30
-ctlFgColor2 index 32
-ctlBgColor1 index 34
-ctlBgColor2 index 35
-topShadowColor index 37
-botShadowColor index 44
+fgColor rgb 0 0 0
+bgColor rgb 55808 55808 55808
+textColor rgb 0 0 0
+ctlFgColor1 rgb 64256 62208 18944
+ctlFgColor2 rgb 60928 46592 11008
+ctlBgColor1 rgb 52480 24832 0
+ctlBgColor2 rgb 65280 45056 65280
+topShadowColor rgb 44544 19968 48128
+botShadowColor rgb 13312 13056 34304
+showGrid
 snapToGrid
-gridSize 5
+gridSize 4
 endScreenProperties
-
 
 # (Group)
 object activeGroupClass
@@ -41,26 +41,28 @@ beginGroup
 object activePipClass
 beginObjectProperties
 major 4
-minor 0
+minor 1
 release 0
 x 0
 y 0
 w 400
 h 481
-fgColor index 14
-bgColor index 0
-topShadowColor index 0
-botShadowColor index 14
-noScroll
+fgColor rgb 0 0 0
+bgColor rgb 65280 65280 65280
+topShadowColor rgb 65280 65280 65280
+botShadowColor rgb 0 0 0
 displaySource "file"
-file "	composite file caputRecorder_bare.edl;P=$(P),L=$(L)"
+file "caputRecorder_bare.edl;P=$(P),L=$(L)"
 sizeOfs 5
-numDsps 0
+numDsps 1
+displayFileName {
+  0 "caputRecorder_bare.edl;P=$(P),L=$(L)"
+}
+noScroll
 endObjectProperties
 
 endGroup
 
-visPv ""
 visMin "A"
 visMax "1"
 endObjectProperties
@@ -75,11 +77,11 @@ x 250
 y 405
 w 100
 h 20
-fgColor index 0
-bgColor index 17
-topShadowColor index 2
-botShadowColor index 12
-font "helvetica-medium-r-10.0"
+fgColor rgb 65280 65280 65280
+bgColor rgb 13056 39168 0
+topShadowColor rgb 55808 55808 55808
+botShadowColor rgb 17920 17920 17920
+font "helvetica-medium-r-12.0"
 buttonLabel "Refresh Menus"
 numPvs 2
 numDsps 1
@@ -93,6 +95,9 @@ symbols {
   0 "P=$(P),L=$(L)"
 }
 closeAction {
+  0 1
+}
+replaceSymbols {
   0 1
 }
 closeDisplay {
@@ -110,11 +115,11 @@ x 350
 y 485
 w 50
 h 20
-fgColor index 0
-bgColor index 17
-topShadowColor index 2
-botShadowColor index 12
-font "helvetica-medium-r-10.0"
+fgColor rgb 65280 65280 65280
+bgColor rgb 13056 39168 0
+topShadowColor rgb 55808 55808 55808
+botShadowColor rgb 17920 17920 17920
+font "helvetica-medium-r-12.0"
 buttonLabel "Less"
 numPvs 4
 numDsps 2
@@ -134,6 +139,10 @@ closeAction {
   0 1
   1 1
 }
+replaceSymbols {
+  0 1
+  1 1
+}
 closeDisplay {
   0 1
   1 1
@@ -150,11 +159,11 @@ x 310
 y 485
 w 40
 h 20
-fgColor index 0
-bgColor index 17
-topShadowColor index 2
-botShadowColor index 12
-font "helvetica-medium-r-10.0"
+fgColor rgb 65280 65280 65280
+bgColor rgb 13056 39168 0
+topShadowColor rgb 55808 55808 55808
+botShadowColor rgb 17920 17920 17920
+font "helvetica-medium-r-12.0"
 buttonLabel "More"
 numPvs 4
 numDsps 2
@@ -169,6 +178,10 @@ menuLabel {
 symbols {
   0 "P=$(P),L=$(L)"
   1 "P=$(P),L=$(L)"
+}
+replaceSymbols {
+  0 1
+  1 1
 }
 endObjectProperties
 

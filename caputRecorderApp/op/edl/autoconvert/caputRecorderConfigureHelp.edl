@@ -1,28 +1,28 @@
-4 0 0
+4 0 1
 beginScreenProperties
 major 4
 minor 0
-release 0
+release 1
 x 670
 y 418
 w 400
 h 500
 font "helvetica-medium-r-18.0"
-ctlFont "helvetica-medium-r-8.0"
+ctlFont "helvetica-bold-r-10.0"
 btnFont "helvetica-medium-r-18.0"
-fgColor index 14
-bgColor index 2
-textColor index 14
-ctlFgColor1 index 30
-ctlFgColor2 index 32
-ctlBgColor1 index 34
-ctlBgColor2 index 35
-topShadowColor index 37
-botShadowColor index 44
+fgColor rgb 0 0 0
+bgColor rgb 55808 55808 55808
+textColor rgb 0 0 0
+ctlFgColor1 rgb 64256 62208 18944
+ctlFgColor2 rgb 60928 46592 11008
+ctlBgColor1 rgb 52480 24832 0
+ctlBgColor2 rgb 65280 45056 65280
+topShadowColor rgb 44544 19968 48128
+botShadowColor rgb 13312 13056 34304
+showGrid
 snapToGrid
-gridSize 5
+gridSize 4
 endScreenProperties
-
 
 # (Rectangle)
 object activeRectangleClass
@@ -34,9 +34,9 @@ x 70
 y 140
 w 319
 h 19
-lineColor index 51
+lineColor rgb 29440 57088 65280
 fill
-fillColor index 51
+fillColor rgb 29440 57088 65280
 lineWidth 0
 endObjectProperties
 
@@ -50,9 +50,9 @@ x 0
 y 0
 w 399
 h 24
-lineColor index 0
+lineColor rgb 65280 65280 65280
 fill
-fillColor index 0
+fillColor rgb 65280 65280 65280
 lineWidth 0
 endObjectProperties
 
@@ -60,18 +60,19 @@ endObjectProperties
 object activeXTextClass
 beginObjectProperties
 major 4
-minor 0
-release 0
+minor 1
+release 1
 x 10
 y 0
 w 380
 h 23
-font "helvetica-medium-r-8.0"
+font "helvetica-medium-r-18.0"
 fontAlign "center"
-fgColor index 14
+fgColor rgb 0 0 0
+bgColor index 3
 useDisplayBg
 value {
- "caput recorder configure"
+  "caput recorder configure"
 }
 endObjectProperties
 
@@ -85,8 +86,8 @@ x 0
 y 25
 w 399
 h 3
-lineColor index 54
-fillColor index 54
+lineColor rgb 2560 0 47104
+fillColor rgb 2560 0 47104
 lineWidth 3
 numPoints 2 {
 xPoints  {
@@ -103,18 +104,19 @@ endObjectProperties
 object activeXTextClass
 beginObjectProperties
 major 4
-minor 0
-release 0
+minor 1
+release 1
 x 10
 y 35
 w 380
 h 20
-font "helvetica-medium-r-8.0"
+font "helvetica-medium-r-14.0"
 fontAlign "center"
-fgColor index 14
+fgColor rgb 0 0 0
+bgColor index 3
 useDisplayBg
 value {
- "Record caputs from whom?"
+  "Record caputs from whom?"
 }
 endObjectProperties
 
@@ -122,18 +124,19 @@ endObjectProperties
 object activeXTextClass
 beginObjectProperties
 major 4
-minor 0
-release 0
+minor 1
+release 1
 x 10
 y 62
 w 55
 h 14
-font "helvetica-medium-r-8.0"
+font "helvetica-medium-r-12.0"
 fontAlign "right"
-fgColor index 14
+fgColor rgb 0 0 0
+bgColor index 3
 useDisplayBg
 value {
- "users:"
+  "users:"
 }
 endObjectProperties
 
@@ -141,44 +144,45 @@ endObjectProperties
 object activeXTextDspClass
 beginObjectProperties
 major 4
-minor 0
+minor 7
 release 0
 x 70
 y 60
 w 320
 h 20
 controlPv "$(P)caputRecorderUsers"
-font "helvetica-medium-r-8.0"
+format "string"
+font "helvetica-medium-r-12.0"
+fontAlign "left"
+fgColor rgb 0 0 0
+bgColor rgb 29440 57088 65280
+editable
+motifWidget
+limitsFromDb
+nullColor rgb 60928 46592 11008
 smartRefresh
 fastUpdate
-fgColor index 14
-bgColor index 51
-editable
-autoHeight
-format "string"
-motifWidget
-nullColor index 32
-useHexPrefix
-objType "controls"
 newPos
+objType "controls"
 endObjectProperties
 
 # (Static Text)
 object activeXTextClass
 beginObjectProperties
 major 4
-minor 0
-release 0
+minor 1
+release 1
 x 10
 y 87
 w 55
 h 14
-font "helvetica-medium-r-8.0"
+font "helvetica-medium-r-12.0"
 fontAlign "right"
-fgColor index 14
+fgColor rgb 0 0 0
+bgColor index 3
 useDisplayBg
 value {
- "hosts:"
+  "hosts:"
 }
 endObjectProperties
 
@@ -186,43 +190,44 @@ endObjectProperties
 object activeXTextDspClass
 beginObjectProperties
 major 4
-minor 0
+minor 7
 release 0
 x 70
 y 85
 w 320
 h 20
 controlPv "$(P)caputRecorderHosts"
-font "helvetica-medium-r-8.0"
+format "string"
+font "helvetica-medium-r-12.0"
+fontAlign "left"
+fgColor rgb 0 0 0
+bgColor rgb 29440 57088 65280
+editable
+motifWidget
+limitsFromDb
+nullColor rgb 60928 46592 11008
 smartRefresh
 fastUpdate
-fgColor index 14
-bgColor index 51
-editable
-autoHeight
-format "string"
-motifWidget
-nullColor index 32
-useHexPrefix
-objType "controls"
 newPos
+objType "controls"
 endObjectProperties
 
 # (Static Text)
 object activeXTextClass
 beginObjectProperties
 major 4
-minor 0
-release 0
+minor 1
+release 1
 x 70
 y 165
 w 316
 h 14
-font "helvetica-medium-r-8.0"
-fgColor index 14
+font "helvetica-medium-r-12.0"
+fgColor rgb 0 0 0
+bgColor index 3
 useDisplayBg
 value {
- "everyone"
+  "everyone"
 }
 endObjectProperties
 
@@ -230,17 +235,18 @@ endObjectProperties
 object activeXTextClass
 beginObjectProperties
 major 4
-minor 0
-release 0
+minor 1
+release 1
 x 70
 y 215
 w 316
 h 14
-font "helvetica-medium-r-8.0"
-fgColor index 14
+font "helvetica-medium-r-12.0"
+fgColor rgb 0 0 0
+bgColor index 3
 useDisplayBg
 value {
- "only userA and userB"
+  "only userA and userB"
 }
 endObjectProperties
 
@@ -248,17 +254,18 @@ endObjectProperties
 object activeXTextClass
 beginObjectProperties
 major 4
-minor 0
-release 0
+minor 1
+release 1
 x 70
 y 265
 w 316
 h 14
-font "helvetica-medium-r-8.0"
-fgColor index 14
+font "helvetica-medium-r-12.0"
+fgColor rgb 0 0 0
+bgColor index 3
 useDisplayBg
 value {
- "everyone except vw5"
+  "everyone except vw5"
 }
 endObjectProperties
 
@@ -266,18 +273,19 @@ endObjectProperties
 object activeXTextClass
 beginObjectProperties
 major 4
-minor 0
-release 0
-x 11
+minor 1
+release 1
+x 7
 y 125
-w 65
+w 69
 h 14
-font "helvetica-medium-r-8.0"
+font "helvetica-medium-r-12.0"
 fontAlign "right"
-fgColor index 14
+fgColor rgb 0 0 0
+bgColor index 3
 useDisplayBg
 value {
- "examples:"
+  "examples:"
 }
 endObjectProperties
 
@@ -285,17 +293,18 @@ endObjectProperties
 object activeXTextClass
 beginObjectProperties
 major 4
-minor 0
-release 0
+minor 1
+release 1
 x 72
 y 143
 w 316
 h 14
-font "helvetica-medium-r-8.0"
-fgColor index 14
+font "helvetica-medium-r-12.0"
+fgColor rgb 0 0 0
+bgColor index 3
 useDisplayBg
 value {
- ""
+  ""
 }
 endObjectProperties
 
@@ -309,8 +318,8 @@ x 1
 y 116
 w 397
 h 1
-lineColor index 54
-fillColor index 54
+lineColor rgb 2560 0 47104
+fillColor rgb 2560 0 47104
 numPoints 2 {
 xPoints  {
 0 1
@@ -332,8 +341,8 @@ x 0
 y 350
 w 397
 h 1
-lineColor index 54
-fillColor index 54
+lineColor rgb 2560 0 47104
+fillColor rgb 2560 0 47104
 numPoints 2 {
 xPoints  {
 0 0
@@ -358,7 +367,6 @@ h 20
 
 beginGroup
 
-
 # (Rectangle)
 object activeRectangleClass
 beginObjectProperties
@@ -369,9 +377,9 @@ x 70
 y 190
 w 319
 h 19
-lineColor index 51
+lineColor rgb 29440 57088 65280
 fill
-fillColor index 51
+fillColor rgb 29440 57088 65280
 lineWidth 0
 endObjectProperties
 
@@ -379,17 +387,18 @@ endObjectProperties
 object activeXTextClass
 beginObjectProperties
 major 4
-minor 0
-release 0
+minor 1
+release 1
 x 72
 y 193
 w 316
 h 14
-font "helvetica-medium-r-8.0"
-fgColor index 14
+font "helvetica-medium-r-12.0"
+fgColor rgb 0 0 0
+bgColor index 3
 useDisplayBg
 value {
- "userA userB"
+  "userA userB"
 }
 endObjectProperties
 
@@ -411,7 +420,6 @@ h 20
 
 beginGroup
 
-
 # (Rectangle)
 object activeRectangleClass
 beginObjectProperties
@@ -422,9 +430,9 @@ x 70
 y 240
 w 319
 h 19
-lineColor index 51
+lineColor rgb 29440 57088 65280
 fill
-fillColor index 51
+fillColor rgb 29440 57088 65280
 lineWidth 0
 endObjectProperties
 
@@ -432,17 +440,18 @@ endObjectProperties
 object activeXTextClass
 beginObjectProperties
 major 4
-minor 0
-release 0
+minor 1
+release 1
 x 72
 y 243
 w 316
 h 14
-font "helvetica-medium-r-8.0"
-fgColor index 14
+font "helvetica-medium-r-12.0"
+fgColor rgb 0 0 0
+bgColor index 3
 useDisplayBg
 value {
- "-vw5"
+  "-vw5"
 }
 endObjectProperties
 
@@ -455,18 +464,19 @@ endObjectProperties
 object activeXTextClass
 beginObjectProperties
 major 4
-minor 0
-release 0
+minor 1
+release 1
 x 10
 y 360
 w 65
 h 14
-font "helvetica-medium-r-8.0"
+font "helvetica-medium-r-12.0"
 fontAlign "right"
-fgColor index 14
+fgColor rgb 0 0 0
+bgColor index 3
 useDisplayBg
 value {
- "example:"
+  "example:"
 }
 endObjectProperties
 
@@ -483,7 +493,6 @@ h 20
 
 beginGroup
 
-
 # (Rectangle)
 object activeRectangleClass
 beginObjectProperties
@@ -494,9 +503,9 @@ x 70
 y 375
 w 319
 h 19
-lineColor index 51
+lineColor rgb 29440 57088 65280
 fill
-fillColor index 51
+fillColor rgb 29440 57088 65280
 lineWidth 0
 endObjectProperties
 
@@ -504,17 +513,18 @@ endObjectProperties
 object activeXTextClass
 beginObjectProperties
 major 4
-minor 0
-release 0
+minor 1
+release 1
 x 72
 y 378
 w 316
 h 14
-font "helvetica-medium-r-8.0"
-fgColor index 14
+font "helvetica-medium-r-12.0"
+fgColor rgb 0 0 0
+bgColor index 3
 useDisplayBg
 value {
- "xxx: yyy:"
+  "xxx: yyy:"
 }
 endObjectProperties
 
@@ -527,18 +537,19 @@ endObjectProperties
 object activeXTextClass
 beginObjectProperties
 major 4
-minor 0
-release 0
+minor 1
+release 1
 x 9
 y 297
 w 380
 h 20
-font "helvetica-medium-r-8.0"
+font "helvetica-medium-r-14.0"
 fontAlign "center"
-fgColor index 14
+fgColor rgb 0 0 0
+bgColor index 3
 useDisplayBg
 value {
- "Record caputs to which IOCs?"
+  "Record caputs to which IOCs?"
 }
 endObjectProperties
 
@@ -546,18 +557,19 @@ endObjectProperties
 object activeXTextClass
 beginObjectProperties
 major 4
-minor 0
-release 0
+minor 1
+release 1
 x 9
 y 324
 w 65
 h 14
-font "helvetica-medium-r-8.0"
+font "helvetica-medium-r-12.0"
 fontAlign "right"
-fgColor index 14
+fgColor rgb 0 0 0
+bgColor index 3
 useDisplayBg
 value {
- "prefixes:"
+  "prefixes:"
 }
 endObjectProperties
 
@@ -565,26 +577,26 @@ endObjectProperties
 object activeXTextDspClass
 beginObjectProperties
 major 4
-minor 0
+minor 7
 release 0
 x 79
 y 322
 w 310
 h 20
 controlPv "$(P)caputRecorderPrefixes"
-font "helvetica-medium-r-8.0"
+format "string"
+font "helvetica-medium-r-12.0"
+fontAlign "left"
+fgColor rgb 0 0 0
+bgColor rgb 29440 57088 65280
+editable
+motifWidget
+limitsFromDb
+nullColor rgb 60928 46592 11008
 smartRefresh
 fastUpdate
-fgColor index 14
-bgColor index 51
-editable
-autoHeight
-format "string"
-motifWidget
-nullColor index 32
-useHexPrefix
-objType "controls"
 newPos
+objType "controls"
 endObjectProperties
 
 # (Lines)
@@ -597,8 +609,8 @@ x 0
 y 285
 w 399
 h 3
-lineColor index 54
-fillColor index 54
+lineColor rgb 2560 0 47104
+fillColor rgb 2560 0 47104
 lineWidth 3
 numPoints 2 {
 xPoints  {
@@ -621,8 +633,8 @@ x 1
 y 405
 w 399
 h 3
-lineColor index 54
-fillColor index 54
+lineColor rgb 2560 0 47104
+fillColor rgb 2560 0 47104
 lineWidth 3
 numPoints 2 {
 xPoints  {
@@ -648,23 +660,23 @@ h 16
 
 beginGroup
 
-
 # (Static Text)
 object activeXTextClass
 beginObjectProperties
 major 4
-minor 0
-release 0
-x 319
+minor 1
+release 1
+x 312
 y 431
-w 45
+w 52
 h 14
-font "helvetica-medium-r-8.0"
+font "helvetica-medium-r-12.0"
 fontAlign "right"
-fgColor index 5
+fgColor rgb 44544 44544 44544
+bgColor index 3
 useDisplayBg
 value {
- "debug:"
+  "debug:"
 }
 endObjectProperties
 
@@ -672,26 +684,26 @@ endObjectProperties
 object activeXTextDspClass
 beginObjectProperties
 major 4
-minor 0
+minor 7
 release 0
 x 369
 y 431
 w 30
 h 16
 controlPv "$(P)caputRecorderDebug"
+format "string"
 font "helvetica-medium-r-8.0"
+fontAlign "left"
+fgColor rgb 0 0 0
+bgColor rgb 55808 55808 55808
+editable
+motifWidget
+limitsFromDb
+nullColor rgb 60928 46592 11008
 smartRefresh
 fastUpdate
-fgColor index 14
-bgColor index 2
-editable
-autoHeight
-format "string"
-motifWidget
-nullColor index 32
-useHexPrefix
-objType "controls"
 newPos
+objType "controls"
 endObjectProperties
 
 endGroup
@@ -703,18 +715,19 @@ endObjectProperties
 object activeXTextClass
 beginObjectProperties
 major 4
-minor 0
-release 0
+minor 1
+release 1
 x 10
 y 417
 w 170
 h 14
-font "helvetica-medium-r-8.0"
+font "helvetica-medium-r-12.0"
 fontAlign "right"
-fgColor index 14
+fgColor rgb 0 0 0
+bgColor index 3
 useDisplayBg
 value {
- "record timing of caputs?"
+  "record timing of caputs?"
 }
 endObjectProperties
 
@@ -722,18 +735,19 @@ endObjectProperties
 object activeXTextClass
 beginObjectProperties
 major 4
-minor 0
-release 0
+minor 1
+release 1
 x 10
 y 437
 w 170
 h 14
-font "helvetica-medium-r-8.0"
+font "helvetica-medium-r-12.0"
 fontAlign "right"
-fgColor index 14
+fgColor rgb 0 0 0
+bgColor index 3
 useDisplayBg
 value {
- "wait for completion?"
+  "wait for completion?"
 }
 endObjectProperties
 
@@ -750,23 +764,23 @@ h 18
 
 beginGroup
 
-
 # (Static Text)
 object activeXTextClass
 beginObjectProperties
 major 4
-minor 0
-release 0
+minor 1
+release 1
 x 10
 y 477
 w 170
 h 14
-font "helvetica-medium-r-8.0"
+font "helvetica-medium-r-12.0"
 fontAlign "right"
-fgColor index 14
+fgColor rgb 0 0 0
+bgColor index 3
 useDisplayBg
 value {
- "if macro already exists:"
+  "if macro already exists:"
 }
 endObjectProperties
 
@@ -779,18 +793,19 @@ endObjectProperties
 object activeXTextClass
 beginObjectProperties
 major 4
-minor 0
-release 0
+minor 1
+release 1
 x 10
 y 457
 w 170
 h 14
-font "helvetica-medium-r-8.0"
+font "helvetica-medium-r-12.0"
 fontAlign "right"
-fgColor index 14
+fgColor rgb 0 0 0
+bgColor index 3
 useDisplayBg
 value {
- "wait for how long?"
+  "wait for how long?"
 }
 endObjectProperties
 
@@ -798,43 +813,44 @@ endObjectProperties
 object activeXTextDspClass
 beginObjectProperties
 major 4
-minor 0
+minor 7
 release 0
 x 181
 y 455
 w 70
 h 18
 controlPv "$(P)caputRecorderWaitCBSec"
-font "helvetica-medium-r-8.0"
+format "string"
+font "helvetica-medium-r-10.0"
+fontAlign "left"
+fgColor rgb 0 0 0
+bgColor rgb 29440 57088 65280
+editable
+motifWidget
+limitsFromDb
+nullColor rgb 60928 46592 11008
 smartRefresh
 fastUpdate
-fgColor index 14
-bgColor index 51
-editable
-autoHeight
-format "string"
-motifWidget
-nullColor index 32
-useHexPrefix
-objType "controls"
 newPos
+objType "controls"
 endObjectProperties
 
 # (Static Text)
 object activeXTextClass
 beginObjectProperties
 major 4
-minor 0
-release 0
+minor 1
+release 1
 x 254
 y 457
-w 50
+w 61
 h 14
-font "helvetica-medium-r-8.0"
-fgColor index 14
+font "helvetica-medium-r-12.0"
+fgColor rgb 0 0 0
+bgColor index 3
 useDisplayBg
 value {
- "seconds"
+  "seconds"
 }
 endObjectProperties
 # (Group)
@@ -849,7 +865,6 @@ w 320
 h 20
 
 beginGroup
-
 
 endGroup
 
@@ -868,7 +883,6 @@ h 20
 
 beginGroup
 
-
 endGroup
 
 endObjectProperties
@@ -885,7 +899,6 @@ w 320
 h 20
 
 beginGroup
-
 
 endGroup
 
@@ -904,7 +917,6 @@ h 16
 
 beginGroup
 
-
 endGroup
 
 endObjectProperties
@@ -920,12 +932,12 @@ x 181
 y 415
 w 80
 h 18
-fgColor index 14
-bgColor index 51
-selectColor index 51
-inconsistentColor index 14
-topShadowColor index 0
-botShadowColor index 14
+fgColor rgb 0 0 0
+bgColor rgb 29440 57088 65280
+selectColor rgb 29440 57088 65280
+inconsistentColor rgb 0 0 0
+topShadowColor rgb 65280 65280 65280
+botShadowColor rgb 0 0 0
 controlPv "$(P)caputRecorderRecordTiming"
 font "helvetica-medium-r-10.0"
 orientation "horizontal"
@@ -941,12 +953,12 @@ x 181
 y 435
 w 80
 h 18
-fgColor index 14
-bgColor index 51
-selectColor index 51
-inconsistentColor index 14
-topShadowColor index 0
-botShadowColor index 14
+fgColor rgb 0 0 0
+bgColor rgb 29440 57088 65280
+selectColor rgb 29440 57088 65280
+inconsistentColor rgb 0 0 0
+topShadowColor rgb 65280 65280 65280
+botShadowColor rgb 0 0 0
 controlPv "$(P)caputRecorderWaitCompletion"
 font "helvetica-medium-r-10.0"
 orientation "horizontal"
@@ -964,7 +976,6 @@ h 18
 
 beginGroup
 
-
 # (Choice Button)
 object activeChoiceButtonClass
 beginObjectProperties
@@ -975,12 +986,12 @@ x 181
 y 475
 w 170
 h 18
-fgColor index 14
-bgColor index 51
-selectColor index 51
-inconsistentColor index 14
-topShadowColor index 0
-botShadowColor index 14
+fgColor rgb 0 0 0
+bgColor rgb 29440 57088 65280
+selectColor rgb 29440 57088 65280
+inconsistentColor rgb 0 0 0
+topShadowColor rgb 65280 65280 65280
+botShadowColor rgb 0 0 0
 controlPv "$(P)caputRecorderIfMacroExists"
 font "helvetica-medium-r-10.0"
 orientation "horizontal"
