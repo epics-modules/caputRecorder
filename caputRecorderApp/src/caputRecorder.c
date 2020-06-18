@@ -75,7 +75,7 @@ epicsExportAddress(int,caputRecorderDebug);
 #define oldDBR_DOUBLE      6
 
 static void getEnumString(dbAddr *paddr, char *destString, unsigned short us) {
-	struct rset *prset = 0;
+	rset *prset = 0;
 	struct dbr_enumStrs	enumStrs;
 	int status;
 
@@ -261,6 +261,7 @@ static void myGetValueString(dbAddr *paddr, long n, char *value, int valueSize) 
 	value[valueSize-1] = '\0';
 }
 
+#if LT_EPICSBASE(3,15,0,0)
 static unsigned my_dbNameOfPV(const dbAddr *paddr, char *pBuf, unsigned bufLen) {
     dbFldDes * pfldDes = paddr->pfldDes;
     char * pBufTmp = pBuf;
@@ -272,6 +273,7 @@ static unsigned my_dbNameOfPV(const dbAddr *paddr, char *pBuf, unsigned bufLen) 
 	strncat(pBufTmp, pfldDes->name, (bufLen-1)-(pBufTmp-pBuf));
     return(pBufTmp - pBuf);
 }
+#endif
 
 static void myAsDataListener(asTrapWriteMessage *pmessage, int after) {
 #if GE_EPICSBASE(3,15,0,0)
@@ -281,7 +283,6 @@ static void myAsDataListener(asTrapWriteMessage *pmessage, int after) {
 	DBADDR *paddr;
 	char pvname[BUFFER_SIZE], value[COMMAND_SIZE], save[COMMAND_SIZE];
 	MSG msg;
-	unsigned int numChar;
 	long no_elements=1, n;
 	short field_size;
 	dbfType field_type;
@@ -304,15 +305,13 @@ static void myAsDataListener(asTrapWriteMessage *pmessage, int after) {
 	if (caputRecorderDebug > 1) errlogPrintf("myAsDataListener:final_type=%d\n", pchannel->final_type);
 	if (caputRecorderDebug > 1) errlogPrintf("myAsDataListener:no_elements=%ld, field_size=%d\n", no_elements, field_size);
 	strncpy(pvname, dbChannelName(pchannel), BUFFER_SIZE-1);
-	numChar = strlen(pvname);
 #else
 	if (caputRecorderDebug > 1) errlogPrintf("myAsDataListener: LT_EPICSBASE(3,15,0)\n");
 	paddr = pmessage->serverSpecific;
 	no_elements = paddr->no_elements;
 	field_type = paddr->field_type;
 	field_size = paddr->field_size;
-	/*numChar = dbNameOfPV(paddr, pvname, BUFFER_SIZE);*/
-	numChar = my_dbNameOfPV(paddr, pvname, BUFFER_SIZE);
+	my_dbNameOfPV(paddr, pvname, BUFFER_SIZE);
 #endif
 
 	if (strstr(pvname, "caputRecorderHeartbeat")) {
@@ -388,7 +387,6 @@ static void caputRecorderTask() {
 }
 
 void registerCaputRecorderTrapListener(char *PVname) {
-	asTrapWriteId id;
 	long status;
 
 	if (caputRecorderDebug) printf("registerCaputRecorderTrapListener: entry\n");
@@ -399,7 +397,7 @@ void registerCaputRecorderTrapListener(char *PVname) {
 	}
 	valid_command_buffer = 1;
 
-	id = asTrapWriteRegisterListener(myAsDataListener);
+	asTrapWriteRegisterListener(myAsDataListener);
 	if (!caputRecorderMsgQueue) {
 		caputRecorderMsgQueue = epicsMessageQueueCreate(MAX_MESSAGES, MSG_SIZE);
 	}
