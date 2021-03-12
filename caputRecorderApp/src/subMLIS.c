@@ -5,10 +5,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include <dbAccess.h>
+/*#include <dbAccess.h>*/
 #include <recGbl.h>
 #include <recSup.h>
-#include <dbEvent.h>
+/*#include <dbEvent.h>*/
 #include <subRecord.h>
 #include <registryFunction.h>
 #include <epicsExport.h>
