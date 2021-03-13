@@ -19,6 +19,9 @@ addons:
     - re2c
 matrix:
     include:
+    - name: "7.0 master"
+      env: BASE=7.0  STATIC=shared
+
     - name: "3.16 master"
       env: BASE=3.16  STATIC=shared
     
