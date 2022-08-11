@@ -23,6 +23,8 @@ epicsExportAddress(int, debugSubMLIS);
 	} evSub;
 #else
 	#include "dbChannel.h"
+	
+	typedef evSubscrip evSub;
 #endif
 
 long	initSubMLIS(struct subRecord *psub)
