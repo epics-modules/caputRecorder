@@ -1,9 +1,12 @@
+---
+layout: default
+title: Overview
+nav_order: 2
+---
+
+
 caputRecorder
-
-caputRecorder 1.6
-
-
-=====================
+=============
 
 ![](caputRecorder_small.adl.jpg)  
 caputRecorder\_small.adl
@@ -12,12 +15,12 @@ Table of Contents
 -----------------
 
 *   [Overview](#Overview)
-*   [How does this work?](#How does this work?)
-*   [Requirements, configuration](#Requirements, configuration)
-*   [How to use](#How to use)
-*   [Selecting what gets recorded](#Selecting what gets recorded)
-*   [Record options](#Record options)
-*   [Global variables](#Global variables)
+*   [How does this work?](#How-does-this-work)
+*   [Requirements, configuration](#requirements-configuration)
+*   [How to use](#How-to-use)
+*   [Selecting what gets recorded](#Selecting-what-gets-recorded)
+*   [Record options](#Record-options)
+*   [Global variables](#Global-variables)
 *   [Discussion](#Discussion)
 
 Overview
@@ -268,19 +271,22 @@ If wxPython is available, the variables 'filepath' and 'filename' are supported 
 
 The rest of the variables are generic: both a variable name and its string value can be specified. A macro can retrieve global variables by calling the function \_getGlobals(prefix='xxx:') (imported from caputRecorder). \_getGlobals() returns a python dictionary with global variable names and values. For the display above, the following dictionary would be returned:
 
-{'varName': 'string value',
-'filename': 'abc\_0838.mda',
-'filepath': '/home/oxygen4/MOONEY/data'}
+>{'varName': 'string value',
+>'filename': 'abc\_0838.mda',
+>'filepath': '/home/oxygen4/MOONEY/data'}
 
 Here is sample code demonstrating the use of global variables in a macro:
 
+```
 def testGlobals():
 	g = \_getGlobals("xxx:")
 	print "globals=%s" % g
 
 	filename = g\['filename'\]
 	print "filename = ", filename
-
+```
+        
+        
 Discussion
 ----------
 
@@ -310,7 +316,9 @@ Discussion
 *   The EDM display-file translation failed at the adl file's "shell command", so I just deleted those items from the EDM displays.
     
 *   You can run more than one instance of caputRecorder in an IOC (but only one copy per IOC of caputPoster.db is supported). To run two instances of caputRecorder, you must give them different prefixes:
-    
+   
+
+    ```
     dbLoadRecords("$(CAPUTRECORDER)/caputRecorderApp/Db/caputPoster.db","P=xxx:,N=300")
     dbLoadRecords("$(CAPUTRECORDER)/caputRecorderApp/Db/caputRecorder.db","P=xxx:,N=100")
     dbLoadRecords("$(CAPUTRECORDER)/caputRecorderApp/Db/caputRecorder.db","P=xxxA:,N=100")
@@ -318,6 +326,7 @@ Discussion
     iocInit
     ...
     registerCaputRecorderTrapListener('xxx:caputRecorderCommand')
+    ```
     
     start\_putRecorder must specify a different name for macros.py for the two instances. The example\_start\_putRecorder script does this as follows:
     
