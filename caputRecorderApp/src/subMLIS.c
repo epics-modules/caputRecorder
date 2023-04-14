@@ -10,15 +10,22 @@
 #include <subRecord.h>
 #include <registryFunction.h>
 #include <epicsExport.h>
+#include <epicsVersion.h>
 
 int	debugSubMLIS = 0;
 epicsExportAddress(int, debugSubMLIS);
 
 #define NUM_EVENT_SUBSCRIPTIONS 5
-typedef struct evSubscrip {
-    ELLNODE                 node;
-    struct dbAddr           *paddr;
-} evSub;
+
+#if EPICS_VERSION_INT < VERSION_INT(3, 15, 0, 1)
+	typedef struct evSubscrip {
+		ELLNODE                 node;
+	} evSub;
+#else
+	#include "dbChannel.h"
+	
+	typedef evSubscrip evSub;
+#endif
 
 long	initSubMLIS(struct subRecord *psub)
 {
