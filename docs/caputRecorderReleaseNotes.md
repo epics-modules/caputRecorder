@@ -9,8 +9,32 @@ nav_order: 3
 caputRecorder Release Notes
 ===========================
 
-Release 1-8
------------
+Release 1-7-5
+-------------
+
+*   Fix to stop redefinition of evSubscrip
+*   Convert documentation to github pages
+
+
+Release 1-7-4
+-------------
+
+*   Fix to build under epics base 7.0.5
+
+
+Release 1-7-3
+-------------
+
+*   Converted adl files to bob and edl.
+*   IOC shell files now installed into top-level iocsh folder rather than residing there.
+
+Release 1-7-2
+-------------
+
+*   Req files now installed to top level db folder.
+
+Release 1-7-1
+-------------
 
 *   EPICS-version test was defective.
 
