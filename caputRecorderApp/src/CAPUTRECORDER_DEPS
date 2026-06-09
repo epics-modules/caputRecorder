@@ -1,0 +1,2 @@
+CAPUTRECORDER_IOC_DBDS = caputRecorder.dbd
+CAPUTRECORDER_IOC_LIBS = caputRecorder

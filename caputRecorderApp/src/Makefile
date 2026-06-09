@@ -9,6 +9,7 @@ include $(TOP)/configure/CONFIG
 
 LIBRARY_IOC += caputRecorder
 DBD += caputRecorder.dbd
+CFG += CAPUTRECORDER_DEPS
 USR_CFLAGS += -DUSE_TYPED_RSET
 caputRecorder_SRCS += caputRecorder.c subMLIS.c
 caputRecorder_LIBS += $(EPICS_BASE_IOC_LIBS)
