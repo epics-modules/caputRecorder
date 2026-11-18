@@ -372,10 +372,11 @@ static void myAsDataListener(asTrapWriteMessage *pmessage, int after) {
 	}
 }
 
-static void caputRecorderTask() {
+static void caputRecorderTask(void *unused) {
 	int msg_size;
 	MSG msg;
 	MSG *pmsg = &msg;
+	(void)unused;
 	while (!shutdown) {
 		msg_size = epicsMessageQueueReceiveWithTimeout(caputRecorderMsgQueue, (void *)pmsg, MSG_SIZE, 5.0);
 		if (msg_size > 0 && pmsg && valid_command_buffer) {
